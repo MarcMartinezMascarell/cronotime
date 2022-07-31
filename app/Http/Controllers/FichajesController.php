@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Fichaje;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use DB;
+
+class FichajesController extends Controller
+{
+    public function indexFichar() {
+        if($user = Auth::user()) {
+            $fichajesHoy = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())->get();
+            $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
+            $total_minutes_ended = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())
+            ->sum('total_time');
+            $last_fichaje_not_ended = (Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())
+            ->where('stopped_at', null)->select('started_at')->first());
+            if($last_fichaje_not_ended)
+                $total_minutes_not_ended = Carbon::now()->diffInMinutes($last_fichaje_not_ended->started_at);
+            else
+                $total_minutes_not_ended = 0;
+            $total_minutes = $total_minutes_ended + $total_minutes_not_ended;
+            $total_hoy = $this->minutesToHours($total_minutes);
+
+            $total_minutes_semana = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])
+            ->sum('total_time');
+            $total_minutes_semana += $total_minutes_not_ended;
+            $total_semana = $this->minutesToHours($total_minutes_semana);
+
+
+            return view('pages.ficharView', [
+                'fichajesHoy' => $fichajesHoy,
+                'ultimoFichaje' => $ultimoFichaje,
+                'total_hoy' => $total_hoy,
+                'total_minutes_hoy' => $total_minutes,
+                'total_semana' => $total_semana,
+                'total_minutes_semana' => $total_minutes_semana,
+            ]);
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+
+    public function setFichaje() {
+
+        if($user = Auth::user()) {
+            $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
+            //return $ultimoFichaje;
+            if($ultimoFichaje && $ultimoFichaje->stopped_at == null) {
+                $ultimoFichaje->stopped_at = Carbon::now();
+                //$total_time = $ultimoFichaje->started_at->diff($ultimoFichaje->stopped_at);
+                $total_time = $ultimoFichaje->stopped_at->diffInMinutes($ultimoFichaje->started_at);
+                $ultimoFichaje->total_time = $total_time;
+                $ultimoFichaje->save();
+            } else {
+                $nuevoFichaje = Fichaje::create([
+                    'user_id' => $user->id,
+                    'started_at' => Carbon::now(),
+                ]);
+                $nuevoFichaje->save();
+            }
+            return redirect()->route('fichar.view');
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+
+    public function delete(Request $request) {
+        $fichaje = Fichaje::find($request->idFichaje);
+        if($request->type == 'entrada') {
+            $fichaje->delete();
+        } else {
+            $fichaje->stopped_at = null;
+            $fichaje->total_time = null;
+            $fichaje->save();
+        }
+        return redirect()->route('fichar.view');
+    }
+
+    private function minutesToHours($total_minutes) {
+        $hours = floor($total_minutes / 60);
+        if($hours < 10)
+            $hours = '0' . $hours;
+        $minutes = $total_minutes % 60;
+        if($minutes < 10)
+            $minutes = '0' . $minutes;
+        $total = $hours . ':' . $minutes;
+        return $total;
+    }
+}

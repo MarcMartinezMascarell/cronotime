@@ -1,0 +1,1 @@
+$(document).ready((function(){$("#delete-entrada, #delete-salida").on("show.bs.modal",(function(e){console.log("click");var a=$(e.relatedTarget).data("idfichaje");$(this).find('input[name="idFichaje"]').val(a)}))}));
