@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\FichajesController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmpresaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,17 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+
+	//ADMINISTRACIÓN
+		//EMPRESAS
+		Route::get('companies', [EmpresaController::class, 'index'])->name('company.index');
+		Route::get('createCompany', [EmpresaController::class, 'createCompany'])->name('company.create');
+		Route::post('createCompany', [EmpresaController::class, 'storeCompany'])->name('company.store');
+		Route::get('deleteCompany/{id}', [EmpresaController::class, 'deleteCompany'])->name('company.delete');
+
+		Route::get('workers/{id}', [AdminController::class, 'showWorkers'])->name('workers.show');
+		Route::get('createProfile', [AdminController::class, 'createProfile'])->name('profile.create');
+		Route::post('storeProfile', [AdminController::class, 'storeProfile'])->name('profile.store');
 });
 
 //VIEWS

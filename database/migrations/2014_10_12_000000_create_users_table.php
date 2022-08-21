@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname')->nullable();
             $table->bigInteger('horario')->nullable();
-            $table->bigInteger('job')->nullable();
+            $table->tinyText('job')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

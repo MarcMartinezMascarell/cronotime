@@ -21,6 +21,7 @@
 
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         <link type="text/css" href="/css/app.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 
     </head>
     <body class="{{ $class ?? '' }}">
@@ -49,5 +50,6 @@
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
 
         <script src="{{ URL::asset('js/custom.js') }}"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
     </body>
 </html>

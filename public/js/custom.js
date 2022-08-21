@@ -1,1 +1,16 @@
-$(document).ready((function(){$("#delete-entrada, #delete-salida").on("show.bs.modal",(function(e){console.log("click");var a=$(e.relatedTarget).data("idfichaje");$(this).find('input[name="idFichaje"]').val(a)}))}));
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!********************************!*\
+  !*** ./resources/js/custom.js ***!
+  \********************************/
+$(document).ready(function () {
+  $('#delete-entrada, #delete-salida').on('show.bs.modal', function (event) {
+    console.log('click');
+    var button = $(event.relatedTarget);
+    var idFichaje = button.data('idfichaje');
+    var modal = $(this);
+    modal.find('input[name="idFichaje"]').val(idFichaje);
+  });
+});
+/******/ })()
+;

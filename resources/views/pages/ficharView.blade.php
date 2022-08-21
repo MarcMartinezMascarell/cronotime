@@ -125,21 +125,23 @@
             <hr class="my-4">
             <div class="row mb-4">
                 <div class="col d-flex justify-content-center flex-column">
-                    @if($ultimoFichaje->stopped_at)
-                        <div class="container">
-                            <p class="text-muted text-center m-0">Estas fuera desde {{$ultimoFichaje->stopped_at->format('H:i (d/m/y)')}}</p>
-                        </div>
-                        <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-success w-50 mx-auto mt-4">
-                            ENTRAR
-                        </a>
-                    @else
-                        <div class="container">
-                            <p class="text-muted text-center m-0">Estas dentro desde las {{$ultimoFichaje->started_at->format('H:i')}}</p>
-                        </div>
-                        <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4">
-                            SALIR
-                        </a>
-                    @endif
+                        @if(isset($ultimoFichaje->stopped_at) || $ultimoFichaje == null)
+                            <div class="container">
+                            @if($ultimoFichaje)
+                                <p class="text-muted text-center m-0">Estas fuera desde {{$ultimoFichaje->stopped_at->format('H:i (d/m/y)')}}</p>
+                            @endif
+                            </div>
+                            <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-success w-50 mx-auto mt-4">
+                                ENTRAR
+                            </a>
+                        @else
+                            <div class="container">
+                                <p class="text-muted text-center m-0">Estas dentro desde las {{$ultimoFichaje->started_at->format('H:i')}}</p>
+                            </div>
+                            <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4">
+                                SALIR
+                            </a>
+                        @endif
 
 
                 </div>

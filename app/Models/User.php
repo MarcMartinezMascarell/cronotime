@@ -20,8 +20,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
+        'job',
+        'horario',
+        'id_empresa',
     ];
 
     /**
@@ -42,6 +46,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function company() {
+        return $this->belongsTo(Empresa::class, 'id_empresa', 'id');
+    }
 
     public function fichajes() {
         return $this->hasMany(Fichaje::class);

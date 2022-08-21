@@ -21,6 +21,7 @@
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
+                        
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
@@ -88,48 +89,57 @@
                         <i class="fas fa-clipboard" style="color: #f4645f;"></i> Informes
                     </a>
                 </li>
+                @hasanyrole('administrador|superAdmin')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="fas fa-desktop" style="color: #f4645f;"></i> Panel de control
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link active" href="#administrador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-briefcase" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">Administración</span>
                     </a>
 
-                    <div class="collapse show" id="navbar-examples">
+                    <div class="collapse" id="administrador">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('profile.create') }}">
                                     Añadir Usuario
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('workers.show', [auth()->user()->company->id]) }}">
                                     Lista Usuarios
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @hasrole('superAdmin')
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link active" href="#superAdmin" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fas fa-user-lock" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">SUPER ADMIN</span>
                     </a>
 
-                    <div class="collapse show" id="navbar-examples">
+                    <div class="collapse" id="superAdmin">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('company.create') }}">
                                     Nueva Empresa
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('company.index') }}">
+                                    Empresas
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @endhasrole
+                @endhasanyrole
             </ul>
             <!-- Divider -->
             <hr class="mt-6">

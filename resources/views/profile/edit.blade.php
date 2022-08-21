@@ -29,7 +29,7 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="text-muted">Dado de alto desde: 20/07/2022</span>
+                                        <span class="text-muted">Dado de alto desde: {{ auth()->user()->created_at->format('d/m/Y') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -39,14 +39,11 @@
                                 {{ auth()->user()->name }}<span class="font-weight-light"></span>
                             </h3>
                             <div class="h5 font-weight-300">
-                                <i class="ni location_pin mr-2"></i>Programador Web
+                                <i class="ni location_pin mr-2"></i>{{auth()->user()->job}}
                             </div>
                             <div>
-                                <i class="ni education_hat mr-2"></i>CeproCoop SCCL
+                                <i class="ni education_hat mr-2"></i>{{isset(auth()->user()->company->nombre)}}
                             </div>
-                            <hr class="my-4" />
-                            <p>{{ __('Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.') }}</p>
-                            <a href="#">{{ __('Show more') }}</a>
                         </div>
                     </div>
                 </div>

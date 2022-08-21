@@ -6,4 +6,7 @@ $(document).ready(function() {
         let modal = $(this);
         modal.find('input[name="idFichaje"]').val(idFichaje);
     });
+
+
 })
+
