@@ -4,7 +4,7 @@
 
 @include('users.partials.header', [
         'title' => __('Hola') . ' '. auth()->user()->name,
-    ]) 
+    ])
 
 <div class="table-responsive p-1">
     <table id="companiesTable" class="table align-items-center table-dark"
@@ -14,9 +14,11 @@
         <tr>
             <th scope="col" data-sortable="true">Nombre y apellidos</th>
             <th scope="col" data-sortable="true" >Email</th>
-            <th scope="col">Administrador</th>
+            <th scope="col" data-sortable="true">Administrador</th>
             <th scope="col">Rol</th>
-            <th scope="col">Completion</th>
+            @hasrole('superAdmin')
+            <th scope="col">Empresa</th>
+            @endhasrole
             <th scope="col"></th>
         </tr>
     </thead>
@@ -40,26 +42,27 @@
                 </td>
                 <td>
                     <div class="text-sm">
+                        @isset($empresa)
                         @if($empresa->administrador())
                         {{ $empresa->administrador()->email }}
                         @endif
+                        @endisset
                     </div>
                 </td>
                 <td>
                     <div class="text-sm">
                         @if($worker->hasRole('administrador'))
                         <i class="fas fa-key"></i>
+                        @elseif($worker->hasRole('superAdmin'))
+                        <i class="fas fa-hammer"></i>
                         @endif
                     </div>
                 </td>
                 <td>
-                    <div class="d-flex align-items-center">
-                        <span class="mr-2">60%</span>
-                        <div>
-                            <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                        </div>
+                    <div class="text-sm">
+                        @hasrole('superAdmin')
+                            {{ $worker->company->nombre }}
+                        @endhasrole
                     </div>
                 </td>
                 <td class="text-right">
@@ -67,16 +70,16 @@
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <a class="dropdown-item text-danger" href="{{ route('company.delete', ['id' => $empresa->id]) }}">Eliminar empresa</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </td>
             </tr>
         @endforeach
-        
+
     </tbody>
 </table>
 

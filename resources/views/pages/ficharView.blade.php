@@ -106,18 +106,24 @@
                                 </div>
                             </div>
                             <!-- FOREACH HORAS -->
-                            <div class="row mt-2">
-                                <div class="col d-flex align-center">
-                                    <p class="sentido w-50 text-center m-0">Lunes</p>
-                                    <span class="w-50 text-center">07:22</span>
+                            @foreach($minutes_per_day as $minutes)
+                                <div class="row mt-2">
+                                    <div class="col d-flex align-center align-items-center">
+                                        <p class="h6 sentido w-50 text-center m-0">{{$minutes->started_at->format('d/m/Y')}}</p>
+                                        <?php
+                                                    $minutes_of_day = $minutes->total_time;
+                                                    $hours = floor($minutes_of_day / 60);
+                                                    if($hours < 10)
+                                                        $hours = '0' . $hours;
+                                                    $minutes = $minutes_of_day % 60;
+                                                    if($minutes < 10)
+                                                        $minutes = '0' . $minutes;
+                                                    $total = $hours . ':' . $minutes;
+                                        ?>
+                                        <span class="w-50 text-center">{{$total}}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col d-flex align-center">
-                                    <p class="sentido w-50 text-center m-0">Martes</p>
-                                    <span class="w-50 text-center">06:57</span>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('id_empresa');
-            $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
+            $table->foreign('id_empresa')->references('id')->on('empresas')->onConstraint('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

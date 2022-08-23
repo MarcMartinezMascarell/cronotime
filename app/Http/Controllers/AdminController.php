@@ -14,8 +14,14 @@ class AdminController extends Controller
 {
 
     public function showWorkers($id) {
-        $empresa = Empresa::find($id);
-        return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers]);
+        if(auth()->user()->hasRole('superAdmin')) {
+            $users = User::get();
+            return view('admin.showWorkers', ['workers' => $users]);
+        } else {
+            $empresa = Empresa::find($id);
+            return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers]);
+        }
+
     }
 
     public function createProfile() {
@@ -35,7 +41,7 @@ class AdminController extends Controller
             $horario->viernes = $request->viernes;
             $horario->sabado = $request->sabado;
             $horario->domingo = $request->domingo;
-    
+
             $horario->save();
             $user->horario = $horario->id;
             $user->assignRole('trabajador');

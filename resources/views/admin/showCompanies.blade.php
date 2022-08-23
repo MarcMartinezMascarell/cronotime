@@ -4,7 +4,7 @@
 
 @include('users.partials.header', [
         'title' => __('Hola') . ' '. auth()->user()->name,
-    ]) 
+    ])
 
 <div class="table-responsive">
     <table id="companiesTable" class="table align-items-center table-dark"
@@ -14,8 +14,8 @@
         <tr>
             <th scope="col" data-sortable="true">Empresa</th>
             <th scope="col" data-sortable="true" >Empleados / Límite</th>
-            <th scope="col">Administrador</th>
-            <th scope="col">Users</th>
+            <th scope="col" data-sortable="true" >Administrador</th>
+            <th scope="col" data-sortable="true" >Creado el</th>
             <th scope="col">Completion</th>
             <th scope="col"></th>
         </tr>
@@ -34,8 +34,8 @@
                     </div>
                 </th>
                 <td>
-                    <div class="text-sm">
-                        {{ $empresa->workersCount() }} / {{ $empresa->workers_limit }}
+                    <div class="text-sm font-weight-bold">
+                        {{ $empresa->workersCount() }} / @if($empresa->workers_limit < 0) <i class="fas fa-infinity"></i> @else {{$empresa->workers_limit}} @endif
                     </div>
                 </td>
                 <td>
@@ -46,7 +46,11 @@
                     </div>
                 </td>
                 <td>
-
+                    <div class="text-sm">
+                        @isset($empresa->created_at)
+                            {{ $empresa->created_at->format('d/m/Y') }}
+                        @endisset
+                    </div>
                 </td>
                 <td>
                     <div class="d-flex align-items-center">
@@ -72,7 +76,7 @@
                 </td>
             </tr>
         @endforeach
-        
+
     </tbody>
 </table>
 

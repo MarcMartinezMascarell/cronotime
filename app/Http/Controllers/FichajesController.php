@@ -32,7 +32,11 @@ class FichajesController extends Controller
             $total_minutes_semana += $total_minutes_not_ended;
             $total_semana = $this->minutesToHours($total_minutes_semana);
 
+            $minutes_per_day = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])
+            ->groupBy(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))->select(DB::raw("(sum(total_time)) as total_time"), 'started_at')
+            ->get();
 
+            //return json_encode($minutes_per_day);
             return view('pages.ficharView', [
                 'fichajesHoy' => $fichajesHoy,
                 'ultimoFichaje' => $ultimoFichaje,
@@ -40,6 +44,7 @@ class FichajesController extends Controller
                 'total_minutes_hoy' => $total_minutes,
                 'total_semana' => $total_semana,
                 'total_minutes_semana' => $total_minutes_semana,
+                'minutes_per_day' => $minutes_per_day,
             ]);
         } else {
             return redirect()->route('login');
