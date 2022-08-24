@@ -21,7 +21,18 @@
                             @foreach($fichajesHoy as $fichaje)
                             <div class="row mt-2">
                                 <div class="col d-flex align-items-center justify-content-between">
-                                    <p class="sentido w-50 text-center m-0">Entrada</p>
+                                    <p class="sentido w-50 text-center m-0">
+                                        Entrada
+                                        @if($fichaje->forgot == 1)
+                                            <i class="text-muted fas fa-clock" data-toggle="tooltip" data-placement="top" title="Fichaje olvidado"></i>
+                                        @endif
+                                        @isset($ultimoFichaje->stopped_at)
+                                            @if($ultimoFichaje->stopped_at->gt($fichaje->started_at) && !$fichaje->stopped_at)
+                                                <i class="text-warning fas fa-exclamation-triangle" data-toggle="tooltip" data-placement="top" title="Este fichaje no tiene salida y hay otros fichajes después,
+                                                te recomendamos eliminarlo ya que puede distorsionar tus estadísticas"></i>
+                                            @endif
+                                        @endisset
+                                    </p>
                                     <span class="w-50 text-center">{{$fichaje->started_at->format('H:i')}}</span>
                                         <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-entrada"
                                         data-idfichaje="{{$fichaje->id}}">
@@ -29,10 +40,16 @@
                                         </a>
                                 </div>
                             </div>
-                                @if($fichaje->stopped_at)
+                            @if($fichaje->stopped_at)
                                 <div class="row mt-2">
                                     <div class="col d-flex align-center">
-                                        <p class="sentido w-50 text-center m-0">Salida</p>
+                                        <p class="sentido w-50 text-center m-0">
+                                            Salida
+                                            @if($fichaje->forgot == 1)
+                                            <i class="text-muted fas fa-clock" data-toggle="tooltip" data-placement="top" title="Fichaje olvidado"></i>
+                                            @endif
+                                        </p>
+
                                         <span class="w-50 text-center">{{$fichaje->stopped_at->format('H:i')}}</span>
                                         <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-salida"
                                         data-idFichaje="{{$fichaje->id}}">
@@ -40,6 +57,7 @@
                                         </a>
                                     </div>
                                 </div>
+                                <hr class="my-2">
                                 @endif
                             @endforeach
 
@@ -131,6 +149,15 @@
             <hr class="my-4">
             <div class="row mb-4">
                 <div class="col d-flex justify-content-center flex-column">
+                        @if(Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <span class="alert-icon"><i class="fas fa-thumbs-down"></i></span>
+                            <span class="alert-text"><strong>Cuidado!</strong> {{Session::get('error')}}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
                         @if(isset($ultimoFichaje->stopped_at) || $ultimoFichaje == null)
                             <div class="container">
                             @if($ultimoFichaje)
@@ -140,6 +167,10 @@
                             <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-success w-50 mx-auto mt-4">
                                 ENTRAR
                             </a>
+                            <a href="" class="text-muted text-center w-auto mt-4" data-toggle="modal" data-target="#fichaje-olvidado">
+                                He olvidado un fichaje
+                            </a>
+
                         @else
                             <div class="container">
                                 <p class="text-muted text-center m-0">Estas dentro desde las {{$ultimoFichaje->started_at->format('H:i')}}</p>
@@ -156,7 +187,71 @@
     </div>
 </div>
 
+<div class="modal fade" id="fichaje-olvidado" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">Has olvidado un fichaje?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="fichajeOlvidadoForm" action="{{ route('fichaje.olvidado')}}" method="POST">
+                @csrf
+                @method('POST')
+            <div class="modal-body">
+                <div class="input-daterange datepicker row align-items-start">
+                    <div class="col">
+                        <div class="form-group m-0">
+                            <p class="h5 text-center">Entrada</p>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                </div>
+                                <input name="entrada" class="form-control" type="datetime-local" value="{{ $ultimoFichaje->started_at->format('Y-m-d H:i:00') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group m-0">
+                            <p class="h5 text-center">Salida</p>
+                            <div class="collapse" id="exit">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                    </div>
+                                    <input name="salida" class="form-control" type="datetime-local" value="{{ \Carbon\Carbon::now()->format('Y-m-d H:i:00') }}">
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <label class="custom-toggle mt-2 d-flex" href="#exit" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                    <input name="salida_yes" type="checkbox" value="true">
+                                    <span class="custom-toggle-slider" data-label-off="Aún no he salido" data-label-on="Yes"></span>
+
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex small align-items-center mt-2">
+                        <i class="text-muted fas fa-clock mx-2"></i>
+                        <p class="text-muted m-0">Quedará registrado como fichaje olvidado</p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Crear fichaje olvidado</button>
+
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="delete-entrada" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">

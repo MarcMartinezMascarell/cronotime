@@ -41,6 +41,10 @@
             @include('layouts.footers.guest')
         @endguest
 
+        <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
+        <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+
         <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -51,5 +55,6 @@
 
         <script src="{{ URL::asset('js/custom.js') }}"></script>
         <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+        <script src="/assets-old/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     </body>
 </html>

@@ -21,7 +21,7 @@
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
-                        
+
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
@@ -85,7 +85,7 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('map') }}">
+                    <a class="nav-link" href="{{ route('fichar.view') }}">
                         <i class="fas fa-clipboard" style="color: #f4645f;"></i> Informes
                     </a>
                 </li>

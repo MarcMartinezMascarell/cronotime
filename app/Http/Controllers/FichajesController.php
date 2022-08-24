@@ -14,7 +14,7 @@ class FichajesController extends Controller
 {
     public function indexFichar() {
         if($user = Auth::user()) {
-            $fichajesHoy = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())->get();
+            $fichajesHoy = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())->orderBy('started_at')->get();
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
             $total_minutes_ended = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())
             ->sum('total_time');
@@ -73,6 +73,28 @@ class FichajesController extends Controller
             return redirect()->route('fichar.view');
         } else {
             return redirect()->route('login');
+        }
+    }
+
+    public function fichajeOlvidado(Request $request) {
+        if($user = Auth::user()) {
+            if($request->salida_yes == "true")
+                $salida = $request->salida;
+            else
+                $salida = null;
+            $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
+            if($ultimoFichaje && !$ultimoFichaje->stopped_at->gt($request->started_at) && $salida == null) {
+                return redirect()->back()->with(['error' => 'No puedes crear un fichaje sin salida anterior al último fichaje']);
+            } else {
+                $nuevoFichaje = Fichaje::create([
+                    'user_id' => $user->id,
+                    'started_at' => $request->entrada,
+                    'stopped_at' => $salida,
+                    'forgot' => 1,
+                ]);
+                $nuevoFichaje->save();
+                return redirect()->back();
+            }
         }
     }
 

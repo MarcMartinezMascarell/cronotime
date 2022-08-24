@@ -10,6 +10,10 @@ $(document).ready(function () {
     var idFichaje = button.data('idfichaje');
     var modal = $(this);
     modal.find('input[name="idFichaje"]').val(idFichaje);
+  }); //Tooltip activation
+
+  $("body").tooltip({
+    selector: '[data-toggle=tooltip]'
   });
 });
 /******/ })()

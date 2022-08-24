@@ -7,6 +7,9 @@ $(document).ready(function() {
         modal.find('input[name="idFichaje"]').val(idFichaje);
     });
 
+    //Tooltip activation
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
 
 })
 
