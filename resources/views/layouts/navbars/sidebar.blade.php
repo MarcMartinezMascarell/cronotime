@@ -27,18 +27,6 @@
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('My profile') }}</span>
                     </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>{{ __('Activity') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>{{ __('Support') }}</span>
-                    </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -85,8 +73,8 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('fichar.view') }}">
-                        <i class="fas fa-clipboard" style="color: #f4645f;"></i> Informes
+                    <a class="nav-link" href="{{ route('estadisticas.informe') }}">
+                        <i class="fas fa-clipboard" style="color: #f4645f;"></i> Tus Informes
                     </a>
                 </li>
                 @hasanyrole('administrador|superAdmin')

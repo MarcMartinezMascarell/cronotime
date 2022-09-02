@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function fichajes() {
         return $this->hasMany(Fichaje::class);
     }
+
+    public function horas() {
+        return $this->hasOne(Horario::class, 'id', 'horario');
+    }
 }

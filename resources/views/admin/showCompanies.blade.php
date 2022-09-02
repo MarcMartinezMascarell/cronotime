@@ -6,10 +6,8 @@
         'title' => __('Hola') . ' '. auth()->user()->name,
     ])
 
-
-<div class="row">
-    <div class="col">
-      <div class="card bg-default shadow">
+<div class="container-fluid">
+    <div class="card bg-default shadow">
             <div class="card-header bg-transparent border-0">
             <h3 class="text-white mb-0">Empresas</h3>
             </div>
@@ -28,13 +26,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($empresas as $empresa)
+                        @foreach($empresas as $empresa)
                         <tr>
                             <th scope="row">
                                 <div class="media align-items-center">
-                                    <a href="#" class="avatar rounded-circle mr-3">
-                                    <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
-                                    </a>
                                     <div class="media-body">
                                         <span class="mb-0 text-sm">{{ $empresa->nombre }}</span>
                                     </div>
@@ -82,12 +77,11 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                        @endforeach
 
-                </tbody>
-            </table>
-
-        </div>
+                    </tbody>
+                </table>
+            </div>
     </div>
 </div>
 

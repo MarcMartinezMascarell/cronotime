@@ -5,7 +5,7 @@
         'title' => __('Hola') . ' '. auth()->user()->name,
     ])
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--2">
         <div class="row">
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                 <div class="card card-profile shadow">
@@ -13,7 +13,7 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="text-muted">Dado de alto desde: {{ auth()->user()->created_at->format('d/m/Y') }}</span>
+                                        <span class="text-muted">Dado de alto el: {{ auth()->user()->created_at->format('d/m/Y') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -47,6 +47,24 @@
                         </div>
                     </div>
                 </div>
+                @if(Auth::user()->horas)
+                <div class="card card-profile shadow mt-4">
+                    <div class="card-header">
+                        <div class="row align-items-center justify-content-center">
+                            <h3 class="text-center">Horario:</h3>
+                        </div>
+                        <div class="row align-items-center justify-content-center">
+                            <p class="text-center m-0">Lunes: {{Auth::user()->horas->Monday}}h</p>
+                            <p class="text-center m-0">Martes: {{Auth::user()->horas->Tuesday}}h</p>
+                            <p class="text-center m-0">Miércoles: {{Auth::user()->horas->Wednesday}}h</p>
+                            <p class="text-center m-0">Jueves: {{Auth::user()->horas->Thursday}}h</p>
+                            <p class="text-center m-0">Viernes: {{Auth::user()->horas->Friday}}h</p>
+                            <p class="text-center m-0">Sábado: {{Auth::user()->horas->Saturday}}h</p>
+                            <p class="text-center m-0">Domingo: {{Auth::user()->horas->Sunday}}h</p>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
             <div class="col-xl-8 order-xl-1">
                 <div class="card shadow">
@@ -80,6 +98,16 @@
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group{{ $errors->has('surname') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-surname">{{ __('Surname') }}</label>
+                                    <input type="text" name="surname" id="input-surname" class="form-control form-control-alternative{{ $errors->has('surname') ? ' is-invalid' : '' }}" placeholder="{{ __('Surname') }}" value="{{ old('name', auth()->user()->surname) }}" required autofocus>
+
+                                    @if ($errors->has('surname'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('surname') }}</strong>
                                         </span>
                                     @endif
                                 </div>

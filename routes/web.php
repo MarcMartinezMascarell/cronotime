@@ -7,6 +7,8 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\FichajesController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EstadisticasController;
+use App\Http\Controllers\PDFGeneratorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +32,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [FichajesController::class, 'indexFichar'])->name('home');
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/home', [FichajesController::class, 'indexFichar'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -46,6 +48,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //FICHAJES
     Route::post('fichajeOlvidado', [FichajesController::class, 'fichajeOlvidado'])->name('fichaje.olvidado');
+    Route::get('/fichar', [FichajesController::class, 'indexFichar'])->name('fichar.view');
+    Route::get('/crearFichaje', [FichajesController::class, 'setFichaje'])->name('setFichaje');
+    Route::post('/delete/fichaje', [FichajesController::class, 'delete'])->name('fichaje.delete');
+    Route::post('/setSalida', [FichajesController::class, 'setSalida'])->name('fichaje.salida');
 
 	//ADMINISTRACIÓN
 		//EMPRESAS
@@ -57,12 +63,14 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('workers/{id}', [AdminController::class, 'showWorkers'])->name('workers.show');
 		Route::get('createProfile', [AdminController::class, 'createProfile'])->name('profile.create');
 		Route::post('storeProfile', [AdminController::class, 'storeProfile'])->name('profile.store');
+
+    //ESTADÍSTICAS
+        //EMPLEADOS
+        Route::get('informes', [EstadisticasController::class, 'informe'])->name('estadisticas.informe');
+
+    //PDFGENERATOR
+        Route::get('downloadInformePDF', [PDFGeneratorController::class, 'download'])->name('pdf.download');
 });
 
 //VIEWS
 
-Route::get('/fichar', [FichajesController::class, 'indexFichar'])->name('fichar.view');
-
-//FICHAJE
-Route::get('/crearFichaje', [FichajesController::class, 'setFichaje'])->name('setFichaje');
-Route::post('/delete/fichaje', [FichajesController::class, 'delete'])->name('fichaje.delete');

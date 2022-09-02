@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fichaje;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +34,14 @@ class FichajesController extends Controller
             $total_semana = $this->minutesToHours($total_minutes_semana);
 
             $minutes_per_day = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])
-            ->groupBy(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))->select(DB::raw("(sum(total_time)) as total_time"), 'started_at')
+            ->groupBy(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))->orderBy('started_at', 'asc')
+            ->select(DB::raw("(sum(total_time)) as total_time"), 'started_at')
             ->get();
+
+            $horario = User::where('users.id', Auth()->id())->leftJoin('horarios', 'users.horario', '=', 'horarios.id')
+            ->select('horarios.Monday', 'horarios.Tuesday', 'horarios.Wednesday', 'horarios.Thursday',
+            'horarios.Friday', 'horarios.Saturday', 'horarios.Sunday')->first();
+            $semanaPrevisto = array_sum($horario->toArray());
 
             //return json_encode($minutes_per_day);
             return view('pages.ficharView', [
@@ -45,6 +52,7 @@ class FichajesController extends Controller
                 'total_semana' => $total_semana,
                 'total_minutes_semana' => $total_minutes_semana,
                 'minutes_per_day' => $minutes_per_day,
+                'semanaPrevisto' => $semanaPrevisto,
             ]);
         } else {
             return redirect()->route('login');
@@ -83,19 +91,29 @@ class FichajesController extends Controller
             else
                 $salida = null;
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
-            if($ultimoFichaje && !$ultimoFichaje->stopped_at->gt($request->started_at) && $salida == null) {
+            if($ultimoFichaje && $ultimoFichaje->stopped_at->gt($request->started_at) && $salida == null) {
                 return redirect()->back()->with(['error' => 'No puedes crear un fichaje sin salida anterior al último fichaje']);
             } else {
+                $total_time = Carbon::parse($salida)->diffInMinutes($request->entrada);
                 $nuevoFichaje = Fichaje::create([
                     'user_id' => $user->id,
                     'started_at' => $request->entrada,
                     'stopped_at' => $salida,
+                    'total_time' => $total_time,
                     'forgot' => 1,
                 ]);
                 $nuevoFichaje->save();
                 return redirect()->back();
             }
         }
+    }
+
+    public function setSalida(Request $request) {
+        $fichaje = Fichaje::find($request->idFichaje);
+        $fichaje->stopped_at = $request->salida;
+        $fichaje->total_time = $fichaje->stopped_at->diffInMinutes($fichaje->started_at);
+        $fichaje->update();
+        return redirect()->back();
     }
 
 

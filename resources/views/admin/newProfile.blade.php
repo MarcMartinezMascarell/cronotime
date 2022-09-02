@@ -3,7 +3,7 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Hola') . ' '. auth()->user()->name,
-    ])   
+    ])
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -13,6 +13,15 @@
                         <div class="row align-items-center">
                             <h3 class="mb-0">Añadir nuevo trabajador</h3>
                         </div>
+                        @if(Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                            <span class="alert-icon"><i class="fas fa-thumbs-down"></i></span>
+                            <span class="alert-text"><strong>Cuidado!</strong> {{Session::get('error')}}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <form method="post" action="{{ route('profile.store') }}" autocomplete="off">
@@ -20,7 +29,7 @@
                             @method('post')
 
                             <h6 class="heading-small text-muted mb-4">INFO DEL TRABAJADOR</h6>
-                            
+
                             @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('status') }}
@@ -87,7 +96,7 @@
                                 @else
                                     <input type="hidden" name="company" value="0">
                                 @endif
-                                
+
 
                             </div>
 
@@ -182,12 +191,12 @@
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-        
+
         @include('layouts.footers.auth')
     </div>
 @endsection

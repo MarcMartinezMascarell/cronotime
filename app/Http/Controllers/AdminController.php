@@ -18,8 +18,11 @@ class AdminController extends Controller
             $users = User::get();
             return view('admin.showWorkers', ['workers' => $users]);
         } else {
-            $empresa = Empresa::find($id);
-            return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers]);
+            if(auth()->user()->company->id == $id) {
+                $empresa = Empresa::find($id);
+                return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers]);
+            }
+            return redirect()->back()->withError('No tienes permiso para acceder.');
         }
 
     }
@@ -29,18 +32,18 @@ class AdminController extends Controller
     }
 
     public function storeProfile(Request $request) {
-        if(auth()->user()->company->workers_limit <= auth()->user()->company->workersCount()) {
+        if(auth()->user()->company->workers_limit > auth()->user()->company->workersCount()) {
             $user = User::firstOrCreate(['email' => $request->email],
             ['name' => $request->name, 'surname' => $request->surname, 'password' => Hash::make($request->password),
             'job' => $request->cargo, 'id_empresa' => $request->company]);
             $horario = new Horario;
-            $horario->lunes = $request->lunes;
-            $horario->martes = $request->martes;
-            $horario->miercoles = $request->miercoles;
-            $horario->jueves = $request->jueves;
-            $horario->viernes = $request->viernes;
-            $horario->sabado = $request->sabado;
-            $horario->domingo = $request->domingo;
+            $horario->Monday = $request->lunes;
+            $horario->Tuesday = $request->martes;
+            $horario->Wednesday = $request->miercoles;
+            $horario->Thursday = $request->jueves;
+            $horario->Friday = $request->viernes;
+            $horario->Saturday = $request->sabado;
+            $horario->Sunday = $request->domingo;
 
             $horario->save();
             $user->horario = $horario->id;
@@ -48,7 +51,7 @@ class AdminController extends Controller
             $user->save();
             return redirect()->back();
         } else {
-            return redirect()->back()->withError('Has alcanzado el límite');
+            return redirect()->back()->withError('Has alcanzado el límite de trabajadores. Aumenta tu plan para poder añadir más trabajadores.');
         }
     }
 }

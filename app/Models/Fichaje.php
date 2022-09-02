@@ -10,7 +10,7 @@ class Fichaje extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'started_at', 'stopped_at', 'forgot',
+        'user_id', 'started_at', 'stopped_at', 'forgot', 'total_time',
     ];
 
     protected $dates = ['started_at', 'stopped_at'];

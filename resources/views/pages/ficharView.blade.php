@@ -4,9 +4,34 @@
 
 @include('layouts.headers.cards')
 
+<?php
+    function toHoursAndMinutes($totalMinutes) {
+        $hours = floor($totalMinutes / 60);
+        if($hours < 10)
+            $hours = '0' . $hours;
+        $minutes = $totalMinutes % 60;
+        if($minutes < 10)
+            $minutes = '0' . $minutes;
+        $total = $hours . ':' . $minutes;
+        return $total;
+    }
+
+?>
+
 <div class="container-fluid mt--8">
     <div class="card d-flex justify-content-center py-3">
-        <h2 class="text-center">¡Bienvenido {{Auth::user()->name}}!</h2>
+        <h2 class="text-center">¡Buenos días {{Auth::user()->name}}!</h2>
+        @if(Auth::user()->horas)
+        <p class="text-muted text-center m-0">
+            <?php
+                $diaActual = Carbon\Carbon::now()->dayName;
+                $horasTrabajador = Auth::user()->horas->get($diaActual)->first();
+                $horasPrevistas = $horasTrabajador[$diaActual];
+                echo $horasPrevistas;
+            ?>
+            horas previstas para hoy.
+        </p>
+        @endif
         <div class="container mt-4 d-flex flex-column">
             <div class="row">
                 <div class="col-xl-3 col-lg-6">
@@ -28,8 +53,10 @@
                                         @endif
                                         @isset($ultimoFichaje->stopped_at)
                                             @if($ultimoFichaje->stopped_at->gt($fichaje->started_at) && !$fichaje->stopped_at)
-                                                <i class="text-warning fas fa-exclamation-triangle" data-toggle="tooltip" data-placement="top" title="Este fichaje no tiene salida y hay otros fichajes después,
-                                                te recomendamos eliminarlo ya que puede distorsionar tus estadísticas"></i>
+                                            <a href="" data-toggle="modal" data-target="#set-salida" data-idfichaje="{{$fichaje->id}}">
+                                                <i class="text-warning fas fa-exclamation-triangle" data-toggle="tooltip" data-placement="top"
+                                                title="Este fichaje no tiene salida. Haz click para añadirle una o eliminalo."></i>
+                                            </a>
                                             @endif
                                         @endisset
                                     </p>
@@ -45,9 +72,9 @@
                                     <div class="col d-flex align-center">
                                         <p class="sentido w-50 text-center m-0">
                                             Salida
-                                            @if($fichaje->forgot == 1)
+                                            {{-- @if($fichaje->forgot == 1)
                                             <i class="text-muted fas fa-clock" data-toggle="tooltip" data-placement="top" title="Fichaje olvidado"></i>
-                                            @endif
+                                            @endif --}}
                                         </p>
 
                                         <span class="w-50 text-center">{{$fichaje->stopped_at->format('H:i')}}</span>
@@ -74,19 +101,26 @@
                                     <span class="h4 font-weight-bold mb-0 mt-1 text-center">{{$total_hoy}}</span>
                                 </div>
                             </div>
+                            @if(Auth::user()->horas)
                             <p class="mb-0 mt-2 text-muted text-sm d-flex justify-content-center">
                                 <span class="text-nowrap text-center mr-2">Llevas un</span>
                                 <span class="text-success text-center"><i class="fa fa-arrow-up"></i>
                                     <?php
-                                    $porcentaje_dia = $total_minutes_hoy*100/480;
+                                    $diaActual = Carbon\Carbon::now()->dayName;
+                                    $horasTrabajador = Auth::user()->horas->get($diaActual)->first();
+                                    $horasPrevistas = $horasTrabajador[$diaActual];
+                                    $minutosPrevistos = $horasPrevistas * 60;
+                                    $porcentaje_dia = $total_minutes_hoy*100/$minutosPrevistos;
                                     echo round($porcentaje_dia, 2) . '%';
                                     ?>
                                 </span>
+
 
                             </p>
                             <p class="mb-0 text-muted text-sm d-flex justify-content-center">
                                 <span class="text-nowrap text-center mr-2 w-100">de lo previsto para hoy</span>
                             </p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -99,11 +133,12 @@
                                     <span class="h4 font-weight-bold mb-0 mt-1 text-center">{{$total_semana}}</span>
                                 </div>
                             </div>
+                            @if($semanaPrevisto)
                             <p class="mb-0 mt-2 text-muted text-sm d-flex justify-content-center">
                                 <span class="text-nowrap text-center mr-2">Llevas un</span>
                                 <span class="text-success text-center"><i class="fa fa-arrow-up"></i>
                                     <?php
-                                    $porcentaje_semana = $total_minutes_semana*100/2400;
+                                    $porcentaje_semana = $total_minutes_semana*100/($semanaPrevisto * 60);
                                     echo round($porcentaje_semana, 2) . '%';
                                     ?>
                                 </span>
@@ -112,6 +147,7 @@
                             <p class="mb-0 text-muted text-sm d-flex justify-content-center">
                                 <span class="text-nowrap text-center mr-2 w-100">de lo previsto esta semana</span>
                             </p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -130,13 +166,7 @@
                                         <p class="h6 sentido w-50 text-center m-0">{{$minutes->started_at->format('d/m/Y')}}</p>
                                         <?php
                                                     $minutes_of_day = $minutes->total_time;
-                                                    $hours = floor($minutes_of_day / 60);
-                                                    if($hours < 10)
-                                                        $hours = '0' . $hours;
-                                                    $minutes = $minutes_of_day % 60;
-                                                    if($minutes < 10)
-                                                        $minutes = '0' . $minutes;
-                                                    $total = $hours . ':' . $minutes;
+                                                    $total = toHoursAndMinutes($minutes_of_day);
                                         ?>
                                         <span class="w-50 text-center">{{$total}}</span>
                                     </div>
@@ -209,7 +239,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
+                                @if($ultimoFichaje)
                                 <input name="entrada" class="form-control" type="datetime-local" value="{{ $ultimoFichaje->started_at->format('Y-m-d H:i:00') }}">
+                                @else
+                                <input name="entrada" class="form-control" type="datetime-local" value="{{ \Carbon\Carbon::now()->format('Y-m-d H:i:00') }}">
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -244,6 +278,51 @@
 
             <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Crear fichaje olvidado</button>
+
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="set-salida" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">Añadir salida al fichaje olvidado</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="setSalidaForm" action="{{ route('fichaje.salida')}}" method="POST">
+                @csrf
+                @method('POST')
+            <div class="modal-body">
+                <div class="input-daterange datepicker row align-items-start">
+                    <div class="col">
+                        <div class="form-group m-0">
+                            <p class="h5 text-center">Salida</p>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                    </div>
+                                    <input type="hidden" name="idFichaje" value="">
+                                    <input name="salida" class="form-control" type="datetime-local" value="{{ \Carbon\Carbon::now()->format('Y-m-d H:i:00') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Crear salida</button>
 
                 <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
             </div>
