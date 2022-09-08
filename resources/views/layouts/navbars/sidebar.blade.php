@@ -69,36 +69,36 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('fichar.view') }}">
-                        <i class="fas fa-clock" style="color: #f4645f;"></i> Fichar
+                        <i class="fas fa-clock" style="color: #f4645f;"></i> {{__("Fichar")}}
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('estadisticas.informe') }}">
-                        <i class="fas fa-clipboard" style="color: #f4645f;"></i> Tus Informes
+                        <i class="fas fa-clipboard" style="color: #f4645f;"></i> {{__("Tus Informes")}}
                     </a>
                 </li>
                 @hasanyrole('administrador|superAdmin')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="fas fa-desktop" style="color: #f4645f;"></i> Panel de control
+                        <i class="fas fa-desktop" style="color: #f4645f;"></i> {{__("Panel de control")}}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#administrador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-briefcase" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">Administración</span>
+                        <span class="nav-link-text" style="color: #f4645f;">{{__("Administración")}}</span>
                     </a>
 
                     <div class="collapse" id="administrador">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.create') }}">
-                                    Añadir Usuario
+                                    {{__("Añadir Usuario")}}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('workers.show', [auth()->user()->company->id]) }}">
-                                    Lista Usuarios
+                                    {{__("Lista Usuarios")}}
                                 </a>
                             </li>
                         </ul>
@@ -115,12 +115,12 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('company.create') }}">
-                                    Nueva Empresa
+                                    {{__("Nueva Empresa")}}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('company.index') }}">
-                                    Empresas
+                                    {{__("Empresas")}}
                                 </a>
                             </li>
                         </ul>

@@ -7,6 +7,7 @@ use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use DB;
@@ -15,6 +16,7 @@ class FichajesController extends Controller
 {
     public function indexFichar() {
         if($user = Auth::user()) {
+            //App::setLocale('ca');
             $fichajesHoy = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())->orderBy('started_at')->get();
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
             $total_minutes_ended = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())

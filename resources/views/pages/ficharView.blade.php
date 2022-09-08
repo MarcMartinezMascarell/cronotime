@@ -20,11 +20,11 @@
 
 <div class="container-fluid mt--8">
     <div class="card d-flex justify-content-center py-3">
-        <h2 class="text-center">¡Buenos días {{Auth::user()->name}}!</h2>
+        <h2 class="text-center">{{__("¡Buenos días")}} {{Auth::user()->name}}!</h2>
         @if(Auth::user()->horas)
         <p class="text-muted text-center m-0">
             <?php
-                $diaActual = Carbon\Carbon::now()->dayName;
+                $diaActual = Carbon\Carbon::now()->locale('en')->dayName;
                 $horasTrabajador = Auth::user()->horas->get($diaActual)->first();
                 $horasPrevistas = $horasTrabajador[$diaActual];
                 echo $horasPrevistas;
@@ -106,7 +106,7 @@
                                 <span class="text-nowrap text-center mr-2">Llevas un</span>
                                 <span class="text-success text-center"><i class="fa fa-arrow-up"></i>
                                     <?php
-                                    $diaActual = Carbon\Carbon::now()->dayName;
+                                    $diaActual = Carbon\Carbon::now()->locale('en')->dayName;
                                     $horasTrabajador = Auth::user()->horas->get($diaActual)->first();
                                     $horasPrevistas = $horasTrabajador[$diaActual];
                                     $minutosPrevistos = $horasPrevistas * 60;
