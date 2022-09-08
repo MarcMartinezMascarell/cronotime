@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\FichajesController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\PDFGeneratorController;
@@ -51,6 +52,9 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+
+    //Cambiar idiona
+    Route::post('change/language', [UserController::class, 'language'])->name('locale.change');
 
     //FICHAJES
     Route::post('fichajeOlvidado', [FichajesController::class, 'fichajeOlvidado'])->name('fichaje.olvidado');

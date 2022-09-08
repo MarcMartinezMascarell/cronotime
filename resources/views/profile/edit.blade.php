@@ -44,6 +44,16 @@
                             <div>
                                 <i class="ni education_hat mr-2"></i>{{auth()->user()->company->nombre}}
                             </div>
+                            <form method="POST" action="{{route('locale.change')}}" class="mt-2">
+                                @csrf
+                                @method('post')
+                                <select name="locale" >
+                                    <option @if(auth()->user()->locale == 'es') echo selected @endif value="es">Castellano</option>
+                                    <option @if(auth()->user()->locale == 'ca') echo selected @endif value="ca">Català</option>
+                                </select>
+                                <input type="submit" class="btn btn-success" value="Cambiar">
+
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('horarios', function (Blueprint $table) {
             $table->id();
-            $table->float('lunes');
-            $table->float('martes');
-            $table->float('miercoles');
-            $table->float('jueves');
-            $table->float('viernes');
-            $table->float('sabado');
-            $table->float('domingo');
+            $table->float('Monday');
+            $table->float('Tuesday');
+            $table->float('Wednesday');
+            $table->float('Thursday');
+            $table->float('Friday');
+            $table->float('Saturday');
+            $table->float('Sunday');
             $table->integer('vacaciones');
             $table->timestamps();
         });
