@@ -5,15 +5,15 @@
         'title' => __('Hola') . ' '. auth()->user()->name,
     ])
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--5">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="mb-0">Añadir nuevo trabajador</h3>
+                            <h3 class="mb-0">{{__("Añadir nuevo trabajador")}}</h3>
                         </div>
-                        @if(Session::has('error'))
+                        {{-- @if(Session::has('error'))
                         <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
                             <span class="alert-icon"><i class="fas fa-thumbs-down"></i></span>
                             <span class="alert-text"><strong>Cuidado!</strong> {{Session::get('error')}}</span>
@@ -21,7 +21,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        @endif
+                        @endif --}}
                     </div>
                     <div class="card-body">
                         <form method="post" action="{{ route('profile.store') }}" autocomplete="off">
@@ -102,7 +102,7 @@
 
                             <hr class="my-4" />
 
-                            <h6 class="heading-small text-muted mb-4">HORARIO</h6>
+                            <h6 class="heading-small text-muted mb-4">{{__("Horario")}}</h6>
 
                             <div class="d-flex flex-wrap">
                                 <div class="col-xl-1 form-group{{ $errors->has('lunes') ? ' has-danger' : '' }}">

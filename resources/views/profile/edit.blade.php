@@ -29,7 +29,7 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="text-muted">Dado de alto el: {{ auth()->user()->created_at->format('d/m/Y') }}</span>
+                                        <span class="text-muted">{{__("Dado de alto el")}}: {{ auth()->user()->created_at->format('d/m/Y') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <option @if(auth()->user()->locale == 'es') echo selected @endif value="es">Castellano</option>
                                     <option @if(auth()->user()->locale == 'ca') echo selected @endif value="ca">Català</option>
                                 </select>
-                                <input type="submit" class="btn btn-success" value="Cambiar">
+                                <input type="submit" class="btn btn-success" value="{{__("Cambiar")}}">
 
                             </form>
                         </div>
@@ -61,16 +61,16 @@
                 <div class="card card-profile shadow mt-4">
                     <div class="card-header">
                         <div class="row align-items-center justify-content-center">
-                            <h3 class="text-center">Horario:</h3>
+                            <h3 class="text-center">{{__("Horario")}}:</h3>
                         </div>
                         <div class="row align-items-center justify-content-center">
-                            <p class="text-center m-0">Lunes: {{Auth::user()->horas->Monday}}h</p>
-                            <p class="text-center m-0">Martes: {{Auth::user()->horas->Tuesday}}h</p>
-                            <p class="text-center m-0">Miércoles: {{Auth::user()->horas->Wednesday}}h</p>
-                            <p class="text-center m-0">Jueves: {{Auth::user()->horas->Thursday}}h</p>
-                            <p class="text-center m-0">Viernes: {{Auth::user()->horas->Friday}}h</p>
-                            <p class="text-center m-0">Sábado: {{Auth::user()->horas->Saturday}}h</p>
-                            <p class="text-center m-0">Domingo: {{Auth::user()->horas->Sunday}}h</p>
+                            <p class="text-center m-0">{{__("Lunes")}}: {{Auth::user()->horas->Monday}}h</p>
+                            <p class="text-center m-0">{{__("Martes")}}: {{Auth::user()->horas->Tuesday}}h</p>
+                            <p class="text-center m-0">{{__("Miércoles")}}: {{Auth::user()->horas->Wednesday}}h</p>
+                            <p class="text-center m-0">{{__("Jueves")}}: {{Auth::user()->horas->Thursday}}h</p>
+                            <p class="text-center m-0">{{__("Viernes")}}: {{Auth::user()->horas->Friday}}h</p>
+                            <p class="text-center m-0">{{__("Sábado")}}: {{Auth::user()->horas->Saturday}}h</p>
+                            <p class="text-center m-0">{{__("Domingo")}}: {{Auth::user()->horas->Sunday}}h</p>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                 <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="mb-0">{{ __('Edit Profile') }}</h3>
+                            <h3 class="mb-0">{{ __('Editar Perfil') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -88,7 +88,7 @@
                             @csrf
                             @method('put')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Información del usuario') }}</h6>
 
                             @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -102,7 +102,7 @@
 
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
+                                    <label class="form-control-label" for="input-name">{{ __('Nombre') }}</label>
                                     <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>
 
                                     @if ($errors->has('name'))
@@ -112,7 +112,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('surname') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-surname">{{ __('Surname') }}</label>
+                                    <label class="form-control-label" for="input-surname">{{ __('Apellidos') }}</label>
                                     <input type="text" name="surname" id="input-surname" class="form-control form-control-alternative{{ $errors->has('surname') ? ' is-invalid' : '' }}" placeholder="{{ __('Surname') }}" value="{{ old('name', auth()->user()->surname) }}" required autofocus>
 
                                     @if ($errors->has('surname'))
@@ -133,7 +133,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -142,7 +142,7 @@
                             @csrf
                             @method('put')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('Password') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Constraseña') }}</h6>
 
                             @if (session('password_status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -155,8 +155,8 @@
 
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-current-password">{{ __('Current Password') }}</label>
-                                    <input type="password" name="old_password" id="input-current-password" class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
+                                    <label class="form-control-label" for="input-current-password">{{ __('Contraseña actual') }}</label>
+                                    <input type="password" name="old_password" id="input-current-password" class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Contraseña actual') }}" value="" required>
 
                                     @if ($errors->has('old_password'))
                                         <span class="invalid-feedback" role="alert">
@@ -165,8 +165,8 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-password">{{ __('New Password') }}</label>
-                                    <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
+                                    <label class="form-control-label" for="input-password">{{ __('Nueva contraseña') }}</label>
+                                    <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Nueva contraseña') }}" value="" required>
 
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
@@ -175,12 +175,12 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                    <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm New Password') }}" value="" required>
+                                    <label class="form-control-label" for="input-password-confirmation">{{ __('Confirma nueva contraseña') }}</label>
+                                    <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirma nueva contraseña') }}" value="" required>
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Change password') }}</button>
+                                    <button type="submit" class="btn btn-success mt-4">{{ __('Cambiar contraseña') }}</button>
                                 </div>
                             </div>
                         </form>

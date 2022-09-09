@@ -29,7 +29,7 @@
                 $horasPrevistas = $horasTrabajador[$diaActual];
                 echo $horasPrevistas;
             ?>
-            horas previstas para hoy.
+            {{__("horas previstas para hoy")}}.
         </p>
         @endif
         <div class="container mt-4 d-flex flex-column">
@@ -39,7 +39,7 @@
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col d-flex flex-column">
-                                    <h5 class="text-muted mb-0 small text-center">Fichajes de hoy</h5>
+                                    <h5 class="text-muted mb-0 small text-center">{{__("Fichajes de hoy")}}</h5>
                                 </div>
                             </div>
                             <!-- FOREACH HORAS -->
@@ -49,13 +49,13 @@
                                     <p class="sentido w-50 text-center m-0">
                                         Entrada
                                         @if($fichaje->forgot == 1)
-                                            <i class="text-muted fas fa-clock" data-toggle="tooltip" data-placement="top" title="Fichaje olvidado"></i>
+                                            <i class="text-muted fas fa-clock" data-toggle="tooltip" data-placement="top" title="{{__("Fichaje olvidado")}}"></i>
                                         @endif
                                         @isset($ultimoFichaje->stopped_at)
                                             @if($ultimoFichaje->stopped_at->gt($fichaje->started_at) && !$fichaje->stopped_at)
                                             <a href="" data-toggle="modal" data-target="#set-salida" data-idfichaje="{{$fichaje->id}}">
                                                 <i class="text-warning fas fa-exclamation-triangle" data-toggle="tooltip" data-placement="top"
-                                                title="Este fichaje no tiene salida. Haz click para añadirle una o eliminalo."></i>
+                                                title="{{__("Este fichaje no tiene salida. Haz click para añadirle una o eliminalo")}}."></i>
                                             </a>
                                             @endif
                                         @endisset
@@ -71,7 +71,7 @@
                                 <div class="row mt-2">
                                     <div class="col d-flex align-center">
                                         <p class="sentido w-50 text-center m-0">
-                                            Salida
+                                            {{__("Salida")}}
                                             {{-- @if($fichaje->forgot == 1)
                                             <i class="text-muted fas fa-clock" data-toggle="tooltip" data-placement="top" title="Fichaje olvidado"></i>
                                             @endif --}}
@@ -97,13 +97,13 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col d-flex flex-column">
-                                    <h5 class="text-muted mb-0 small text-center">Horas trabajadas hoy</h5>
+                                    <h5 class="text-muted mb-0 small text-center">{{__("Horas trabajadas hoy")}}</h5>
                                     <span class="h4 font-weight-bold mb-0 mt-1 text-center">{{$total_hoy}}</span>
                                 </div>
                             </div>
                             @if(Auth::user()->horas)
                             <p class="mb-0 mt-2 text-muted text-sm d-flex justify-content-center">
-                                <span class="text-nowrap text-center mr-2">Llevas un</span>
+                                <span class="text-nowrap text-center mr-2">{{__("Llevas un")}}</span>
                                 <span class="text-success text-center"><i class="fa fa-arrow-up"></i>
                                     <?php
                                     $diaActual = Carbon\Carbon::now()->locale('en')->dayName;
@@ -118,7 +118,7 @@
 
                             </p>
                             <p class="mb-0 text-muted text-sm d-flex justify-content-center">
-                                <span class="text-nowrap text-center mr-2 w-100">de lo previsto para hoy</span>
+                                <span class="text-nowrap text-center mr-2 w-100">{{__("de lo previsto para hoy")}}</span>
                             </p>
                             @endif
                         </div>
@@ -129,13 +129,13 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col d-flex flex-column">
-                                    <h5 class="text-muted mb-0 small text-center">Horas trabajadas esta semana</h5>
+                                    <h5 class="text-muted mb-0 small text-center">{{__("Horas trabajadas esta semana")}}</h5>
                                     <span class="h4 font-weight-bold mb-0 mt-1 text-center">{{$total_semana}}</span>
                                 </div>
                             </div>
                             @if($semanaPrevisto)
                             <p class="mb-0 mt-2 text-muted text-sm d-flex justify-content-center">
-                                <span class="text-nowrap text-center mr-2">Llevas un</span>
+                                <span class="text-nowrap text-center mr-2">{{__("Llevas un")}}</span>
                                 <span class="text-success text-center"><i class="fa fa-arrow-up"></i>
                                     <?php
                                     $porcentaje_semana = $total_minutes_semana*100/($semanaPrevisto * 60);
@@ -145,7 +145,7 @@
 
                             </p>
                             <p class="mb-0 text-muted text-sm d-flex justify-content-center">
-                                <span class="text-nowrap text-center mr-2 w-100">de lo previsto esta semana</span>
+                                <span class="text-nowrap text-center mr-2 w-100">{{__("de lo previsto esta semana")}}</span>
                             </p>
                             @endif
                         </div>
@@ -156,7 +156,7 @@
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col d-flex flex-column">
-                                    <h5 class="text-muted mb-0 small text-center">Resumen semanal</h5>
+                                    <h5 class="text-muted mb-0 small text-center">{{__("Resumen semanal")}}</h5>
                                 </div>
                             </div>
                             <!-- FOREACH HORAS -->
@@ -191,22 +191,22 @@
                         @if(isset($ultimoFichaje->stopped_at) || $ultimoFichaje == null)
                             <div class="container">
                             @if($ultimoFichaje)
-                                <p class="text-muted text-center m-0">Estas fuera desde {{$ultimoFichaje->stopped_at->format('H:i (d/m/y)')}}</p>
+                                <p class="text-muted text-center m-0">{{__("Estas fuera desde")}} {{$ultimoFichaje->stopped_at->format('H:i (d/m/y)')}}</p>
                             @endif
                             </div>
                             <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-success w-50 mx-auto mt-4">
-                                ENTRAR
+                                {{__("ENTRAR")}}
                             </a>
                             <a href="" class="text-muted text-center w-auto mt-4" data-toggle="modal" data-target="#fichaje-olvidado">
-                                He olvidado un fichaje
+                                {{__("He olvidado un fichaje")}}
                             </a>
 
                         @else
                             <div class="container">
-                                <p class="text-muted text-center m-0">Estas dentro desde las {{$ultimoFichaje->started_at->format('H:i')}}</p>
+                                <p class="text-muted text-center m-0">{{__("Estas dentro desde las")}} {{$ultimoFichaje->started_at->format('H:i')}}</p>
                             </div>
                             <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4">
-                                SALIR
+                                {{__("SALIR")}}
                             </a>
                         @endif
 
@@ -222,7 +222,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">Has olvidado un fichaje?</h6>
+                <h6 class="modal-title" id="modal-title-default">{{__("¿Has olvidado un fichaje?")}}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -234,7 +234,7 @@
                 <div class="input-daterange datepicker row align-items-start">
                     <div class="col">
                         <div class="form-group m-0">
-                            <p class="h5 text-center">Entrada</p>
+                            <p class="h5 text-center">{{__("Entrada")}}</p>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -249,7 +249,7 @@
                     </div>
                     <div class="col">
                         <div class="form-group m-0">
-                            <p class="h5 text-center">Salida</p>
+                            <p class="h5 text-center">{{__("Salida")}}</p>
                             <div class="collapse" id="exit">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -269,7 +269,7 @@
                     </div>
                     <div class="d-flex small align-items-center mt-2">
                         <i class="text-muted fas fa-clock mx-2"></i>
-                        <p class="text-muted m-0">Quedará registrado como fichaje olvidado</p>
+                        <p class="text-muted m-0">{{__("Quedará registrado como fichaje olvidado")}}</p>
                     </div>
 
 
@@ -277,9 +277,9 @@
             </div>
 
             <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Crear fichaje olvidado</button>
+                    <button type="submit" class="btn btn-default">{{__("Crear fichaje olvidado")}}</button>
 
-                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
             </div>
         </form>
 
@@ -292,7 +292,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">Añadir salida al fichaje olvidado</h6>
+                <h6 class="modal-title" id="modal-title-default">{{__("Añadir salida al fichaje olvidado")}}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -304,7 +304,7 @@
                 <div class="input-daterange datepicker row align-items-start">
                     <div class="col">
                         <div class="form-group m-0">
-                            <p class="h5 text-center">Salida</p>
+                            <p class="h5 text-center">{{__("Salida")}}</p>
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -322,9 +322,9 @@
             </div>
 
             <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Crear salida</button>
+                    <button type="submit" class="btn btn-default">{{__("Crear salida")}}</button>
 
-                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
             </div>
         </form>
 
@@ -337,14 +337,14 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">Atención</h6>
+                <h6 class="modal-title" id="modal-title-default">{{__("Atención")}}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <p class="bold">Si el fichaje dispone de entrada y salida, su salida correspondiente será borrada también</p>
+                <p class="bold">{{__("Si el fichaje dispone de entrada y salida, su salida correspondiente será borrada también")}}</p>
             </div>
 
             <div class="modal-footer">
@@ -353,9 +353,9 @@
                     @method('POST')
                     <input type="hidden" name="idFichaje" value="">
                     <input type="hidden" name="type" value="entrada">
-                    <button type="submit" class="btn btn-danger text-white">Borrar</button>
+                    <button type="submit" class="btn btn-danger text-white">{{__("Borrar")}}</button>
                 </form>
-                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
             </div>
 
         </div>
@@ -367,14 +367,14 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">Atención</h6>
+                <h6 class="modal-title" id="modal-title-default">{{__("Atención")}}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <p class="bold">El fichaje de salida será borrado</p>
+                <p class="bold">{{__("El fichaje de salida será borrado")}}</p>
             </div>
 
             <div class="modal-footer">
@@ -383,9 +383,9 @@
                     @method('POST')
                     <input type="hidden" name="idFichaje" value="">
                     <input type="hidden" name="type" value="salida">
-                    <button type="submit" class="btn btn-danger text-white">Borrar</button>
+                    <button type="submit" class="btn btn-danger text-white">{{__("Borrar")}}</button>
                 </form>
-                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
             </div>
 
         </div>

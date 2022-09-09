@@ -89,9 +89,9 @@
         <table>
             <thead>
                 <tr>
-                  <th><b>Horas Totales</b></th>
-                  <th><b>Media Diaria</b></th>
-                  <th><b>% Olvidados</b></th>
+                  <th><b>{{__("Horas totales")}}</b></th>
+                  <th><b>{{__("Media diaria")}}</b></th>
+                  <th><b>{{__("% Olvidados")}}</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -127,8 +127,8 @@
         <table>
             <thead>
                 <tr>
-                  <td class="muted">Número de días trabajado</td>
-                  <td class="muted">Total de fichajes</td>
+                  <td class="muted">{{__("Número de días trabajados")}}</td>
+                  <td class="muted">{{__("Total de fichajes")}}</td>
                 </tr>
             </thead>
             <tbody>
@@ -139,7 +139,7 @@
             </tbody>
         </table>
         <div class="fichajes-container">
-            <h2 class="title-fichajes">Todos los fichajes</h2>
+            <h2 class="title-fichajes">{{__("Todos los fichajes")}}</h2>
             <ul>
                 <?php
                 $previousDate = null;
@@ -166,7 +166,7 @@
                                 if($fichaje->started_at->format('d-m-Y') != $fichaje->stopped_at->format('d-m-Y'))
                                     $fecha = $fichaje->stopped_at->format('d/m/Y');
                                 ?>
-                                <p class="title-fichaje">Salida | {{Carbon\Carbon::parse($fichaje->stopped_at)->format('h:i')}}
+                                <p class="title-fichaje">{{__("Salida")}} | {{Carbon\Carbon::parse($fichaje->stopped_at)->format('h:i')}}
                                     @isset ($fecha)
                                     ({{$fecha}})
                                     @endisset

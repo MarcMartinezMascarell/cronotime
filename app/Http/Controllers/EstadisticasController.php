@@ -14,7 +14,7 @@ use App\Models\User;
 class EstadisticasController extends Controller
 {
     public function informe(Request $request) {
-        $entrada = $request->get('start', Carbon::now()->startOfWeek());
+        $entrada = $request->get('start', Carbon::now()->startOfMonth());
         $salida = $request->get('end', Carbon::today());
         $userId = $request->get('userId');
         if($userId) {
@@ -25,7 +25,7 @@ class EstadisticasController extends Controller
                 $user = $user;
             }
             else
-                return redirect()->back()->withError('Este usuario no pertenece a tu organización');
+                return redirect()->back()->withError(__('Este usuario no pertenece a tu organización'));
         } else
             $user = Auth::user();
 

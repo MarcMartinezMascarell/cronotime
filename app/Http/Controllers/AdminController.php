@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 
 use App\Models\User;
 use App\Models\Horario;
@@ -20,9 +22,11 @@ class AdminController extends Controller
         } else {
             if(auth()->user()->company->id == $id) {
                 $empresa = Empresa::find($id);
-                return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers]);
+                $entrada = Carbon::now()->startOfMonth();
+                $salida = Carbon::now();
+                return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers, 'entrada' => $entrada, 'salida' => $salida]);
             }
-            return redirect()->back()->withError('No tienes permiso para acceder.');
+            return redirect()->back()->withError(__('No tienes permiso para acceder.'));
         }
 
     }
@@ -51,7 +55,7 @@ class AdminController extends Controller
             $user->save();
             return redirect()->back();
         } else {
-            return redirect()->back()->withError('Has alcanzado el límite de trabajadores. Aumenta tu plan para poder añadir más trabajadores.');
+            return redirect()->back()->withError(__('Has alcanzado el límite de trabajadores. Aumenta tu plan para poder añadir más trabajadores.'));
         }
     }
 }

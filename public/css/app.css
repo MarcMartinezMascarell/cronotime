@@ -10256,9 +10256,6 @@ textarea.form-control-lg {
   text-decoration: none;
 }
 
-.btn:hover {
-  color: white;
-}
 .btn:hover.btn-link {
   color: #172b4d;
 }

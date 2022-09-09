@@ -3,7 +3,7 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Hola') . ' '. auth()->user()->name,
-        'description' => 'A continuación encontrarás tu informe, puedes elegir el período que más te convenga',
+        'description' => __('A continuación encontrarás tu informe, puedes elegir el período que más te convenga'),
     ])
 
 <?php
@@ -22,20 +22,20 @@ function toHoursAndMinutes($totalMinutes) {
 
 <div class="container-fluid mt--4">
     <div class="card d-flex justify-content-center py-3 px-2">
-        @if(Session::has('error'))
+        {{-- @if(Session::has('error'))
         <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
             <span class="alert-icon"><i class="fas fa-thumbs-down"></i></span>
-            <span class="alert-text"><strong>Cuidado!</strong> {{Session::get('error')}}</span>
+            <span class="alert-text"><strong>{{__("¡Cuidado!")}}</strong> {{Session::get('error')}}</span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        @endif
+        @endif --}}
         <div class="row px-4 py-2">
 
             <form id="informeForm" action="{{ route('estadisticas.informe')}}" method="GET">
                 @hasanyrole('superAdmin|administrador')
-                <p class="text-muted m-0">Seleccionar trabajador</p>
+                <p class="text-muted m-0">{{__("Seleccionar trabajador")}}</p>
                 <div class="row col-4">
                     <div class="form-group m-0 p-0">
                         <select class="form-control" name="userId">
@@ -46,7 +46,7 @@ function toHoursAndMinutes($totalMinutes) {
                     </div>
                 </div>
                 @endhasanyrole
-                <p class="text-muted m-0">Cambiar período</p>
+                <p class="text-muted m-0">{{__("Cambiar período")}}</p>
                 <div class="input-daterange datepicker row align-items-start">
                     <div class="col">
                         <div class="form-group m-0">
@@ -74,7 +74,7 @@ function toHoursAndMinutes($totalMinutes) {
         </div>
         <div class="row px-4">
             @if(!$numeroFichajes)
-            <p class="text-center text-muted">No hay datos entre estas fechas</p>
+            <p class="text-center text-muted">{{__("No hay datos entre estas fechas")}}</p>
             @endif
             <?php
                 if(!$userId)
@@ -92,7 +92,7 @@ function toHoursAndMinutes($totalMinutes) {
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col d-flex flex-column">
-                                <h5 class=" mb-0 text-center">Fichajes</h5>
+                                <h5 class=" mb-0 text-center">{{__("Fichajes")}}</h5>
                             </div>
                         </div>
                         <!-- FOREACH HORAS -->
@@ -134,7 +134,7 @@ function toHoursAndMinutes($totalMinutes) {
                             <div class="row mt-1">
                                 <div class="col d-flex align-center">
                                     <p class="sentido w-50 text-center m-0 small">
-                                        Salida
+                                        {{__("Salida")}}
                                     </p>
 
                                     <?php
@@ -161,7 +161,7 @@ function toHoursAndMinutes($totalMinutes) {
                                             <input type="hidden" name="userId" value="{{$userId}}">
                                             <input type="hidden" name="start" value="{{ Carbon\Carbon::parse($entrada)->format('Y-m-d') }}">
                                             <input type="hidden" name="end" value="{{ Carbon\Carbon::parse($salida)->format('Y-m-d') }}">
-                                            <a class="text-center text-muted" href="javascript:$('#downloadPDFForm2').submit();">Descárgate el pdf para verlos todos...<i class="fas fa-file-download ml-2"></i></a>
+                                            <a class="text-center text-muted" href="javascript:$('#downloadPDFForm2').submit();">{{__("Descárgate el pdf para verlos todos...")}}<i class="fas fa-file-download ml-2"></i></a>
                                         </form>
                                     <?php
                                     break;
@@ -178,16 +178,16 @@ function toHoursAndMinutes($totalMinutes) {
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col d-flex flex-column">
-                                <h5 class="mb-0 text-center">Estadísticas</h5>
+                                <h5 class="mb-0 text-center">{{__("Estadísticas")}}</h5>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-lg-4 col-sm-4 col-md-12 text-center mb-2">
-                                <h4 class="m-0">Horas totales</h4>
+                                <h4 class="m-0">{{__("Horas totales")}}</h4>
                                 <h3 class="m-0 bold"><strong>{{$totalPeriodo}}</strong></h3>
                             </div>
                             <div class="col-lg-4 col-sm-4 col-md-12 text-center mb-2">
-                                <h4 class="m-0">% Olvidados</h4>
+                                <h4 class="m-0">{{__("% Olvidados")}}</h4>
                                 <?php
                                 $porcentajeOlvidados = 0;
                                 if($numeroOlvidados) {
@@ -207,17 +207,17 @@ function toHoursAndMinutes($totalMinutes) {
                                 </h3>
                             </div>
                             <div class="col-lg-4 col-sm-4 col-md-12 text-center mb-2">
-                                <h4 class="m-0">Media diaria</h4>
+                                <h4 class="m-0">{{__("Media diaria")}}</h4>
                                 <h3 class="m-0 "><strong>{{$mediaHoras}}</strong></h3>
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-6 col-sm-4 col-md-12 text-center d-flex justify-content-center">
-                                <h4 class="mr-2 small text-muted">Número de días trabajados: </h4>
+                                <h4 class="mr-2 small text-muted">{{__("Número de días trabajados")}}: </h4>
                                 <h3 class="m-0 bold small text-muted"><strong>{{$diasTrabajados}}</strong></h3>
                             </div>
                             <div class="col-lg-6 col-sm-4 col-md-12 text-center d-flex justify-content-center">
-                                <h4 class="mr-2 small text-muted">Número total de fichajes: </h4>
+                                <h4 class="mr-2 small text-muted">{{__("Número total de fichajes")}}: </h4>
                                 <h3 class="m-0 bold small text-muted"><strong>{{$numeroFichajes}}</strong></h3>
                             </div>
                         </div>

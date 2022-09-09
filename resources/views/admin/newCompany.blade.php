@@ -3,9 +3,9 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Hola') . ' '. auth()->user()->name,
-    ])   
+    ])
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--5">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card shadow">
@@ -20,15 +20,15 @@
                             @method('post')
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Company info') }}</h6>
-                            
-                            @if (session('status'))
+
+                            {{-- @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('status') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                            @endif
+                            @endif --}}
 
 
                             <div class="d-flex flex-wrap">
@@ -106,12 +106,12 @@
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-        
+
         @include('layouts.footers.auth')
     </div>
 @endsection
