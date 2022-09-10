@@ -40,7 +40,7 @@ function toHoursAndMinutes($totalMinutes) {
                     <div class="form-group m-0 p-0">
                         <select class="form-control" name="userId">
                             @foreach (Auth::user()->company->workers as $worker)
-                                <option <?php echo $worker->id == $userId ? 'selected' : '' ?> value="{{$worker->id}}">{{$worker->name}}</option>
+                                <option <?php echo $worker->id == $userId ? 'selected' : '' ?> value="{{$worker->id}}">{{$worker->name}} {{$worker->surname}}</option>
                             @endforeach
                         </select>
                     </div>

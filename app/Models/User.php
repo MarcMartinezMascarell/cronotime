@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+use Carbon\Carbon;
+use DB;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -55,7 +58,43 @@ class User extends Authenticatable
         return $this->hasMany(Fichaje::class);
     }
 
+    public function fichajesBetween($entrada, $salida) {
+        return $this->hasMany(Fichaje::class)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])->get();
+    }
+
     public function horas() {
         return $this->hasOne(Horario::class, 'id', 'horario');
+    }
+
+    public function porcentajeOlvidados($entrada, $salida) {
+        $fichajesPeriodo = Fichaje::where('user_id', $this->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+        ->orderBy('started_at')
+        ->select('fichajes.*')->get();
+        $fichajesOlvidadosPeriodo = Fichaje::where('user_id', $this->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+        ->orderBy('started_at')
+        ->where('forgot', 1)
+        ->select('fichajes.*')->get();
+        $numero_olvidados = $fichajesOlvidadosPeriodo->count();
+        $numero_fichajes = $fichajesPeriodo->count();
+        if($numero_olvidados)
+            $porcentajeOlvidados = $numero_olvidados*100/$numero_fichajes;
+        else
+            $porcentajeOlvidados = 0;
+        return $porcentajeOlvidados;
+    }
+
+    public function mediaDiaria($entrada, $salida) {
+        $dias_trabajados = Fichaje::where('user_id', $this->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+        ->groupBy(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))
+        ->select(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))
+        ->get();
+        $numero_dias_trabajados = $dias_trabajados->count();
+        $total_minutes_periodo = Fichaje::where('user_id', $this->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+        ->sum('total_time');
+        if($numero_dias_trabajados)
+            $mediaMinutos = $total_minutes_periodo/$numero_dias_trabajados;
+        else
+            $mediaMinutos = 0;
+        return $mediaMinutos;
     }
 }

@@ -15,16 +15,20 @@ use App\Models\Empresa;
 class AdminController extends Controller
 {
 
-    public function showWorkers($id) {
+    public function showWorkers($id, Request $request) {
+        $entrada = $request->get('start', Carbon::now()->startOfMonth());
+        $salida = $request->get('end', Carbon::today());
         if(auth()->user()->hasRole('superAdmin')) {
             $users = User::get();
             return view('admin.showWorkers', ['workers' => $users]);
         } else {
             if(auth()->user()->company->id == $id) {
                 $empresa = Empresa::find($id);
-                $entrada = Carbon::now()->startOfMonth();
-                $salida = Carbon::now();
-                return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers, 'entrada' => $entrada, 'salida' => $salida]);
+                $estadisticas = [];
+                //return $empresa->workers;
+                return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers,
+                'entrada' => $entrada, 'salida' => $salida,
+                'estadisticas' => $estadisticas]);
             }
             return redirect()->back()->withError(__('No tienes permiso para acceder.'));
         }

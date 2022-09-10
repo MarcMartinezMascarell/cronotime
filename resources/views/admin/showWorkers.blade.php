@@ -6,9 +6,24 @@
         'title' => __('Hola') . ' '. auth()->user()->name,
     ])
 
+
+<?php
+function toHoursAndMinutes($totalMinutes) {
+    $hours = floor($totalMinutes / 60);
+    if($hours < 10)
+        $hours = '0' . $hours;
+    $minutes = $totalMinutes % 60;
+    if($minutes < 10)
+        $minutes = '0' . $minutes;
+    $total = $hours . ':' . $minutes;
+    return $total;
+}
+
+?>
+
 <div class="container-fluid mt--5">
     <div class="card shadow p-3">
-        <form id="informeForm" action="{{ route('estadisticas.informe')}}" method="GET" >
+        <form id="informeForm" action="{{ route('workers.show', [$empresa->id])}}" method="GET" >
             <p class="text-muted m-0">{{__("Cambiar período")}}</p>
             <div class="input-daterange datepicker row align-items-start">
                 <div class="col">
@@ -48,7 +63,7 @@
                     <th scope="col" data-sortable="true" >{{__("Email")}}</th>
                     <th scope="col" data-sortable="true">{{__("Administrador")}}</th>
                     <th scope="col">{{__("Rol")}}</th>
-                    <th scope="col">{{__("Horas menusales")}}</th>
+                    <th scope="col">{{__("Horas periodo")}}</th>
                     <th scope="col">{{__("Media diaria")}}</th>
                     <th scope="col">{{__("% Olvidados")}}</th>
                     @hasrole('superAdmin')
@@ -92,23 +107,27 @@
                                 @endif
                             </div>
                         </td>
+                        @hasrole('superAdmin')
                         <td>
                             <div class="text-sm">
-                                @hasrole('superAdmin')
-                                    {{ $worker->company->nombre }}
-                                @endhasrole
+                                {{ $worker->company->nombre }}
                             </div>
                         </td>
-                        <td class="text-right">
-                            <div class="dropdown">
-                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                                </a>
-                                {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item text-danger" href="{{ route('company.delete', ['id' => $empresa->id]) }}">Eliminar empresa</a>
-                                </div> --}}
+                        @endhasrole
+
+                        <td>
+                            <div class="text-sm">
+                                <?php echo toHoursAndMinutes($worker->fichajesBetween($entrada, $salida)->sum('total_time')) ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-sm">
+                                <?php echo toHoursAndMinutes($worker->mediaDiaria($entrada, $salida)) ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-sm">
+                                <?php echo round($worker->porcentajeOlvidados($entrada, $salida), 2) ?>%
                             </div>
                         </td>
                     </tr>
