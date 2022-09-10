@@ -110,6 +110,8 @@
                                     $horasTrabajador = Auth::user()->horas->get($diaActual)->first();
                                     $horasPrevistas = $horasTrabajador[$diaActual];
                                     $minutosPrevistos = $horasPrevistas * 60;
+                                    if(!$minutosPrevistos)
+                                        $minutosPrevistos = 1;
                                     $porcentaje_dia = $total_minutes_hoy*100/$minutosPrevistos;
                                     echo round($porcentaje_dia, 2) . '%';
                                     ?>
