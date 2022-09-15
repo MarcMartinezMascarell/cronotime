@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use DB;
 use PDF;
+use Excel;
+use App\Exports\workersTable;
 
 use App\Models\Fichaje;
 use App\Models\User;
@@ -69,6 +71,12 @@ class PDFGeneratorController extends Controller
         }
 
     }
+
+    public function downloadExcelWorkers(Request $request) {
+        return Excel::download(new workersTable($request->entrada, $request->salida, $request->id), 'workers.xls');
+    }
+
+
 
     private function minutesToHours($total_minutes) {
         $hours = floor($total_minutes / 60);

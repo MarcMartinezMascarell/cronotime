@@ -75,8 +75,9 @@ Route::group(['middleware' => 'auth'], function () {
         //EMPLEADOS
         Route::get('informes', [EstadisticasController::class, 'informe'])->name('estadisticas.informe');
 
-    //PDFGENERATOR
+    //DOWLOAD FILES
         Route::get('downloadInformePDF', [PDFGeneratorController::class, 'download'])->name('pdf.download');
+        Route::get('downloadExcelWorkers', [PDFGeneratorController::class, 'downloadExcelWorkers'])->name('excel.download');
 });
 
 //VIEWS

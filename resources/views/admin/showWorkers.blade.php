@@ -52,6 +52,12 @@ function toHoursAndMinutes($totalMinutes) {
         {{-- <div class="card-header bg-transparent border-0">
             <h3 class="mb-0">Trabajadores</h3>
         </div> --}}
+        <form id="downloadExcelForm" class="d-flex justify-content-end" action="{{ route('excel.download')}}" method="get">
+            <input type="hidden" name="start" value="{{ Carbon\Carbon::parse($entrada)->format('Y-m-d') }}">
+            <input type="hidden" name="end" value="{{ Carbon\Carbon::parse($salida)->format('Y-m-d') }}">
+            <input type="hidden" name="id" value="{{$empresa->id}}">
+            <a class="text-center text-muted" href="javascript:$('#downloadExcelForm').submit();"><i class="fas fa-file-download"></i></a>
+        </form>
         <div class="table-responsive rounded mt-2">
 
             <table id="companiesTable" class="table align-middle mb-5 bg-white"
@@ -61,8 +67,10 @@ function toHoursAndMinutes($totalMinutes) {
                   <tr>
                     <th scope="col" data-sortable="true">{{__("Nombre y Apellidos")}}</th>
                     <th scope="col" data-sortable="true" >{{__("Email")}}</th>
+                    @hasrole('superAdmin')
                     <th scope="col" data-sortable="true">{{__("Administrador")}}</th>
                     <th scope="col">{{__("Rol")}}</th>
+                    @endhasrole
                     <th scope="col">{{__("Horas periodo")}}</th>
                     <th scope="col">{{__("Media diaria")}}</th>
                     <th scope="col">{{__("% Olvidados")}}</th>
@@ -89,6 +97,7 @@ function toHoursAndMinutes($totalMinutes) {
                                 {{ $worker->email }}
                             </div>
                         </td>
+                        @hasrole('superAdmin')
                         <td>
                             <div class="text-sm">
                                 @isset($empresa)
@@ -107,10 +116,11 @@ function toHoursAndMinutes($totalMinutes) {
                                 @endif
                             </div>
                         </td>
-                        @hasrole('superAdmin')
                         <td>
                             <div class="text-sm">
+                                @if ($worker->company)
                                 {{ $worker->company->nombre }}
+                                @endif
                             </div>
                         </td>
                         @endhasrole
@@ -133,7 +143,7 @@ function toHoursAndMinutes($totalMinutes) {
                     </tr>
                     @endforeach
             </tbody>
-              </table>
+            </table>
 
 
         </div>

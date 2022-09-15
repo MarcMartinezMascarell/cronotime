@@ -10275,3 +10275,7 @@ textarea.form-control-lg {
   right: 0;
   margin: 0 3rem;
 }
+
+.welcome-icon-box i {
+  font-size: 5rem;
+}
