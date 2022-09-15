@@ -11,9 +11,35 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container mt--5">
             <div class="card">
-                <p>Sistema de fichajes para empresas</p>
+                <div class="row">
+                    <div class="col col-sm-4 p-4 welcome-icon-box">
+                        <div class="card card-stats p-3">
+                            <div class="d-flex flex-column justify-content-center">
+                                <i class="fas fa-gavel text-center"></i>
+                                <div class="text-muted text-center mt-2">{{__("Cumple con la ley de registro horario obligatorio vigente desde Mayo de 2019")}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-sm-4 p-4 welcome-icon-box">
+                        <div class="card card-stats p-3">
+                            <div class="d-flex flex-column justify-content-center">
+                                <i class="fas fa-user-clock text-center"></i>
+                                <div class="text-muted text-center mt-2">{{__("Permite a tus trabajadores fichar al entrar y salir del trabajo con un sólo click")}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-sm-4 p-4 welcome-icon-box">
+                        <div class="card card-stats p-3">
+                            <div class="d-flex flex-column justify-content-center">
+                                <i class="fas fa-chart-bar text-center"></i>
+                                <div class="text-muted text-center mt-2">{{__("Reportes mensuales automáticos con las estadísticas de tus trabajadores")}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="separator separator-bottom separator-skew zindex-100">

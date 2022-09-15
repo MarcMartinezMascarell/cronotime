@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Notification;
 
 use App\Models\User;
 use App\Models\Horario;
@@ -20,15 +22,15 @@ class AdminController extends Controller
         $salida = $request->get('end', Carbon::today());
         if(auth()->user()->hasRole('superAdmin')) {
             $users = User::get();
-            return view('admin.showWorkers', ['workers' => $users]);
+            $empresa = Empresa::find(1);
+            return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $users,
+            'entrada' => $entrada, 'salida' => $salida]);
         } else {
             if(auth()->user()->company->id == $id) {
                 $empresa = Empresa::find($id);
-                $estadisticas = [];
                 //return $empresa->workers;
                 return view('admin.showWorkers', ['empresa' => $empresa, 'workers' => $empresa->workers,
-                'entrada' => $entrada, 'salida' => $salida,
-                'estadisticas' => $estadisticas]);
+                'entrada' => $entrada, 'salida' => $salida]);
             }
             return redirect()->back()->withError(__('No tienes permiso para acceder.'));
         }
@@ -57,9 +59,21 @@ class AdminController extends Controller
             $user->horario = $horario->id;
             $user->assignRole('trabajador');
             $user->save();
-            return redirect()->back();
+            $this->sendSetPassword($user);
+
+            return redirect()->route('workers.show');
         } else {
             return redirect()->back()->withError(__('Has alcanzado el límite de trabajadores. Aumenta tu plan para poder añadir más trabajadores.'));
         }
+    }
+
+
+
+    public function sendSetPassword($user) {
+            $token = Str::random(64);
+            Mail::send('email.forgetPassword', ['token' => $token], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Reset Password');
+        });
     }
 }
