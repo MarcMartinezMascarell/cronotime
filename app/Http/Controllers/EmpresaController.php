@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\Empresa;
 use App\Models\User;
+use Carbon\Carbon;
 
 class EmpresaController extends Controller
 {
@@ -37,6 +38,7 @@ class EmpresaController extends Controller
         $user->id_empresa = $empresaId;
         $user->assignRole('administrador');
         $user->save();
+        $user->sendWelcomeNotification(Carbon::now()->addDay());
 
         return redirect()->route('company.index');
 

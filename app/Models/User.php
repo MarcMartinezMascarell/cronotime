@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\Welcome;
+use \Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 
 use Carbon\Carbon;
 use DB;
@@ -16,7 +17,7 @@ use Mail;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, ReceivesWelcomeNotification;
 
     // public function sendPasswordResetNotification($token)
     // {
@@ -105,6 +106,23 @@ class User extends Authenticatable
         return $mediaMinutos;
     }
 
+    public function diasTrabajados($entrada, $salida) {
+        $dias_trabajados = Fichaje::where('user_id', $this->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+        ->groupBy(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))
+        ->select(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))
+        ->get();
+        $numero_dias_trabajados = $dias_trabajados->count();
+        return $numero_dias_trabajados;
+    }
+
+    public function numeroFichajes($entrada, $salida) {
+        $fichajesPeriodo = Fichaje::where('user_id', $this->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+        ->orderBy('started_at')
+        ->select('fichajes.*')->get();
+        $numero_fichajes = $fichajesPeriodo->count();
+        return $numero_fichajes;
+    }
+
     public function sendWelcomeMail($user) {
         // Generate a new reset password token
         $token = app('auth.password.broker')->createToken($user);
@@ -115,5 +133,12 @@ class User extends Authenticatable
 
             $m->to($user->email, $user->name)->subject('Welcome to APP');
         });
+    }
+
+
+
+    public function sendWelcomeNotification(\Carbon\Carbon $validUntil)
+    {
+        $this->notify(new Welcome($validUntil));
     }
 }
