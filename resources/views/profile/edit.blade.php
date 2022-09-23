@@ -41,9 +41,11 @@
                             <div class="h5 font-weight-300">
                                 <i class="ni location_pin mr-2"></i>{{auth()->user()->job}}
                             </div>
+                            @if(auth()->user()->company)
                             <div>
                                 <i class="ni education_hat mr-2"></i>{{auth()->user()->company->nombre}}
                             </div>
+                            @endif
                             <form method="POST" action="{{route('locale.change')}}" class="mt-2">
                                 @csrf
                                 @method('post')

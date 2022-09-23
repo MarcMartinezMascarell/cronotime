@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Mail;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Support\Str;
@@ -46,22 +47,22 @@ class AdminController extends Controller
             $user = User::firstOrCreate(['email' => $request->email],
             ['name' => $request->name, 'surname' => $request->surname, 'password' => Hash::make($request->password),
             'job' => $request->cargo, 'id_empresa' => $request->company]);
-            $horario = new Horario;
-            $horario->Monday = $request->lunes;
-            $horario->Tuesday = $request->martes;
-            $horario->Wednesday = $request->miercoles;
-            $horario->Thursday = $request->jueves;
-            $horario->Friday = $request->viernes;
-            $horario->Saturday = $request->sabado;
-            $horario->Sunday = $request->domingo;
-
-            $horario->save();
-            $user->horario = $horario->id;
-            $user->assignRole('trabajador');
-            $user->save();
-            $this->sendSetPassword($user);
-
-            return redirect()->route('workers.show');
+            if(!$user->horario) {
+                $horario = new Horario;
+                $horario->Monday = $request->lunes;
+                $horario->Tuesday = $request->martes;
+                $horario->Wednesday = $request->miercoles;
+                $horario->Thursday = $request->jueves;
+                $horario->Friday = $request->viernes;
+                $horario->Saturday = $request->sabado;
+                $horario->Sunday = $request->domingo;
+                $horario->save();
+                $user->horario = $horario->id;
+                $user->assignRole('trabajador');
+                $user->save();
+                $user->sendWelcomeNotification(Carbon::now()->addDay());
+            }
+            return redirect()->route('workers.show', [$user->company->id]);
         } else {
             return redirect()->back()->withError(__('Has alcanzado el límite de trabajadores. Aumenta tu plan para poder añadir más trabajadores.'));
         }
@@ -71,8 +72,8 @@ class AdminController extends Controller
 
     public function sendSetPassword($user) {
             $token = Str::random(64);
-            Mail::send('email.forgetPassword', ['token' => $token], function($message) use($request){
-            $message->to($request->email);
+            Mail::send('email.forgetPassword', ['token' => $token, 'user' => $user], function($message, $user) {
+            $message->to($user->email);
             $message->subject('Reset Password');
         });
     }

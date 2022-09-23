@@ -56,7 +56,7 @@ function toHoursAndMinutes($totalMinutes) {
             <input type="hidden" name="start" value="{{ Carbon\Carbon::parse($entrada)->format('Y-m-d') }}">
             <input type="hidden" name="end" value="{{ Carbon\Carbon::parse($salida)->format('Y-m-d') }}">
             <input type="hidden" name="id" value="{{$empresa->id}}">
-            <a class="text-center text-muted" href="javascript:$('#downloadExcelForm').submit();"><i class="fas fa-file-download"></i></a>
+            <a class="text-center text-muted" href="javascript:$('#downloadExcelForm').submit();">Exportar Excel <i class="fas fa-file-download"></i></a>
         </form>
         <div class="table-responsive rounded mt-2">
 

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-
+use Spatie\WelcomeNotification\WelcomesNewUsers;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\FichajesController;
 use App\Http\Controllers\AdminController;
@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\PDFGeneratorController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ use App\Http\Controllers\PDFGeneratorController;
 |
 */
 
+Route::group(['middleware' => ['web', WelcomesNewUsers::class,]], function () {
+    Route::get('welcome/{user}', [WelcomeController::class, 'showWelcomeForm'])->name('welcome');
+    Route::post('welcome/{user}', [WelcomeController::class, 'savePassword']);
+});
 
 Route::get('/', function () {
     return view('welcome');

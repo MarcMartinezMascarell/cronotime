@@ -11,21 +11,27 @@ function toHoursAndMinutes($totalMinutes) {
 }
 
 ?>
-
+<style>
+    th {
+        font-weight: 900;
+    }
+</style>
 
 <table>
                 <thead>
                   <tr>
                     <th><b>{{__("Nombre y Apellidos")}}</b></th>
-                    <th >{{__("Email")}}</th>
+                    <th><b>{{__("Email")}}</b></th>
                     @hasrole('superAdmin')
-                    <th>{{__("Administrador")}}</th>
+                    <th><b>{{__("Administrador")}}</b></th>
                     @endhasrole
-                    <th>{{__("Horas periodo")}}</th>
-                    <th>{{__("Media diaria")}}</th>
-                    <th>{{__("% Olvidados")}}</th>
+                    <th><b>{{__("Horas periodo")}}</b></th>
+                    <th><b>{{__("Media diaria")}}</b></th>
+                    <th><b>{{__("% Olvidados")}}</b></th>
+                    <th><b>{{__("Número de días trabajados:")}}</b></th>
+                    <th><b>{{__("Número total de fichajes:")}}</b></th>
                     @hasrole('superAdmin')
-                    <th>{{__("Empresa")}}</th>
+                    <th><b>{{__("Empresa")}}</b></th>
                     @endhasrole
                   </tr>
                 </thead>
@@ -57,6 +63,12 @@ function toHoursAndMinutes($totalMinutes) {
                         </td>
                         <td>
                             <?php echo round($worker->porcentajeOlvidados($entrada, $salida), 2) ?>%
+                        </td>
+                        <td>
+                            <?php echo $worker->diasTrabajados($entrada, $salida) ?>
+                        </td>
+                        <td>
+                            <?php echo $worker->numeroFichajes($entrada, $salida) ?>
                         </td>
                     </tr>
                     @endforeach
