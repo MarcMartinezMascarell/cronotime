@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -16,6 +19,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        //$schedule->call(function() {
+        //     $user = User::find(1);
+        //     Mail::send('email.monthlyReport', function($message) {
+        //         $message->subject('Monthly Report');
+        //         $message->to($user->email);
+        //         $message->line('Testing');
+        //     });
+        // });
+        $schedule->command('monthlyReport')->everyMinute();
     }
 
     /**
