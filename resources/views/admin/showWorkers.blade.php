@@ -116,13 +116,6 @@ function toHoursAndMinutes($totalMinutes) {
                                 @endif
                             </div>
                         </td>
-                        <td>
-                            <div class="text-sm">
-                                @if ($worker->company)
-                                {{ $worker->company->nombre }}
-                                @endif
-                            </div>
-                        </td>
                         @endhasrole
 
                         <td>
@@ -138,6 +131,13 @@ function toHoursAndMinutes($totalMinutes) {
                         <td>
                             <div class="text-sm">
                                 <?php echo round($worker->porcentajeOlvidados($entrada, $salida), 2) ?>%
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-sm">
+                                @if ($worker->company)
+                                {{ $worker->company->nombre }}
+                                @endif
                             </div>
                         </td>
                     </tr>
