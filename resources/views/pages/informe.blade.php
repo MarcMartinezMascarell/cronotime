@@ -124,6 +124,10 @@ function toHoursAndMinutes($totalMinutes) {
                                     @endisset
                                 </p>
                                 <span class="w-50 text-center small">{{$fichaje->started_at->format('H:i')}}</span>
+                                <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-entrada"
+                                data-idfichaje="{{$fichaje->id}}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                                     {{-- <a href="#" class="d-flex align-items-center text-dec-none text-danger small" data-toggle="modal" data-target="#delete-entrada"
                                     data-idfichaje="{{$fichaje->id}}">
                                         <i class="fas fa-trash"></i>
@@ -146,6 +150,10 @@ function toHoursAndMinutes($totalMinutes) {
                                         ({{$fecha}})
                                     @endisset
                                     </span>
+                                    <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-salida"
+                                    data-idfichaje="{{$fichaje->id}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                     {{-- <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-salida"
                                     data-idFichaje="{{$fichaje->id}}">
                                         <i class="fas fa-trash"></i>
@@ -167,6 +175,7 @@ function toHoursAndMinutes($totalMinutes) {
                                     break;
                                 }
                             ?>
+                            <hr class="m-1">
                         @endforeach
 
 
@@ -227,5 +236,67 @@ function toHoursAndMinutes($totalMinutes) {
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="delete-entrada" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">{{__("Atención")}}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="bold">{{__("Si el fichaje dispone de entrada y salida, su salida correspondiente será borrada también")}}</p>
+            </div>
+
+            <div class="modal-footer">
+                <form id="delete-fichaje-form" action="{{ route('fichaje.delete')}}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="idFichaje" value="">
+                    <input type="hidden" name="type" value="entrada">
+                    <button type="submit" class="btn btn-danger text-white">{{__("Borrar")}}</button>
+                </form>
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-salida" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">{{__("Atención")}}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="bold">{{__("El fichaje de salida será borrado")}}</p>
+            </div>
+
+            <div class="modal-footer">
+                <form id="delete-fichaje-form" action="{{ route('fichaje.delete')}}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="idFichaje" value="">
+                    <input type="hidden" name="type" value="salida">
+                    <button type="submit" class="btn btn-danger text-white">{{__("Borrar")}}</button>
+                </form>
+                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 @stop
