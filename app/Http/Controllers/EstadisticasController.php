@@ -24,8 +24,14 @@ class EstadisticasController extends Controller
                     return redirect()->back()->withError('No tienes permiso para hacer eso');
                 $user = $user;
             }
-            else
-                return redirect()->back()->withError(__('Este usuario no pertenece a tu organización'));
+            else {
+                if(Auth::user()->hasAnyRole(['superAdmin', 'administrador'])) {
+                    $user = $user;
+                } else {
+                    return redirect()->back()->withError(__('Este usuario no pertenece a tu organización'));
+                }
+            }
+
         } else
             $user = Auth::user();
 
