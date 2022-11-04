@@ -53,6 +53,7 @@ class EstadisticasController extends Controller
             $total_minutes_periodo = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
             ->sum('total_time');
             $total_periodo = $this->minutesToHours($total_minutes_periodo);
+            $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
             if($numero_dias_trabajados)
                 $mediaHoras = $this->minutesToHours($total_minutes_periodo/$numero_dias_trabajados);
             else
@@ -67,6 +68,7 @@ class EstadisticasController extends Controller
                 'numeroOlvidados' => $numero_olvidados,
                 'mediaHoras' => $mediaHoras,
                 'userId' => $userId,
+                'ultimoFichaje' => $ultimoFichaje,
             ]);
         } else {
             return redirect()->route('login');

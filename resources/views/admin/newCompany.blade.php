@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('company.store') }}" autocomplete="off">
+                        <form method="post" action="{{ route('company.store') }}" autocomplete="off"  enctype="multipart/form-data">
                             @csrf
                             @method('post')
 
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-xl-12 form-group{{ $errors->has('logo') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-logo">{{ __('Subir logo') }}</label>
-                                    <input type="file" name="logo" id="input-logo" class="form-control form-control-alternative{{ $errors->has('logo') ? ' is-invalid' : '' }}" value="">
+                                    <input type="file" name="logo" id="input-logo" class="form-control form-control-alternative{{ $errors->has('logo') ? ' is-invalid' : '' }}">
 
                                     @if ($errors->has('logo'))
                                         <span class="invalid-feedback" role="alert">

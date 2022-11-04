@@ -46,6 +46,7 @@
     "Seleccionar trabajador": "Seleccionar treballador",
     "Fichajes": "Fitxatges",
     "Estadísticas": "Estadístiques",
+    "Nombre y Apellidos": "Nom i Cognoms",
     "Horas totales": "Hores totals",
     "% Olvidados": "% Oblidats",
     "Media diaria": "Mitjana diària",
@@ -74,5 +75,10 @@
     "No hay datos entre estas fechas": "No hi ha dades entre aquestes dates",
     "Este usuario no pertenece a tu organización": "Aquest usuari no pertany a la teva organització",
     "No tienes permiso para acceder.": "No tens permís per accedir.",
-    "¿Has encontrado algún error?": "Has trobat algun error?"
+    "¿Has encontrado algún error?": "Has trobat algun error?",
+    "Ayudanos a mejorar!": "Ajuda'ns a millorar!",
+    "¿Crees que podemos mejorar algo?": "Creus que podem millorar alguna cosa?",
+    "Subir": "Pujar",
+    "Sube tu nuevo logo!": "Puja el teu nou logo!",
+    "Cambiar logo": "Canviar logo"
 }

@@ -21,7 +21,6 @@
                         <th scope="col" data-sortable="true" >Empleados / Límite</th>
                         <th scope="col" data-sortable="true" >Administrador</th>
                         <th scope="col" data-sortable="true" >Creado el</th>
-                        <th scope="col">Completion</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -30,6 +29,13 @@
                         <tr>
                             <th scope="row">
                                 <div class="media align-items-center">
+                                    <div class="avatar rounded-circle mr-3">
+                                        @if($empresa->logo_url)
+                                        <img alt="Logo" src="{{asset('storage/images/logos/'.$empresa->logo_url)}}">
+                                        @else
+                                        <img alt="Image placeholder" src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
+                                        @endif
+                                    </div>
                                     <div class="media-body">
                                         <span class="mb-0 text-sm">{{ $empresa->nombre }}</span>
                                     </div>
@@ -52,16 +58,6 @@
                                     @isset($empresa->created_at)
                                         {{ $empresa->created_at->format('d/m/Y') }}
                                     @endisset
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="mr-2">60%</span>
-                                    <div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
                                 </div>
                             </td>
                             <td class="text-right">

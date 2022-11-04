@@ -36,7 +36,7 @@ function toHoursAndMinutes($totalMinutes) {
             <form id="informeForm" action="{{ route('estadisticas.informe')}}" method="GET">
                 @hasanyrole('superAdmin|administrador')
                 <p class="text-muted m-0">{{__("Seleccionar trabajador")}}</p>
-                <div class="row col-4">
+                <div class="row col-12 col-lg-6">
                     <div class="form-group m-0 p-0">
                         <select class="form-control" name="userId">
                             @foreach (Auth::user()->company->workers as $worker)
@@ -238,65 +238,7 @@ function toHoursAndMinutes($totalMinutes) {
 </div>
 
 
-<div class="modal fade" id="delete-entrada" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">{{__("Atención")}}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <p class="bold">{{__("Si el fichaje dispone de entrada y salida, su salida correspondiente será borrada también")}}</p>
-            </div>
-
-            <div class="modal-footer">
-                <form id="delete-fichaje-form" action="{{ route('fichaje.delete')}}" method="POST">
-                    @csrf
-                    @method('POST')
-                    <input type="hidden" name="idFichaje" value="">
-                    <input type="hidden" name="type" value="entrada">
-                    <button type="submit" class="btn btn-danger text-white">{{__("Borrar")}}</button>
-                </form>
-                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="delete-salida" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">{{__("Atención")}}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <p class="bold">{{__("El fichaje de salida será borrado")}}</p>
-            </div>
-
-            <div class="modal-footer">
-                <form id="delete-fichaje-form" action="{{ route('fichaje.delete')}}" method="POST">
-                    @csrf
-                    @method('POST')
-                    <input type="hidden" name="idFichaje" value="">
-                    <input type="hidden" name="type" value="salida">
-                    <button type="submit" class="btn btn-danger text-white">{{__("Borrar")}}</button>
-                </form>
-                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">{{__("Cancelar")}}</button>
-            </div>
-
-        </div>
-    </div>
-</div>
+@include('layouts.popups')
 
 
 @stop

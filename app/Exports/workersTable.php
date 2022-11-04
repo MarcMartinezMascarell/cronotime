@@ -26,9 +26,9 @@ class workersTable implements FromView
     public function view(): View
     {
         if(!$this->entrada)
-            $entrada = Carbon::now()->startOfMonth();
+            $this->entrada = Carbon::now()->startOfMonth();
         if(!$this->salida)
-            $salida = Carbon::today();
+            $this->salida = Carbon::today();
         if(auth()->user()->hasRole('superAdmin')) {
             $users = User::get();
             $empresa = Empresa::find(1);
@@ -39,6 +39,6 @@ class workersTable implements FromView
             }
         }
         return view('pdf.workersTable', ['empresa' => $empresa, 'workers' => $empresa->workers,
-        'entrada' => $entrada, 'salida' => $salida]);
+        'entrada' => $this->entrada, 'salida' => $this->salida]);
     }
 }

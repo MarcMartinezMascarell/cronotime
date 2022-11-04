@@ -31,6 +31,16 @@ class EmpresaController extends Controller
         $empresa->save();
         $empresaId = $empresa->id;
 
+        //Guardar logo de la empresa
+        if($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $filename = str_replace(' ', '', $empresa->nombre) . '_logo.' . $image->getClientOriginalExtension();
+            $location = public_path('images/logos/' . $filename);
+            $path = $request->file('logo')->storeAs('public/images/logos', $filename);
+            $empresa->logo_url = $filename;
+            $empresa->save();
+        }
+
         //Añadir administrador si existe, o crear uno nuevo si no existe
         $user = User::firstOrCreate(['email' => $request->email],
         ['name' => $request->adminName, 'password' => Hash::make($request->password)  ]);

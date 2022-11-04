@@ -11,7 +11,7 @@
                         <span class="avatar avatar-sm rounded-circle">
                             <img alt="Image placeholder" src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
                         </span>
-                        <div class="media-body ml-2 d-none d-lg-block">
+                        <div class="media-body ml-2">
                             <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
                         </div>
                     </div>

@@ -83,6 +83,10 @@ Route::group(['middleware' => 'auth'], function () {
     //DOWLOAD FILES
         Route::get('downloadInformePDF', [PDFGeneratorController::class, 'download'])->name('pdf.download');
         Route::get('downloadExcelWorkers', [PDFGeneratorController::class, 'downloadExcelWorkers'])->name('excel.download');
+
+    //ADMIN
+        //Show PDF TEMPLATE
+        Route::get('pdfTemplate', [PDFGeneratorController::class, 'pdfTemplate'])->name('pdf.template');
 });
 
 //VIEWS

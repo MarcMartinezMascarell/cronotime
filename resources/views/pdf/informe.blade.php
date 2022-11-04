@@ -14,7 +14,7 @@
     }
     .container {
         max-width: 1200px;
-        margin: 0 auto;
+        margin: 80px auto;
         padding: 2rem 4rem
     }
     p {
@@ -65,6 +65,16 @@
     .horas, .totalHoras {
         display: inline-block;
     }
+    header {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                right: 0px;
+                font-size: 20px;
+                max-width: 1200px;
+                margin: 10px auto;
+                padding: 2rem 4rem
+    }
   </style>
   <body>
 
@@ -79,8 +89,16 @@
         $total = $hours . ':' . $minutes;
         return $total;
     }
-
     ?>
+
+    <header>
+        <div class="logo" style="width: 100%;margin-bottom:30px;border-bottom:1px solid grey">
+            <img alt="Logo" src="{{storage_path('app/public/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;">
+            {{-- <img alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;"> --}}
+            <p class="subtitle">{{$user->company->nombre}}</p>
+        </div>
+    </header>
+
     <div class="container">
         <div class="title-container">
             <h1 class="title">Informe {{$user->name}} {{$user->surname}}</h1>

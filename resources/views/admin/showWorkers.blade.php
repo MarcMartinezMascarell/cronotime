@@ -25,8 +25,8 @@ function toHoursAndMinutes($totalMinutes) {
     <div class="card shadow p-3">
         <form id="informeForm" action="{{ route('workers.show', [$empresa->id])}}" method="GET" >
             <p class="text-muted m-0">{{__("Cambiar período")}}</p>
-            <div class="input-daterange datepicker row align-items-start">
-                <div class="col">
+            <div class="input-daterange datepicker row align-items-start justify-content-center">
+                <div class="col-12 col-lg-6 mb-2">
                     <div class="form-group m-0">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -36,7 +36,7 @@ function toHoursAndMinutes($totalMinutes) {
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-lg-6 mb-2">
                     <div class="form-group m-0">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -53,8 +53,8 @@ function toHoursAndMinutes($totalMinutes) {
             <h3 class="mb-0">Trabajadores</h3>
         </div> --}}
         <form id="downloadExcelForm" class="d-flex justify-content-end" action="{{ route('excel.download')}}" method="get">
-            <input type="hidden" name="start" value="{{ Carbon\Carbon::parse($entrada)->format('Y-m-d') }}">
-            <input type="hidden" name="end" value="{{ Carbon\Carbon::parse($salida)->format('Y-m-d') }}">
+            <input type="hidden" name="entrada" value="{{ Carbon\Carbon::parse($entrada)->format('Y-m-d') }}">
+            <input type="hidden" name="salida" value="{{ Carbon\Carbon::parse($salida)->format('Y-m-d') }}">
             <input type="hidden" name="id" value="{{$empresa->id}}">
             <a class="text-center text-muted" href="javascript:$('#downloadExcelForm').submit();">Exportar Excel <i class="fas fa-file-download"></i></a>
         </form>

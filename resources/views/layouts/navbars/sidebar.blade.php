@@ -5,27 +5,39 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="{{ route('home') }}">
+        <a class="navbar-brand pt-0 d-none d-md-block" href="{{ route('home') }}">
             CronoTime
         </a>
+        <div class="company-logo d-flex justify-content-center align-items-center flex-column  d-none d-md-block">
+            @hasanyrole('administrador|superAdmin')
+            <div class="d-flex justify-content-center align-items-center"  data-toggle="tooltip" data-placement="bottom" title="{{__("Cambiar logo")}}">
+                <a href=""  data-toggle="modal" data-target="#update-logo">
+                    <img class="sidebar-logo" alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}">
+                </a>
+            </div>
+            @else
+                <img class="sidebar-logo" alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}">
+            @endhasanyrole
+            <p class="text-center m-0">{{auth()->user()->company->nombre}}</p>
+        </div>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                        <img alt="Image placeholder" src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
                         </span>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
+                        <h6 class="text-overflow m-0">{{ __('¡Bienvenido!') }}</h6>
 
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
-                        <span>{{ __('My profile') }}</span>
+                        <span>{{ __('Perfil') }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
@@ -42,8 +54,8 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                        <a class="navbar-brand pt-0" href="{{ route('home') }}">
+                            CronoTime
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -55,7 +67,7 @@
                 </div>
             </div>
             <!-- Form -->
-            <form class="mt-4 mb-3 d-md-none">
+            {{-- <form class="mt-4 mb-3 d-md-none">
                 <div class="input-group input-group-rounded input-group-merge">
                     <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="{{ __('Search') }}" aria-label="Search">
                     <div class="input-group-prepend">
@@ -64,7 +76,19 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </form> --}}
+            <div class="company-logo d-flex justify-content-center align-items-center flex-column  d-md-none">
+                @hasanyrole('administrador|superAdmin')
+                <div class="d-flex justify-content-center align-items-center"  data-toggle="tooltip" data-placement="bottom" title="{{__("Cambiar logo")}}">
+                    <a href=""  data-toggle="modal" data-target="#update-logo">
+                        <img class="sidebar-logo" alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}">
+                    </a>
+                </div>
+                @else
+                    <img class="sidebar-logo" alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}">
+                @endhasanyrole
+                <p class="text-center m-0">{{auth()->user()->company->nombre}}</p>
+            </div>
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -132,7 +156,7 @@
             <!-- Divider -->
             <hr class="mt-6">
             <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Documentation</h6>
+            <h6 class="navbar-heading text-muted">{{__('Ayudanos a mejorar!')}}</h6>
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
@@ -140,7 +164,15 @@
                         <i class="ni ni-spaceship"></i> {{__('¿Has encontrado algún error?')}}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="mailto:marcmartinezmascarell@gmail.com">
+                        <i class="ni ni-spaceship"></i> {{__('¿Crees que podemos mejorar algo?')}}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
+
 </nav>
+
+
