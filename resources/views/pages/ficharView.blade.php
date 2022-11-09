@@ -210,6 +210,9 @@
                             <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4">
                                 {{__("SALIR")}}
                             </a>
+                            <a href="" class="text-muted text-center w-auto mt-4" data-toggle="modal" data-target="#set-salida" data-idfichaje="{{$ultimoFichaje->id}}">
+                                {{__("He olvidado salir")}}
+                            </a>
                         @endif
 
 

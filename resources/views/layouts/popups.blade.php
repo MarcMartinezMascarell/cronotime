@@ -20,7 +20,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
-                                @if($ultimoFichaje)
+                                @if(isset($ultimoFichaje))
                                 <input name="entrada" class="form-control" type="datetime-local" value="{{ $ultimoFichaje->started_at->format('Y-m-d H:i:00') }}">
                                 @else
                                 <input name="entrada" class="form-control" type="datetime-local" value="{{ \Carbon\Carbon::now()->format('Y-m-d H:i:00') }}">
@@ -73,7 +73,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">{{__("Añadir salida al fichaje olvidado")}}</h6>
+                <h6 class="modal-title" id="modal-title-default">{{__("Añadir salida")}}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -186,9 +186,12 @@
                 </button>
             </div>
 
-            <form action="">
+            <form action="{{ route('company.updateLogo')}}"  method="POST">
+            @csrf
+            @method('PUT')
             <div class="modal-body">
                     <input type="file">
+                    <input type="hidden" name="empresa" value="{{Auth::user()->company->id}}">
             </div>
 
             <div class="modal-footer">

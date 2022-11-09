@@ -238,7 +238,4 @@ function toHoursAndMinutes($totalMinutes) {
 </div>
 
 
-@include('layouts.popups')
-
-
 @stop
