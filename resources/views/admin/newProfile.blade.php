@@ -107,7 +107,7 @@
                             <div class="d-flex flex-wrap">
                                 <div class="col-xl-1 form-group{{ $errors->has('lunes') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-lunes">{{ __('Lunes') }}</label>
-                                    <input type="number" name="lunes" id="input-lunes" class="form-control form-control-alternative{{ $errors->has('lunes') ? ' is-invalid' : '' }}" value="8" required>
+                                    <input type="number" step="0.5" name="lunes" id="input-lunes" class="form-control form-control-alternative{{ $errors->has('lunes') ? ' is-invalid' : '' }}" value="8" required>
 
                                     @if ($errors->has('lunes'))
                                         <span class="invalid-feedback" role="alert">
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="col-xl-1 form-group{{ $errors->has('martes') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-martes">{{ __('Martes') }}</label>
-                                    <input type="number" name="martes" id="input-martes" class="form-control form-control-alternative{{ $errors->has('martes') ? ' is-invalid' : '' }}" value="8" required>
+                                    <input type="number" step="0.5" name="martes" id="input-martes" class="form-control form-control-alternative{{ $errors->has('martes') ? ' is-invalid' : '' }}" value="8" required>
 
                                     @if ($errors->has('martes'))
                                         <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="col-xl-1 form-group{{ $errors->has('miercoles') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-miercoles">{{ __('Miércoles') }}</label>
-                                    <input type="number" name="miercoles" id="input-miercoles" class="form-control form-control-alternative{{ $errors->has('miercoles') ? ' is-invalid' : '' }}" value="8" required>
+                                    <input type="number" step="0.5" name="miercoles" id="input-miercoles" class="form-control form-control-alternative{{ $errors->has('miercoles') ? ' is-invalid' : '' }}" value="8" required>
 
                                     @if ($errors->has('miercoles'))
                                         <span class="invalid-feedback" role="alert">
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="col-xl-1 form-group{{ $errors->has('jueves') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-jueves">{{ __('Jueves') }}</label>
-                                    <input type="number" name="jueves" id="input-jueves" class="form-control form-control-alternative{{ $errors->has('jueves') ? ' is-invalid' : '' }}" value="8" required>
+                                    <input type="number" step="0.5" name="jueves" id="input-jueves" class="form-control form-control-alternative{{ $errors->has('jueves') ? ' is-invalid' : '' }}" value="8" required>
 
                                     @if ($errors->has('jueves'))
                                         <span class="invalid-feedback" role="alert">
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="col-xl-1 form-group{{ $errors->has('viernes') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-viernes">{{ __('Viernes') }}</label>
-                                    <input type="number" name="viernes" id="input-viernes" class="form-control form-control-alternative{{ $errors->has('viernes') ? ' is-invalid' : '' }}" value="8" required>
+                                    <input type="number" step="0.5" name="viernes" id="input-viernes" class="form-control form-control-alternative{{ $errors->has('viernes') ? ' is-invalid' : '' }}" value="8" required>
 
                                     @if ($errors->has('viernes'))
                                         <span class="invalid-feedback" role="alert">
@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="col-xl-1 form-group{{ $errors->has('sabado') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-sabado">{{ __('Sábado') }}</label>
-                                    <input type="number" name="sabado" id="input-sabado" class="form-control form-control-alternative{{ $errors->has('sabado') ? ' is-invalid' : '' }}" value="0" required>
+                                    <input type="number" step="0.5" name="sabado" id="input-sabado" class="form-control form-control-alternative{{ $errors->has('sabado') ? ' is-invalid' : '' }}" value="0" required>
 
                                     @if ($errors->has('sabado'))
                                         <span class="invalid-feedback" role="alert">
@@ -167,7 +167,7 @@
                                 </div>
                                 <div class="col-xl-1 form-group{{ $errors->has('domingo') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-domingo">{{ __('Domingo') }}</label>
-                                    <input type="number" name="domingo" id="input-domingo" class="form-control form-control-alternative{{ $errors->has('domingo') ? ' is-invalid' : '' }}" value="0" required>
+                                    <input type="number" step="0.5" name="domingo" id="input-domingo" class="form-control form-control-alternative{{ $errors->has('domingo') ? ' is-invalid' : '' }}" value="0" required>
 
                                     @if ($errors->has('domingo'))
                                         <span class="invalid-feedback" role="alert">

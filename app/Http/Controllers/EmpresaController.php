@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Empresa;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class EmpresaController extends Controller
 {
@@ -31,6 +32,16 @@ class EmpresaController extends Controller
         $empresa->save();
         $empresaId = $empresa->id;
 
+        //Guardar logo de la empresa
+        if($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $filename = str_replace(' ', '', $empresa->nombre) . '_logo.' . $image->getClientOriginalExtension();
+            $location = public_path('images/logos/' . $filename);
+            $path = $request->file('logo')->storeAs('public/images/logos', $filename);
+            $empresa->logo_url = $filename;
+            $empresa->save();
+        }
+
         //Añadir administrador si existe, o crear uno nuevo si no existe
         $user = User::firstOrCreate(['email' => $request->email],
         ['name' => $request->adminName, 'password' => Hash::make($request->password)  ]);
@@ -42,6 +53,22 @@ class EmpresaController extends Controller
 
         return redirect()->route('company.index');
 
+    }
+
+    public function updateLogo(Request $request) {
+        if(auth()->user()->hasRole('administrador')) {
+            $empresa = Empresa::find(auth()->user()->company->id);
+            if($request->hasFile('logo')) {
+                $image = $request->file('logo');
+                $filename = str_replace(' ', '', $empresa->nombre) . '_logo.' . $image->getClientOriginalExtension();
+                $location = public_path('images/logos/' . $filename);
+                File::delete($location);
+                $path = $request->file('logo')->storeAs('public/images/logos', $filename);
+                // $empresa->logo_url = $filename;
+                // $empresa->save();
+            }
+            return redirect()->route('fichar.view');
+        }
     }
 
     public function deleteCompany($id) {

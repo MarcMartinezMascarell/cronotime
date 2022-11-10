@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('createCompany', [EmpresaController::class, 'createCompany'])->name('company.create');
 		Route::post('createCompany', [EmpresaController::class, 'storeCompany'])->name('company.store');
 		Route::get('deleteCompany/{id}', [EmpresaController::class, 'deleteCompany'])->name('company.delete');
+        Route::put('updateLogo', [EmpresaController::class, 'updateLogo'])->name('company.updateLogo');
 
 		Route::get('workers/{id}', [AdminController::class, 'showWorkers'])->name('workers.show');
 		Route::get('createProfile', [AdminController::class, 'createProfile'])->name('profile.create');
@@ -83,6 +84,10 @@ Route::group(['middleware' => 'auth'], function () {
     //DOWLOAD FILES
         Route::get('downloadInformePDF', [PDFGeneratorController::class, 'download'])->name('pdf.download');
         Route::get('downloadExcelWorkers', [PDFGeneratorController::class, 'downloadExcelWorkers'])->name('excel.download');
+
+    //ADMIN
+        //Show PDF TEMPLATE
+        Route::get('pdfTemplate', [PDFGeneratorController::class, 'pdfTemplate'])->name('pdf.template');
 });
 
 //VIEWS

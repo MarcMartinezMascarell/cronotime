@@ -42,6 +42,11 @@
             @include('layouts.footers.guest')
         @endguest
 
+        @auth()
+            @include('layouts.popups')
+        @endauth
+
+
         <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
         <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 

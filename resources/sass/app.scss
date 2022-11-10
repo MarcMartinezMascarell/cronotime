@@ -26,6 +26,10 @@
     background-image: none;
 }
 
+.btn-default:hover {
+    color: white;
+}
+
 .flotate-alert {
     position: absolute;
     z-index: 999;
@@ -38,5 +42,24 @@
 .welcome-icon-box {
     i {
         font-size: 5rem;
+    }
+}
+
+.avatar {
+    img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.sidebar-logo {
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+.pdf_logo {
+    img {
+        mix-blend-mode: multiply;
     }
 }

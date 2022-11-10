@@ -36,7 +36,7 @@ function toHoursAndMinutes($totalMinutes) {
             <form id="informeForm" action="{{ route('estadisticas.informe')}}" method="GET">
                 @hasanyrole('superAdmin|administrador')
                 <p class="text-muted m-0">{{__("Seleccionar trabajador")}}</p>
-                <div class="row col-4">
+                <div class="row col-12 col-lg-6">
                     <div class="form-group m-0 p-0">
                         <select class="form-control" name="userId">
                             @foreach (Auth::user()->company->workers as $worker)
@@ -124,6 +124,10 @@ function toHoursAndMinutes($totalMinutes) {
                                     @endisset
                                 </p>
                                 <span class="w-50 text-center small">{{$fichaje->started_at->format('H:i')}}</span>
+                                <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-entrada"
+                                data-idfichaje="{{$fichaje->id}}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                                     {{-- <a href="#" class="d-flex align-items-center text-dec-none text-danger small" data-toggle="modal" data-target="#delete-entrada"
                                     data-idfichaje="{{$fichaje->id}}">
                                         <i class="fas fa-trash"></i>
@@ -146,6 +150,10 @@ function toHoursAndMinutes($totalMinutes) {
                                         ({{$fecha}})
                                     @endisset
                                     </span>
+                                    <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-salida"
+                                    data-idfichaje="{{$fichaje->id}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                     {{-- <a href="#" class="d-flex align-items-center text-dec-none text-danger" data-toggle="modal" data-target="#delete-salida"
                                     data-idFichaje="{{$fichaje->id}}">
                                         <i class="fas fa-trash"></i>
@@ -167,6 +175,7 @@ function toHoursAndMinutes($totalMinutes) {
                                     break;
                                 }
                             ?>
+                            <hr class="m-1">
                         @endforeach
 
 
@@ -227,5 +236,6 @@ function toHoursAndMinutes($totalMinutes) {
         </div>
     </div>
 </div>
+
 
 @stop
