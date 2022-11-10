@@ -57,3 +57,9 @@
     max-height: 100px;
     object-fit: contain;
 }
+
+.pdf_logo {
+    img {
+        mix-blend-mode: multiply;
+    }
+}

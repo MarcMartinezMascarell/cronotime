@@ -14,8 +14,8 @@
     }
     .container {
         max-width: 1200px;
-        margin: 80px auto;
-        padding: 2rem 4rem
+        margin: 0px auto;
+        padding: 0rem 4rem
     }
     p {
         margin: 0;
@@ -66,14 +66,12 @@
         display: inline-block;
     }
     header {
-                position: fixed;
                 top: 0px;
                 left: 0px;
                 right: 0px;
                 font-size: 20px;
                 max-width: 1200px;
                 margin: 10px auto;
-                padding: 2rem 4rem
     }
   </style>
   <body>
@@ -92,9 +90,9 @@
     ?>
 
     <header>
-        <div class="logo" style="width: 100%;margin-bottom:30px;border-bottom:1px solid grey">
-            <img alt="Logo" src="{{storage_path('app/public/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;">
-            {{-- <img alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;"> --}}
+        <div class="pdf_logo" style="width: 100%;margin-bottom:30px;border-bottom:1px solid grey">
+            {{-- <img alt="Logo" src="{{storage_path('app/public/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;"> --}}
+            <img alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;">
             <p class="subtitle">{{$user->company->nombre}}</p>
         </div>
     </header>

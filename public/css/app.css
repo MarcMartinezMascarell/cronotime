@@ -10296,3 +10296,7 @@ textarea.form-control-lg {
   -o-object-fit: contain;
      object-fit: contain;
 }
+
+.pdf_logo img {
+  mix-blend-mode: multiply;
+}

@@ -62,7 +62,7 @@ class PDFGeneratorController extends Controller
     }
 
     public function pdfTemplate() {
-        $id = 3;
+        $id = 9;
         $entrada = Carbon::now()->startOfMonth();
         $salida = Carbon::today();
         $user = User::find($id);
