@@ -31,7 +31,7 @@
                                 <div class="media align-items-center">
                                     <div class="avatar rounded-circle mr-3">
                                         @if($empresa->logo_url)
-                                        <img alt="Logo" src="{{asset('storage/images/logos/'.$empresa->logo_url)}}">
+                                        <img alt="Logo" src="{{asset('images/logos/'.$empresa->logo_url)}}">
                                         @else
                                         <img alt="Image placeholder" src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
                                         @endif
