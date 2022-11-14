@@ -8,7 +8,7 @@
         <a class="navbar-brand pt-0 d-none d-md-block" href="{{ route('home') }}">
             CronoTime
         </a>
-        <div class="company-logo d-flex justify-content-center align-items-center flex-column  d-none d-md-block">
+        <div class="company-logo d-md-flex justify-content-center align-items-center flex-column">
             @hasanyrole('administrador|superAdmin')
             <div class="d-flex justify-content-center align-items-center"  data-toggle="tooltip" data-placement="bottom" title="{{__("Cambiar logo")}}">
                 <a href=""  data-toggle="modal" data-target="#update-logo">
