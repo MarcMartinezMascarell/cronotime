@@ -12,11 +12,11 @@
             @hasanyrole('administrador|superAdmin')
             <div class="d-flex justify-content-center align-items-center"  data-toggle="tooltip" data-placement="bottom" title="{{__("Cambiar logo")}}">
                 <a href=""  data-toggle="modal" data-target="#update-logo">
-                    <img class="sidebar-logo" alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}">
+                    <img class="sidebar-logo" alt="Logo" src="{{asset('images/logos/'.auth()->user()->company->logo_url)}}">
                 </a>
             </div>
             @else
-                <img class="sidebar-logo" alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}">
+                <img class="sidebar-logo" alt="Logo" src="{{asset('images/logos/'.auth()->user()->company->logo_url)}}">
             @endhasanyrole
             <p class="text-center m-0">{{auth()->user()->company->nombre}}</p>
         </div>
