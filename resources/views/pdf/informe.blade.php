@@ -91,7 +91,7 @@
 
     <header>
         <div class="pdf_logo" style="width: 100%;margin-bottom:30px;border-bottom:1px solid grey">
-            <img alt="Logo" src="{{storage_path('app/public/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;">
+            {{-- <img alt="Logo" src="{{storage_path('app/public/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;"> --}}
             {{-- <img alt="Logo" src="{{asset('storage/images/logos/'.auth()->user()->company->logo_url)}}" style="width:100px; max-height:100px; object-fit:contain;"> --}}
             <p class="subtitle">{{$user->company->nombre}}</p>
         </div>
