@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function($table) {
             $table->unsignedBigInteger('id_empresa')->nullable();
-            $table->tinyText('locale')->default('es');
+            $table->tinyText('locale');
             $table->foreign('id_empresa')->references('id')->on('empresas')->onConstraint('cascade')->onDelete('cascade');
             $table->foreign('horario')->references('id')->on('horarios')->onConstraint('cascade')->onDelete('cascade');
         });
