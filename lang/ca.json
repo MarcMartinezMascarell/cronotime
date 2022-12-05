@@ -1,6 +1,6 @@
 {
     "Fichar": "Fitxar",
-    "¡Buenos días": "Bon día",
+    "¡Buenos días": "Bon dia",
     "Tus Informes": "Els teus informes",
     "Cambiar período": "Canviar període",
     "Panel de control": "Panell de control",
@@ -85,5 +85,6 @@
     "Añadir salida": "Afegir sortida",
     "Llevas un": "Portes un",
     "de lo previsto para hoy": "del previst per avui",
-    "de lo previsto esta semana": "del previst aquesta setmana"
+    "de lo previsto esta semana": "del previst aquesta setmana",
+    "A continuación encontrarás una lista detallada de todos los cambios realizados en la aplicación": "A continuació trobaràs una llista detallada de tots els canvis realitzats a l'aplicació"
 }

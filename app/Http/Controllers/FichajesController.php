@@ -19,7 +19,8 @@ class FichajesController extends Controller
             //App::setLocale('ca');
             $fichajesHoy = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())->orderBy('started_at')->get();
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
-            $total_minutes_ended = Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())
+            $total_minutes_ended = Fichaje::where('user_id', $user->id)->whereNotNull('stopped_at')
+            ->whereDate('started_at', Carbon::today())
             ->sum('total_time');
             $last_fichaje_not_ended = (Fichaje::where('user_id', $user->id)->whereDate('started_at', Carbon::today())
             ->where('stopped_at', null)->select('started_at')->first());
@@ -30,7 +31,8 @@ class FichajesController extends Controller
             $total_minutes = $total_minutes_ended + $total_minutes_not_ended;
             $total_hoy = $this->minutesToHours($total_minutes);
 
-            $total_minutes_semana = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])
+            $total_minutes_semana = Fichaje::where('user_id', $user->id)->whereNotNull('stopped_at')
+            ->whereBetween('started_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])
             ->sum('total_time');
             $total_minutes_semana += $total_minutes_not_ended;
             $total_semana = $this->minutesToHours($total_minutes_semana);

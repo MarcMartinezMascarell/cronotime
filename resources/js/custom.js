@@ -30,25 +30,29 @@ $(document).ready(function() {
     });
 
 
-    $('.totalTime').each(function() {
-        let totalTime = $(this).text().split(':');
-        let minutes = totalTime[1];
-        let hours = totalTime[0];
-        setInterval(() => {
-            minutes++;
-            if(minutes < 10) {
-                minutes = '0' + minutes;
-            }
-            if (minutes == 60) {
-                minutes = 0;
-                hours++;
-                if(hours < 10) {
-                    hours = '0' + hours;
-                }
-            }
-            $(this).text(hours + ':' + minutes);
-        }, 60000);
-    })
+    if($('.btn-salir').length) {
+        setTimeout(() => {
+            $('.totalTime').each(function() {
+                let totalTime = $(this).text().split(':');
+                let minutes = totalTime[1];
+                let hours = totalTime[0];
+                setInterval(() => {
+                    minutes++;
+                    if(minutes < 10) {
+                        minutes = '0' + minutes;
+                    }
+                    if (minutes == 60) {
+                        minutes = 0;
+                        hours++;
+                        if(hours < 10) {
+                            hours = '0' + hours;
+                        }
+                    }
+                    $(this).text(hours + ':' + minutes);
+                }, 59000);
+            })
+        }, 1000);
+    }
 
 
 

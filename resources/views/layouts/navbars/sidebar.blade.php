@@ -12,11 +12,11 @@
             @hasanyrole('administrador|superAdmin')
             <div class="d-flex justify-content-center align-items-center"  data-toggle="tooltip" data-placement="bottom" title="{{__("Cambiar logo")}}">
                 <a href=""  data-toggle="modal" data-target="#update-logo">
-                    <img class="sidebar-logo" alt="Logo" src="{{asset('images/logos/'.auth()->user()->company->logo_url)}}">
+                    <img class="sidebar-logo" alt="Logo" src="{{asset('images/logos/'.auth()->user()->company->logo_url)}}" onerror="this.style.display='none'">
                 </a>
             </div>
             @else
-                <img class="sidebar-logo" alt="Logo" src="{{asset('images/logos/'.auth()->user()->company->logo_url)}}">
+                <img class="sidebar-logo" alt="Logo" src="{{asset('images/logos/'.auth()->user()->company->logo_url)}}" onerror="this.style.display='none'">
             @endhasanyrole
             <p class="text-center m-0">{{auth()->user()->company->nombre}}</p>
         </div>
@@ -167,6 +167,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="mailto:marcmartinezmascarell@gmail.com">
                         <i class="ni ni-spaceship"></i> {{__('¿Crees que podemos mejorar algo?')}}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/changelog">
+                        <i class="ni ni-spaceship"></i> {{__('Changelog')}}
                     </a>
                 </li>
             </ul>

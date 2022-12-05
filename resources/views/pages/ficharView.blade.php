@@ -207,7 +207,7 @@
                             <div class="container">
                                 <p class="text-muted text-center m-0">{{__("Estas dentro desde las")}} {{$ultimoFichaje->started_at->format('H:i')}}</p>
                             </div>
-                            <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4">
+                            <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4 btn-salir">
                                 {{__("SALIR")}}
                             </a>
                             <a href="" class="text-muted text-center w-auto mt-4" data-toggle="modal" data-target="#set-salida" data-idfichaje="{{$ultimoFichaje->id}}">

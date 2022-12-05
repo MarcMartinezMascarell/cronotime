@@ -29,31 +29,36 @@ $(document).ready(function () {
       $(this).attr('href', newLink);
     });
   });
-  $('.totalTime').each(function () {
-    var _this = this;
 
-    var totalTime = $(this).text().split(':');
-    var minutes = totalTime[1];
-    var hours = totalTime[0];
-    setInterval(function () {
-      minutes++;
+  if ($('.btn-salir').length) {
+    setTimeout(function () {
+      $('.totalTime').each(function () {
+        var _this = this;
 
-      if (minutes < 10) {
-        minutes = '0' + minutes;
-      }
+        var totalTime = $(this).text().split(':');
+        var minutes = totalTime[1];
+        var hours = totalTime[0];
+        setInterval(function () {
+          minutes++;
 
-      if (minutes == 60) {
-        minutes = 0;
-        hours++;
+          if (minutes < 10) {
+            minutes = '0' + minutes;
+          }
 
-        if (hours < 10) {
-          hours = '0' + hours;
-        }
-      }
+          if (minutes == 60) {
+            minutes = 0;
+            hours++;
 
-      $(_this).text(hours + ':' + minutes);
-    }, 60000);
-  });
+            if (hours < 10) {
+              hours = '0' + hours;
+            }
+          }
+
+          $(_this).text(hours + ':' + minutes);
+        }, 59000);
+      });
+    }, 1000);
+  }
 });
 /******/ })()
 ;

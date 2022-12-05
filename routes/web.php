@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web', WelcomesNewUsers::class,]], function () {
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
+Route::view('changelog', 'pages.changelog');
+
 Route::get('language/{locale}', function ($locale) {
     app()->setLocale($locale);
     session()->put('locale', $locale);
