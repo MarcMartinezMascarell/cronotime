@@ -49,7 +49,7 @@
             </li>
         </ul>
         <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <div class="collapse navbar-collapse justify-content-between" id="sidenav-collapse-main">
             <!-- Collapse header -->
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
@@ -175,6 +175,9 @@
                     </a>
                 </li>
             </ul>
+            <p class="text-muted text-center small">
+                v1.0.1
+            </p>
         </div>
     </div>
 
