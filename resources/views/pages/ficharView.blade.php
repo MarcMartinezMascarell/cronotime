@@ -98,7 +98,7 @@
                             <div class="row">
                                 <div class="col d-flex flex-column">
                                     <h5 class="text-muted mb-0 small text-center">{{__("Horas trabajadas hoy")}}</h5>
-                                    <span class="h4 font-weight-bold mb-0 mt-1 text-center">{{$total_hoy}}</span>
+                                    <span class="h4 font-weight-bold mb-0 mt-1 text-center totalTime">{{$total_hoy}}</span>
                                 </div>
                             </div>
                             @if(Auth::user()->horas)
@@ -132,7 +132,7 @@
                             <div class="row">
                                 <div class="col d-flex flex-column">
                                     <h5 class="text-muted mb-0 small text-center">{{__("Horas trabajadas esta semana")}}</h5>
-                                    <span class="h4 font-weight-bold mb-0 mt-1 text-center">{{$total_semana}}</span>
+                                    <span class="h4 font-weight-bold mb-0 mt-1 text-center totalTime">{{$total_semana}}</span>
                                 </div>
                             </div>
                             @if($semanaPrevisto)
@@ -207,7 +207,7 @@
                             <div class="container">
                                 <p class="text-muted text-center m-0">{{__("Estas dentro desde las")}} {{$ultimoFichaje->started_at->format('H:i')}}</p>
                             </div>
-                            <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4">
+                            <a href="{{ route('setFichaje') }}" class="btn btn-lg btn-danger w-50 mx-auto mt-4 btn-salir">
                                 {{__("SALIR")}}
                             </a>
                             <a href="" class="text-muted text-center w-auto mt-4" data-toggle="modal" data-target="#set-salida" data-idfichaje="{{$ultimoFichaje->id}}">

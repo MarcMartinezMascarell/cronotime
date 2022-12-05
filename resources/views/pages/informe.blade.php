@@ -38,7 +38,7 @@ function toHoursAndMinutes($totalMinutes) {
                 <p class="text-muted m-0">{{__("Seleccionar trabajador")}}</p>
                 <div class="row col-12 col-lg-6">
                     <div class="form-group m-0 p-0">
-                        <select class="form-control" name="userId">
+                        <select class="form-control" name="userId" id="workerId">
                             @foreach (Auth::user()->company->workers as $worker)
                                 <option <?php echo $worker->id == $userId ? 'selected' : '' ?> value="{{$worker->id}}">{{$worker->name}} {{$worker->surname}}</option>
                             @endforeach
@@ -46,7 +46,11 @@ function toHoursAndMinutes($totalMinutes) {
                     </div>
                 </div>
                 @endhasanyrole
-                <p class="text-muted m-0">{{__("Cambiar período")}}</p>
+                <p class="text-muted m-0 mt-2">{{__("Cambiar período")}}</p>
+                <div class="date-options my-2">
+                    <a href="{{ route('estadisticas.informe', ['start' => Carbon\Carbon::now()->subDays(7)->startOfWeek()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->subDays(7)->endOfWeek()->format('Y-m-d'), 'userId' => $userId]) }}" class="btn btn-dark fecha_informe">{{__("Semana pasada")}}</a>
+                    <a href="{{ route('estadisticas.informe', ['start' => Carbon\Carbon::now()->subDays(30)->startOfMonth()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->subDays(30)->endOfMonth()->format('Y-m-d'), 'userId' => $userId]) }}" class="btn btn-dark fecha_informe">{{__("Mes pasado")}}</a>
+                </div>
                 <div class="input-daterange datepicker row align-items-start">
                     <div class="col">
                         <div class="form-group m-0">

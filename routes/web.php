@@ -28,9 +28,9 @@ Route::group(['middleware' => ['web', WelcomesNewUsers::class,]], function () {
     Route::post('welcome/{user}', [WelcomeController::class, 'savePassword']);
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+
+Route::view('changelog', 'pages.changelog');
 
 Route::get('language/{locale}', function ($locale) {
     app()->setLocale($locale);
@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //ESTADÍSTICAS
         //EMPLEADOS
-        Route::get('informes', [EstadisticasController::class, 'informe'])->name('estadisticas.informe');
+        Route::get('informes/', [EstadisticasController::class, 'informe'])->name('estadisticas.informe');
 
     //DOWLOAD FILES
         Route::get('downloadInformePDF', [PDFGeneratorController::class, 'download'])->name('pdf.download');

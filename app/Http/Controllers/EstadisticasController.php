@@ -31,7 +31,6 @@ class EstadisticasController extends Controller
                     return redirect()->back()->withError(__('Este usuario no pertenece a tu organización'));
                 }
             }
-
         } else
             $user = Auth::user();
 
