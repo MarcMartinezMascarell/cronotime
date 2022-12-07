@@ -33,7 +33,7 @@
 .flotate-alert {
     position: absolute;
     z-index: 999;
-    top: 8rem;
+    top: 4rem;
     left: 0;
     right: 0;
     margin: 0 3rem;
@@ -61,5 +61,21 @@
 .pdf_logo {
     img {
         mix-blend-mode: multiply;
+    }
+}
+
+
+//Calendario
+#agenda {
+    .fc-day-today {
+        background-color: rgba(244, 100, 95, 0.2);
+        .fc-daygrid-day-top {
+            .fc-daygrid-day-number {
+                font-weight: 600;
+            }
+        }
+    }
+    .fc-toolbar-title {
+        text-transform: capitalize;
     }
 }

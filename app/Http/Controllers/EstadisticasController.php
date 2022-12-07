@@ -88,6 +88,3 @@ class EstadisticasController extends Controller
         return $total;
     }
 }
-
-
-

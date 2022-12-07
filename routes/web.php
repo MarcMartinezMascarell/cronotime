@@ -11,6 +11,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\PDFGeneratorController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CalendarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,11 @@ Route::group(['middleware' => 'auth'], function () {
     //ESTADÍSTICAS
         //EMPLEADOS
         Route::get('informes/', [EstadisticasController::class, 'informe'])->name('estadisticas.informe');
+
+    //CALENDARIO
+        Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
+        Route::get('get-events', [CalendarController::class, 'getEvents']);
+        Route::post('add-event', [CalendarController::class, 'addEvent'])->name('calendar.addEvent');
 
     //DOWLOAD FILES
         Route::get('downloadInformePDF', [PDFGeneratorController::class, 'download'])->name('pdf.download');
