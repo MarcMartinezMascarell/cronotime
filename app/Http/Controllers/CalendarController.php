@@ -20,8 +20,9 @@ class CalendarController extends Controller
             $event->title = $request->title;
             $event->description = $request->description;
             $start_date = $request->start_date;
-            if($request->start_time) {
+            if($request->start_time != null) {
                 $start_date = date('Y-m-d H:i', strtotime("$request->start_date $request->start_time"));
+                $event->allDay = 0;
             } else {
                 $start_date = $request->start_date;
                 $event->allDay = 1;
@@ -32,12 +33,11 @@ class CalendarController extends Controller
                 if($request->end_date < $request->start_date) {
                     return redirect()->back()->withError(__('La fecha de finalización no puede ser anterior a la fecha de inicio'));
                 }
-                if($request->end_time) {
+                if($request->end_time != null) {
                     $end_date = date('Y-m-d H:i', strtotime("$request->end_date $request->end_time"));
                 } else {
                     $end_date = $request->end_date;
                 }
-                $event->allDay = 0;
                 $event->end = $end_date;
             } else {
                 $event->end = $start_date;

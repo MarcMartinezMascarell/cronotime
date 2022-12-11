@@ -8,8 +8,21 @@
 ])
 
 <div class="container-fluid mt-4">
+    {{-- <ul >
+        <strong class="h3 mb-3">v1.1.0</strong>
+        <small>(5/12/2022)</small>
+        <li>Añadida nueva funcionalidad de Calendario Laboral. En ella podrás ver los distintos eventos creados por los administradores de tu empresa, así como añadir tus ausencias o solicitar vacaciones.</li>
+    </ul> --}}
     <ul >
-        <strong>v1.0.1</strong>
+        <strong class="h5 mb-3">v1.0.2</strong>
+        <small>(11/12/2022)</small>
+        <li>Desarrollo empezado de nueva funcionalidad: Calendario Laboral.</li>
+        <li>Añadida nueva información en tu informe: Horas totales por día y semana.</li>
+        <li>Pequeños bugs solucionados.</li>
+    </ul>
+    <ul >
+        <strong class="h5 mb-3">v1.0.1</strong>
+        <small>(5/12/2022)</small>
         <li>Contador de <em>horas trabajadas hoy</em> y <em>horas trabajadas esta semana</em> ahora se actualiza automáticamente, sin necesidad de recargar la págna.</li>
         <li>Añadidos botones enlaces directos a "Semana anterior" y "Mes anterior" en el apartado de informes.</li>
         <li>Aumentado el tiempo de sesión a 7 días.</li>

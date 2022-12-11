@@ -97,8 +97,13 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('estadisticas.informe') }}">
+                    <a class="nav-link" href="{{ route('estadisticas.informe') }}" disabled>
                         <i class="fas fa-clipboard" style="color: #f4645f;"></i> {{__("Tus Informes")}}
+                    </a>
+                </li>
+                <li class="nav-item coming-soon">
+                    <a class="nav-link" >
+                        <i class="fas fa-calendar-alt" style="color: #f4645f;"></i> {{__("Calendario")}}
                     </a>
                 </li>
                 @hasanyrole('administrador|superAdmin')

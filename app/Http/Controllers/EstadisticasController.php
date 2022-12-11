@@ -53,6 +53,21 @@ class EstadisticasController extends Controller
             ->sum('total_time');
             $total_periodo = $this->minutesToHours($total_minutes_periodo);
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
+            if($total_minutes_periodo > 0){
+                $minutes_per_day = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+                ->groupBy(DB::raw("DATE_FORMAT(started_at, '%d-%m-%Y')"))->orderBy('started_at', 'asc')
+                ->select(DB::raw("(sum(total_time)) as total_time"), 'started_at')
+                ->get();
+                $total_minutes_semana = Fichaje::where('user_id', $user->id)->whereNotNull('stopped_at')
+                ->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+                ->orderBy('started_at', 'asc')
+                ->select(DB::raw('sum(total_time) as minutes'), DB::raw("DATE_FORMAT(created_at,'%u') as weeks"))
+                ->groupBy('weeks')->get();
+            } else {
+                $minutes_per_day = [];
+                $total_minutes_semana = [];
+            }
+            //return $total_minutes_semana;
             if($numero_dias_trabajados)
                 $mediaHoras = $this->minutesToHours($total_minutes_periodo/$numero_dias_trabajados);
             else
@@ -68,6 +83,8 @@ class EstadisticasController extends Controller
                 'mediaHoras' => $mediaHoras,
                 'userId' => $userId,
                 'ultimoFichaje' => $ultimoFichaje,
+                'minutes_per_day' => $minutes_per_day,
+                'total_minutes_semana' => $total_minutes_semana,
             ]);
         } else {
             return redirect()->route('login');

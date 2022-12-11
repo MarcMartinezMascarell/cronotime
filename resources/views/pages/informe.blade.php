@@ -233,6 +233,73 @@ function toHoursAndMinutes($totalMinutes) {
                                 <h4 class="mr-2 small text-muted">{{__("Número total de fichajes")}}: </h4>
                                 <h3 class="m-0 bold small text-muted"><strong>{{$numeroFichajes}}</strong></h3>
                             </div>
+                                {{-- <div class="col-lg-6 col-sm-4 col-md-12 text-center d-flex justify-content-center">
+                                    <h4 class="mr-2 small text-muted">{{__("Días de vacaciones disfrutadas")}}: </h4>
+                                    <h3 class="m-0 bold small text-muted"><strong>{{$numeroFichajes}}</strong></h3>
+                                </div>
+                                <div class="col-lg-6 col-sm-4 col-md-12 text-center d-flex justify-content-center">
+                                    <h4 class="mr-2 small text-muted">{{__("Días de vacaciones restantes")}}: </h4>
+                                    <h3 class="m-0 bold small text-muted"><strong>{{$numeroFichajes}}</strong></h3>
+                                </div>
+                                <div class="col-lg-6 col-sm-4 col-md-12 text-center d-flex justify-content-center">
+                                    <h4 class="mr-2 small text-muted">{{__("Ausencias")}}: </h4>
+                                    <h3 class="m-0 bold small text-muted"><strong>{{$numeroFichajes}}</strong></h3>
+                                </div> --}}
+                        </div>
+                    </div>
+                </div>
+                {{-- TOTAL POR DÍAS Y SEMANAS --}}
+                <div class="card card-stats mb-4 mb-xl-0 mt-3">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-6 d-flex flex-column">
+                                <h5 class="mb-2 text-center">{{__("Horas por día")}}</h5>
+                                <!-- FOREACH HORAS -->
+                                <?php
+                                if(!empty($minutes_per_day)) :
+                                $currentWeek = $minutes_per_day[0]->started_at->format('W');
+                                $startOfWeek = $minutes_per_day[0]->started_at->startOfWeek()->format('d/m/Y');
+                                $endOfWeek = $minutes_per_day[0]->started_at->endOfWeek()->format('d/m/Y');
+                                foreach ($total_minutes_semana as $semana) {
+                                    if($semana['weeks'] == $currentWeek) {
+                                        $week_minutes = $semana['minutes'];
+                                    }
+                                }
+                                ?>
+                                <p class="small text-muted mb-0">{{__("Semana")}} {{$startOfWeek}} - {{$endOfWeek }} ({{toHoursAndMinutes($week_minutes)}})</p>
+                                @foreach($minutes_per_day as $minutes)
+                                    <?php
+                                        if($minutes->started_at->format('W') > $currentWeek) {
+                                            $currentWeek = $minutes->started_at->format('W');
+                                            $startOfWeek = $minutes->started_at->startOfWeek()->format('d/m/Y');
+                                            $endOfWeek = $minutes->started_at->endOfWeek()->format('d/m/Y');
+                                            ?>
+                                            <hr class="mt-2 mb-2">
+                                            <?php
+                                            foreach ($total_minutes_semana as $semana) {
+                                                if($semana['weeks'] == $currentWeek) {
+                                                    $week_minutes = $semana['minutes'];
+                                                }
+                                            }
+                                            ?>
+                                            <p class="small text-muted mb-0">{{__("Semana")}} {{$startOfWeek}} - {{$endOfWeek }} ({{toHoursAndMinutes($week_minutes)}})</p>
+                                            <?php
+                                        }
+                                    ?>
+                                    <div class="row mt-2">
+                                        <div class="col d-flex align-center align-items-center">
+                                            <?php Carbon\Carbon::setLocale('ca'); ?>
+                                            <p class="small sentido w-50 text-center m-0">{{$minutes->started_at->format('d/m/Y')}}</p>
+                                            <?php
+                                                        $minutes_of_day = $minutes->total_time;
+                                                        $total = toHoursAndMinutes($minutes_of_day);
+                                            ?>
+                                            <span class="w-50 text-center">{{$total}}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>

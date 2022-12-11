@@ -93,13 +93,22 @@ $(document).ready(function() {
     //CALENDARIO
     let calendarEl = document.getElementById('agenda');
     let locale = document.getElementsByTagName("html")[0].getAttribute("lang");
+    let tusEventosText = (locale == 'es') ? 'Tus eventos' : 'Els teus events';
     if(typeof(calendarEl) != 'undefined' && calendarEl != null) {
         let calendar = new FullCalendar.Calendar(calendarEl, {
 
             initialView: 'dayGridMonth',
             locale: locale,
+            customButtons: {
+                myCustomButton: {
+                    text: tusEventosText,
+                    click: function() {
+                    alert('clicked the custom button!');
+                    }
+                }
+            },
             headerToolbar: {
-              left: 'prev,next today',
+              left: 'prev,next today myCustomButton',
               center: 'title',
               right: 'dayGridMonth,timeGridWeek,listWeek'
             },

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Jenssegers\Date\Date;
+
 
 class Localization
 {
@@ -21,8 +23,9 @@ class Localization
     {
         if($request->user()) {
             App::setLocale($request->user()->locale);
+            Date::setLocale($request->user()->locale);
         } else {
-            App::setLocale('ca');
+            App::setLocale('es');
         }
 
         return $next($request);
