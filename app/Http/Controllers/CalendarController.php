@@ -10,8 +10,23 @@ class CalendarController extends Controller
 {
     //
     public function index() {
-        $events = Events::all();
-        return view('calendar.calendar', ['events' => $events]);
+        //Check if user is logged in
+        if($user = auth()->user()) {
+            //Check if user is admin
+            if($user->hasRole('superAdmin')) {
+                $events = Events::leftJoin('users', 'events.owner_id', 'users.id')->select('events.*', 'users.name as owner')->get();
+                return view('calendar.calendar', ['events' => $events]);
+                // $events = Events::all();
+                // return view('calendar.calendar', ['events' => $events]);
+            } else {
+                //Get events for the company
+                $events = Events::where('id_empresa', $user->company->id)->leftJoin('users', 'events.owner_id', 'users.id')->select('events.*', 'users.name as owner')->get();
+                return view('calendar.calendar', ['events' => $events]);
+            }
+        } else {
+            return redirect()->route('login');
+        }
+        //return view('calendar.calendar', ['events' => $events]);
     }
 
     public function addEvent(Request $request) {
@@ -47,6 +62,8 @@ class CalendarController extends Controller
             $event->id_empresa = $request->empresa_id;
             $event->event_type = $request->event_type;
             $event->color = $request->color;
+            if($request->event_type == 2)
+                $event->allDay = 0;
             $event->save();
         }
         return redirect()->back();

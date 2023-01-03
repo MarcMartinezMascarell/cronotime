@@ -103,21 +103,45 @@ $(document).ready(function () {
           click: function click() {
             alert('clicked the custom button!');
           }
+        },
+        filterButton: {
+          text: 'Filtrar',
+          click: function click() {
+            alert('clicked the custom button! 2');
+          },
+          el: {
+            id: 'filter-select-button'
+          }
         }
       },
       headerToolbar: {
         left: 'prev,next today myCustomButton',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
+        center: 'title filterButton',
+        right: 'dayGridMonth,timeGridWeek,listMonth'
       },
       selectable: true,
       selectMirror: true,
       selectMinDistance: 10,
+      eventDidMount: function eventDidMount(info) {
+        if (info.event.extendedProps.event_type == 2) {
+          //Si el evento es de tipo ausencia, muestra el nombre del trabajador
+          if (info.view.type == 'listMonth') {
+            var titleEl = info.el.querySelector('.fc-list-event-title a');
+            titleEl.textContent = info.event.title + ' (' + info.event.extendedProps.owner + ')';
+            info.el.style.backgroundColor = info.event.backgroundColor;
+          } else {
+            var titleEl = info.el.querySelector('.fc-event-title');
+            titleEl.textContent = info.event.title + ' (' + info.event.extendedProps.owner + ')';
+          }
+        }
+      },
       dateClick: function dateClick(info) {
         var _date$;
 
-        console.log(info);
-        $('#new-event').modal('show');
+        //Click simple en una fecha
+        //Mostrar modal para añadir evento
+        $('#new-event').modal('show'); //Canviar las fecha de todos los inputs de fecha
+
         var date = info.dateStr.split('T');
         $('.start_date').val(date[0]);
         $('.start_time').val((_date$ = date[1]) === null || _date$ === void 0 ? void 0 : _date$.split('+')[0]);
@@ -125,8 +149,10 @@ $(document).ready(function () {
       select: function select(info) {
         var _date_start$, _date_end$;
 
-        console.log(info);
-        $('#new-event').modal('show');
+        //Click largo en una fecha
+        //Mostrar modal para añadir evento
+        $('#new-event').modal('show'); //Canviar las fecha de todos los inputs de fecha
+
         var date_start = info.startStr.split('T');
         var date_end = info.endStr.split('T');
         $('.start_date').val(date_start[0]);
@@ -151,6 +177,10 @@ $(document).ready(function () {
     });
     calendar.render();
   }
+
+  var filterSelect = document.getElementById('filter-select');
+  var customButton = document.getElementById('filter-select-button');
+  customButton.appendChild(filterSelect);
 });
 /******/ })()
 ;

@@ -18,6 +18,15 @@
 </script>
 
 
+<div id="filter-select">
+    <select name="filter" id="">
+        <option value="all">{{__("Todos")}}</option>
+        <option value="normal">{{__("Normales")}}</option>
+        <option value="ausencia">{{__("Ausencias")}}</option>
+        <option value="vacaciones">{{__("Vacaciones")}}</option>
+    </select>
+</div>
+
 <div class="modal fade" id="new-event" tabindex="1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-top modal-" role="document">
         <div class="modal-content">
@@ -111,21 +120,34 @@
                 </form>
 
                 {{-- FORMULARIO AUSENCIAS --}}
-                <form id="evento-ausencia" class="event-type-form" action="{{ route('company.updateLogo')}}"  method="POST" style="display:none">
+                <form id="evento-ausencia" class=" event-type-form" action="{{ route('calendar.addEvent')}}"  method="POST" style="display:none">
                     @csrf
-                    @method('PUT')
-                        <input type="hidden" name="empresa" value="{{Auth::user()->company->id}}">
+                    @method('POST')
+                        <input type="hidden" name="empresa_id" value="{{Auth::user()->company->id}}">
+                        <input type="hidden" name="owner_id" value="{{Auth::id()}}">
+                        <input type="hidden" name="event_type" value="2">
+                        <input type="hidden" name="color" value="#e76f51">
+                        <input class="start_date" type="hidden" name="start_date">
+                        <input class="start_date" type="hidden" name="end_date">
                         <div class="form-group mb-2">
-                            <input class="form-control" type="text" name="title" id="title" placeholder="{{__("Motivo*")}}" required>
+                            <input class="form-control" type="text" name="title" id="title" placeholder="{{__('Motivo*')}}" required>
                         </div>
                         <div class="row">
                             <div class="form-group mb-2">
                                 <div class="row">
+                                    <div class="col">
+                                        <label class="mb-1 small" for="start_date">{{__("Fecha")}}</label>
+                                        <input id="start_date" class="form-control start_date" type="date" name="start_date" aria-label="Small">
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-xs-12 col-sm-6">
-                                        <input id="start" class="form-control" type="datetime-local" name="start" aria-label="Small">
+                                    <label class="mb-1 small" for="start_date">{{__("Hora inicio")}}</label>
+                                        <input id="start" class="form-control" type="time" name="start_time" aria-label="Small">
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <input id="end" class="form-control" type="datetime-local" name="end" aria-label="Small">
+                                    <label class="mb-1 small" for="start_date">{{__("Hora final")}}</label>
+                                        <input id="end" class="form-control" type="time" name="end_time" aria-label="Small">
                                     </div>
                                 </div>
                             </div>

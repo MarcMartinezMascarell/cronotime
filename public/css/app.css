@@ -10315,3 +10315,7 @@ textarea.form-control-lg {
   opacity: 0.5;
   pointer-events: none;
 }
+
+.fc, .fc *, .fc *:before, .fc *:after {
+  transition: all 0.2s ease;
+}
