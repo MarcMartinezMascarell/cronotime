@@ -108,8 +108,8 @@
                 </li>
                 @hasanyrole('administrador|superAdmin')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="fas fa-desktop" style="color: #f4645f;"></i> {{__("Panel de control")}}
+                    <a class="nav-link" href="{{ route('estadisticas.dashboard') }}">
+                        <i class="fas fa-desktop" style="color: #f4645f;"></i> {{__("Dashboard")}}
                     </a>
                 </li>
                 <li class="nav-item">

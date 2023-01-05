@@ -82,6 +82,10 @@ Route::group(['middleware' => 'auth'], function () {
         //EMPLEADOS
         Route::get('informes/', [EstadisticasController::class, 'informe'])->name('estadisticas.informe');
 
+        //ESTADÍSTICAS
+        Route::get('dashboard/', [EstadisticasController::class, 'dashboard'])->name('estadisticas.dashboard');
+        Route::get('chart-data', [EstadisticasController::class, 'chartData']);
+
     //CALENDARIO
         Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
         Route::get('get-events', [CalendarController::class, 'getEvents']);

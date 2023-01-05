@@ -91,6 +91,57 @@ class EstadisticasController extends Controller
         }
     }
 
+    public function dashboard(Request $request) {
+        if($user = Auth::user()) {
+
+            $startDate = $request->input('start', date('Y-01-01'));
+            $endDate = $request->input('end', date('Y-12-31'));
+
+            // Retrieve the data from the database
+            $results = Fichaje::selectRaw("MONTH(started_at) as month, SUM(TIMESTAMPDIFF(MINUTE, started_at, stopped_at)) as total_minutes")
+            ->where("user_id", $user->id)
+            ->whereBetween("started_at", [$startDate, $endDate])
+            ->groupBy("month")
+            ->get();
+
+            // Extract the labels and data from the results
+            // Create an array with all the month names
+            $labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            // Create an array with the data for each month, initialized to zero
+            $chartData = array_fill(0, 12, 0);
+
+            // Iterate through the results of the query, and update the data for each month
+            foreach ($results as $result) {
+                $chartData[$result->month - 1] = number_format(($result->total_minutes / 60), 2);
+            }
+            return view('pages.dashboard', [
+                'labels' => $labels,
+                'chartData' => $chartData,
+            ]);
+        }
+    }
+
+    public function chartData() {
+        if($user = Auth::user()) {
+            // Retrieve the data from the database
+            $results = Fichaje::selectRaw("MONTH(started_at) as month, SUM(TIMESTAMPDIFF(MINUTE, started_at, stopped_at)) as total_minutes")
+            ->where("user_id", $userId)
+            ->groupBy("month")
+            ->get();
+
+            // Extract the labels and data from the results
+            $labels = [];
+            $chartData = [];
+            foreach ($results as $result) {
+                $labels[] = $result->month;
+                $chartData[] = $result->total_minutes;
+            }
+
+            // Return the data as a JSON response
+            return response()->json($data);
+        }
+    }
+
 
 
 

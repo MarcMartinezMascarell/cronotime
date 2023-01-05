@@ -105,19 +105,10 @@ $(document).ready(function() {
                     alert('clicked the custom button!');
                     }
                 },
-                filterButton: {
-                    text: 'Filtrar',
-                    click: function() {
-                        alert('clicked the custom button! 2');
-                    },
-                    el: {
-                        id: 'filter-select-button'
-                    }
-                }
             },
             headerToolbar: {
               left: 'prev,next today myCustomButton',
-              center: 'title filterButton',
+              center: 'title',
               right: 'dayGridMonth,timeGridWeek,listMonth'
             },
             selectable: true,
@@ -180,9 +171,39 @@ $(document).ready(function() {
           calendar.render();
     }
 
-    let filterSelect = document.getElementById('filter-select');
-    let customButton = document.getElementById('filter-select-button');
-    customButton.appendChild(filterSelect);
+
+
+
+    //CHART
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let maxYValue = Math.max(...chartData) + 2;
+    let chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Horas totales',
+                data: chartData,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        max: Math.ceil(maxYValue)
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Horas'
+                    }
+                }]
+            }
+        }
+    });
 
 })
 

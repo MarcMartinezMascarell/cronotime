@@ -18,14 +18,14 @@
 </script>
 
 
-<div id="filter-select">
+<!-- <div id="filter-select">
     <select name="filter" id="">
         <option value="all">{{__("Todos")}}</option>
         <option value="normal">{{__("Normales")}}</option>
         <option value="ausencia">{{__("Ausencias")}}</option>
         <option value="vacaciones">{{__("Vacaciones")}}</option>
     </select>
-</div>
+</div> -->
 
 <div class="modal fade" id="new-event" tabindex="1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-top modal-" role="document">
