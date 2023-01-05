@@ -189,11 +189,12 @@ $(document).ready(function () {
     data: {
       labels: labels,
       datasets: [{
-        label: 'Horas totales',
+        label: 'Barras',
         data: chartData,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
+        backgroundColor: 'rgba(244, 100, 95, 0.2)',
+        borderColor: 'rgba(244, 100, 95, 1)',
+        borderWidth: 1,
+        pointStyle: 'circle'
       }]
     },
     options: {
