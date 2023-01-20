@@ -40,6 +40,16 @@ class ProjectController extends Controller
         return redirect()->route('projects.index');
     }
 
+    public function showProject($id){
+        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1) {
+            return 'hola';
+            $project = Project::find($id);
+            return view('admin.showProject', compact('project'));
+        } else {
+            return redirect()->route('home')->withError('No tienes permiso para hacer eso');
+        }
+    }
+
     public function assignHours() {
         if($user = Auth::user()) {
             $projects = Project::where('id_empresa', Auth::user()->company->id)->get();

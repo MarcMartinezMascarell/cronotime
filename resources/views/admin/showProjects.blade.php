@@ -46,7 +46,9 @@ function toHoursAndMinutes($totalMinutes) {
                             <th scope="row">
                                 <div class="media align-items-center">
                                     <div class="media-body">
-                                        <span class="mb-0 text-sm">{{$project->name}}</span>
+                                        <a href="{{route('project.show', ['id' => $project->id])}}">
+                                            <span class="mb-0 text-sm">{{$project->name}}</span>
+                                        </a>
                                     </div>
                                 </div>
                             </th>
@@ -76,9 +78,8 @@ function toHoursAndMinutes($totalMinutes) {
                                     <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item text-danger" href="#">Eliminar empresa</a>
+                                        <a class="dropdown-item" href="#">Editar</a>
+                                        <a class="dropdown-item text-danger" href="#">Eliminar proyecto</a>
                                     </div>
                                 </div>
                             </td>
