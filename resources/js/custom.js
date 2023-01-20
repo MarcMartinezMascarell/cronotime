@@ -54,6 +54,39 @@ $(document).ready(function() {
         }, 1000);
     }
 
+    //Assignar horas a proyecto
+    $('#assignMinutesForm').on('submit', function(e) {
+        e.preventDefault();
+        let minutesToAssign = parseInt($('#minutesToAssign').text());
+        let minutesAssigned = 0;
+        $(this).find('input[type="number"]').each(function(e) {
+            minutesAssigned += parseInt($(this).val());
+        });
+        if(minutesAssigned > minutesToAssign) {
+            alert('No puedes asignar más horas de las que has trabajado');
+            return false;
+        }
+        $(this).unbind('submit').submit();
+    });
+    //On change input number, update minutes to assign
+    let minutesToAssign = parseInt($('#minutesToAssign').text());
+    $('input[type="number"]').on('change', function(e) {
+        let minutesAssigned = 0;
+        let newMinutesToAssign = minutesToAssign;
+        if(e.target.value == '') {
+            e.target.value = 0;
+        }
+        $('#assignMinutesForm').find('input[type="number"]').each(function(e) {
+            minutesAssigned += parseInt($(this).val());
+        });
+        newMinutesToAssign -= minutesAssigned;
+        if(Number.isInteger(newMinutesToAssign)) {
+            $('#minutesToAssign').text(newMinutesToAssign);
+        } else {
+            $('#minutesToAssign').text(minutesToAssign);
+        }
+    });
+
 
     //FECHAS
 

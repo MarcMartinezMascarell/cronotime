@@ -12,6 +12,7 @@ use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\PDFGeneratorController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,10 +74,21 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('createCompany', [EmpresaController::class, 'storeCompany'])->name('company.store');
 		Route::get('deleteCompany/{id}', [EmpresaController::class, 'deleteCompany'])->name('company.delete');
         Route::put('updateLogo', [EmpresaController::class, 'updateLogo'])->name('company.updateLogo');
+        Route::post('toggleProjects', [EmpresaController::class, 'toggleProjects'])->name('company.toggleProjects');
 
 		Route::get('workers/{id}', [AdminController::class, 'showWorkers'])->name('workers.show');
 		Route::get('createProfile', [AdminController::class, 'createProfile'])->name('profile.create');
 		Route::post('storeProfile', [AdminController::class, 'storeProfile'])->name('profile.store');
+
+        //Proyectos
+        Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('createProject', [ProjectController::class, 'createProject'])->name('project.create');
+        Route::post('storeProject', [ProjectController::class, 'storeProject'])->name('project.store');
+        Route::get('deleteProject/{id}', [ProjectController::class, 'deleteProject'])->name('project.delete');
+        Route::get('editProject/{id}', [ProjectController::class, 'editProject'])->name('project.edit');
+        Route::put('updateProject/{id}', [ProjectController::class, 'updateProject'])->name('project.update');
+        Route::get('assignHours', [ProjectController::class, 'assignHours'])->name('project.assignHours');
+        Route::post('saveProjectHours', [ProjectController::class, 'saveProjectHours'])->name('project.saveProjectHours');
 
     //ESTADÍSTICAS
         //EMPLEADOS

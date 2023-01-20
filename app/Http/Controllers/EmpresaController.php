@@ -71,6 +71,19 @@ class EmpresaController extends Controller
         }
     }
 
+    public function toggleProjects(Request $request) {
+        if(auth()->user()->hasAnyRole('administrador|superAdmin')) {
+            $empresa = Empresa::find(auth()->user()->company->id);
+            if($empresa->has_projects == 1) {
+                $empresa->has_projects = 0;
+            } else {
+                $empresa->has_projects = 1;
+            }
+            $empresa->save();
+            return redirect()->route('profile.edit');
+        }
+    }
+
     public function deleteCompany($id) {
         $empresa = Empresa::find($id);
         $empresa->delete();

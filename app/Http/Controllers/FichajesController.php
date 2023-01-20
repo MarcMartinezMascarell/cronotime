@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fichaje;
 use App\Models\User;
+use App\Models\Project;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use DB;
+
 
 class FichajesController extends Controller
 {
@@ -68,6 +70,7 @@ class FichajesController extends Controller
 
         if($user = Auth::user()) {
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
+            $isNew = false;
             //return $ultimoFichaje;
             if($ultimoFichaje && $ultimoFichaje->stopped_at == null) {
                 $ultimoFichaje->stopped_at = Carbon::now();
@@ -75,14 +78,27 @@ class FichajesController extends Controller
                 $total_time = $ultimoFichaje->stopped_at->diffInMinutes($ultimoFichaje->started_at);
                 $ultimoFichaje->total_time = $total_time;
                 $ultimoFichaje->save();
+                $user->minutes_to_assign = $user->minutes_to_assign + $total_time;
+                $user->update();
             } else {
                 $nuevoFichaje = Fichaje::create([
                     'user_id' => $user->id,
                     'started_at' => Carbon::now(),
                 ]);
+                $isNew = true;
                 $nuevoFichaje->save();
             }
-            return redirect()->route('fichar.view');
+            if($ultimoFichaje && $ultimoFichaje->stopped_at != null && $isNew == false) {
+                if(Auth::user()->company->has_projects == 1) {
+                    $projects = Project::where('id_empresa', Auth::user()->company->id)->get();
+                    return view('pages.assignHours', ['projects' => $projects, 'ultimoFichaje' => $ultimoFichaje]);
+                } else {
+                    return redirect()->route('fichar.view');
+                }
+            } else {
+                return redirect()->route('fichar.view');
+            }
+
         } else {
             return redirect()->route('login');
         }
@@ -122,15 +138,23 @@ class FichajesController extends Controller
 
 
     public function delete(Request $request) {
-        $fichaje = Fichaje::find($request->idFichaje);
-        if($request->type == 'entrada') {
-            $fichaje->delete();
+        if($user = Auth::user()) {
+            $fichaje = Fichaje::find($request->idFichaje);
+            if($request->type == 'entrada') {
+                $fichaje->delete();
+            } else {
+                if($user->company->has_projects == 1) {
+                    $user->minutes_to_assign = $user->minutes_to_assign - $fichaje->total_time;
+                    $user->update();
+                }
+                $fichaje->stopped_at = null;
+                $fichaje->total_time = null;
+                $fichaje->save();
+            }
+            return redirect()->route('fichar.view');
         } else {
-            $fichaje->stopped_at = null;
-            $fichaje->total_time = null;
-            $fichaje->save();
+            return redirect()->route('login');
         }
-        return redirect()->route('fichar.view');
     }
 
     private function minutesToHours($total_minutes) {

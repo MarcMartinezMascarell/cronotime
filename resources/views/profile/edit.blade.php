@@ -56,6 +56,15 @@
                                 <input type="submit" class="btn btn-success" value="{{__("Cambiar")}}">
 
                             </form>
+                            @hasanyrole('administrador|superAdmin')
+                            <hr class="my-4" />
+                            <form action="{{route('company.toggleProjects')}}" method="post">
+                                @csrf
+                                @method('post')
+                                <input type="hidden" name="company_id" value="{{auth()->user()->company->id}}">
+                                <input type="submit" class="btn btn-{{ (auth()->user()->company->has_projects == 1) ? 'danger' :'success' }}" value="{{ (auth()->user()->company->has_projects == 1) ? 'Desactivar proyectos' :'Activar proyectos' }}">
+                            </form>
+                            @endhasanyrole
                         </div>
                     </div>
                 </div>

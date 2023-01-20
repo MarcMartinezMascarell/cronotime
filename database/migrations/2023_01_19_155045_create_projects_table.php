@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('empresas', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->tinyText('nombre');
-            $table->integer('workers_limit');
-            $table->string('logo_url')->nullable();
-            $table->tinyInteger('has_projects')->default(0);
+            $table->string('name');
+            $table->string('description');
+            $table->string('client');
+            $table->string('status');
+            $table->float('hours', 8, 2)->default(0);
+            $table->foreignId('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresas');
+        Schema::dropIfExists('projects');
     }
 };
