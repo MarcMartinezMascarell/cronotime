@@ -33,7 +33,7 @@ function toHoursAndMinutes($totalMinutes) {
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col" data-sortable="true" >Proyecto</th>
-                        <th scope="col" data-sortable="true" >Horas dedicadas</th>
+                        <th scope="col" data-sortable="true" >Horas dedicadas este mes</th>
                         <th scope="col" data-sortable="true" >Máximo aportador</th>
                         <th scope="col" data-sortable="true" >Actualizado el</th>
                         <th scope="col" data-sortable="true" >Creado el</th>
@@ -54,12 +54,14 @@ function toHoursAndMinutes($totalMinutes) {
                             </th>
                             <td>
                                 <div class="text-sm font-weight-bold">
-                                    {{toHoursAndMinutes($project->totalTime())}}
+                                    {{toHoursAndMinutes($project->totalTime(Carbon\Carbon::now()->startOfMonth(), Carbon\Carbon::now()))}}
                                 </div>
                             </td>
                             <td>
                                 <div class="text-sm">
-                                    {{$project->totalTimeByUser()->name}} {{$project->totalTimeByUser()->surname}}
+
+                                    {{ ($project->topUser(Carbon\Carbon::now()->startOfMonth(), Carbon\Carbon::now())) ?
+                                    $project->topUser(Carbon\Carbon::now()->startOfMonth(), Carbon\Carbon::now())->name . ' ' .$project->topUser(Carbon\Carbon::now()->startOfMonth(), Carbon\Carbon::now())->surname : '' }}
                                 </div>
                             </td>
                             <td>

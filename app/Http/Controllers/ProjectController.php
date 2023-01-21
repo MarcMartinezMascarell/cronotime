@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use DB;
 
 use App\Models\Fichaje;
 use App\Models\Project;
@@ -40,11 +43,12 @@ class ProjectController extends Controller
         return redirect()->route('projects.index');
     }
 
-    public function showProject($id){
-        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1) {
-            return 'hola';
+    public function showProject($id, Request $request){
+        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
             $project = Project::find($id);
-            return view('admin.showProject', compact('project'));
+            $entrada = $request->get('start', Carbon::now()->startOfMonth());
+            $salida = $request->get('end', Carbon::today());
+            return view('admin.project', ['project' => $project, 'entrada' => $entrada, 'salida' => $salida]);
         } else {
             return redirect()->route('home')->withError('No tienes permiso para hacer eso');
         }

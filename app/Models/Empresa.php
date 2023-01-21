@@ -20,4 +20,8 @@ class Empresa extends Model
     public function workersCount() {
         return $this::workers()->count();
     }
+
+    public function projects() {
+        return $this->hasMany(Project::class, 'id_empresa', 'id');
+    }
 }

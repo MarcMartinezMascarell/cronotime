@@ -18,6 +18,42 @@
 
 ?>
 
+@if (Carbon\Carbon::today()->dayOfWeek == 5 && Auth::user()->minutes_to_assign > 0 && Auth::user()->company->has_projects == 1)
+    <div class="modal fade in" id="assignHoursPlease" tabindex="1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+        <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+            <div class="modal-content bg-gradient-danger">
+
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-notification">{{__('Atención')}}</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="py-3 text-center">
+                        <i class="ni ni-bell-55 ni-3x"></i>
+                        <h4 class="heading mt-4">{{__('¡Tienes minutos sin asignar a un proyecto!')}}</h4>
+                        <p>{{__('Por favor, asigna tus minutos restantes antes de que acabe la semana, tus jefes te lo agradecerán.')}}</p>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <a href="{{route('project.assignHours')}}" class="btn btn-default">{{__('¡Voy a ello!')}}</a>
+                    <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Me da igual</button>
+                </div>
+
+            </div>
+        </div>
+  </div>
+@endif
+
+
+
+
+
 <div class="container-fluid mt--8">
     <div class="card d-flex justify-content-center py-3">
         <h2 class="text-center">{{__("¡Buenos días")}} {{Auth::user()->name}}!</h2>

@@ -16,6 +16,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 $(document).ready(function () {
+  if ($('#assignHoursPlease').length) {
+    $('#assignHoursPlease').modal('show');
+  }
+
   $('#delete-entrada, #delete-salida').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var idFichaje = button.data('idfichaje');
@@ -73,9 +77,10 @@ $(document).ready(function () {
   } //Assignar horas a proyecto
 
 
+  var minutesToAssign = parseInt($('#minutesToAssign').text());
+  var newMinutesToAssign = minutesToAssign;
   $('#assignMinutesForm').on('submit', function (e) {
     e.preventDefault();
-    var minutesToAssign = parseInt($('#minutesToAssign').text());
     var minutesAssigned = 0;
     $(this).find('input[type="number"]').each(function (e) {
       minutesAssigned += parseInt($(this).val());
@@ -86,13 +91,15 @@ $(document).ready(function () {
       return false;
     }
 
-    $(this).unbind('submit').submit();
+    if (minutesToAssign == 0) {
+      alert('No tienes horas que asignar');
+    } else {
+      $(this).unbind('submit').submit();
+    }
   }); //On change input number, update minutes to assign
 
-  var minutesToAssign = parseInt($('#minutesToAssign').text());
   $('input[type="number"]').on('change', function (e) {
     var minutesAssigned = 0;
-    var newMinutesToAssign = minutesToAssign;
 
     if (e.target.value == '') {
       e.target.value = 0;
