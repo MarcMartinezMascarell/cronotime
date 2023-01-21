@@ -16,6 +16,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 $(document).ready(function () {
+  if ($('#assignHoursPlease').length) {
+    $('#assignHoursPlease').modal('show');
+  }
+
   $('#delete-entrada, #delete-salida').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var idFichaje = button.data('idfichaje');
@@ -70,9 +74,49 @@ $(document).ready(function () {
         }, 59000);
       });
     }, 1000);
-  } //FECHAS
-  //Seleccionar tipo de evento nuevo al añadir
+  } //Assignar horas a proyecto
 
+
+  var minutesToAssign = parseInt($('#minutesToAssign').text());
+  var newMinutesToAssign = minutesToAssign;
+  $('#assignMinutesForm').on('submit', function (e) {
+    e.preventDefault();
+    var minutesAssigned = 0;
+    $(this).find('input[type="number"]').each(function (e) {
+      minutesAssigned += parseInt($(this).val());
+    });
+
+    if (minutesAssigned > minutesToAssign) {
+      alert('No puedes asignar más horas de las que has trabajado');
+      return false;
+    }
+
+    if (minutesToAssign == 0) {
+      alert('No tienes horas que asignar');
+    } else {
+      $(this).unbind('submit').submit();
+    }
+  }); //On change input number, update minutes to assign
+
+  $('input[type="number"]').on('change', function (e) {
+    var minutesAssigned = 0;
+
+    if (e.target.value == '') {
+      e.target.value = 0;
+    }
+
+    $('#assignMinutesForm').find('input[type="number"]').each(function (e) {
+      minutesAssigned += parseInt($(this).val());
+    });
+    newMinutesToAssign -= minutesAssigned;
+
+    if (Number.isInteger(newMinutesToAssign)) {
+      $('#minutesToAssign').text(newMinutesToAssign);
+    } else {
+      $('#minutesToAssign').text(minutesToAssign);
+    }
+  }); //FECHAS
+  //Seleccionar tipo de evento nuevo al añadir
 
   $('.event-type-btn').on('click', function (e) {
     $('.event-type-form').hide();

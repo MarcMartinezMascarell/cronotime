@@ -106,7 +106,24 @@
                         <i class="fas fa-calendar-alt" style="color: #f4645f;"></i> {{__("Calendario")}}
                     </a>
                 </li>
+                @if(auth()->user()->company->has_projects == 1)
+                    <a class="nav-link active" href="#proyectosUser" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-briefcase" style="color: #f4645f;"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{__("Mis proyectos")}}</span>
+                    </a>
+                    <div class="collapse" id="proyectosUser">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.assignHours') }}">
+                                        {{__("Asignar Tiempo")}}
+                                    </a>
+                                </li>
+                            </ul>
+                    </div>
+                @endif
                 @hasanyrole('administrador|superAdmin')
+                <hr></hr>
+                <p class="heading-small text-center text-muted">{{__('Administración')}}</p>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('estadisticas.dashboard') }}">
                         <i class="fas fa-desktop" style="color: #f4645f;"></i> {{__("Dashboard")}}
@@ -115,7 +132,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#administrador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-briefcase" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{__("Administración")}}</span>
+                        <span class="nav-link-text" style="color: #f4645f;">{{__("Usuarios")}}</span>
                     </a>
 
                     <div class="collapse" id="administrador">
@@ -132,6 +149,26 @@
                             </li>
                         </ul>
                     </div>
+                    @if(auth()->user()->company->has_projects == 1)
+                        <a class="nav-link active" href="#proyectos" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="fa fa-briefcase" style="color: #f4645f;"></i>
+                            <span class="nav-link-text" style="color: #f4645f;">{{__("Proyectos")}}</span>
+                        </a>
+                        <div class="collapse" id="proyectos">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('project.create') }}">
+                                            {{__("Nuevo proyecto")}}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('projects.index') }}">
+                                            {{__("Proyectos")}}
+                                        </a>
+                                    </li>
+                                </ul>
+                        </div>
+                    @endif
                 </li>
                 @hasrole('superAdmin')
                 <li class="nav-item">

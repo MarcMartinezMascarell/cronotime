@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('empresas', function (Blueprint $table) {
+        Schema::create('project_hours', function (Blueprint $table) {
             $table->id();
-            $table->tinyText('nombre');
-            $table->integer('workers_limit');
-            $table->string('logo_url')->nullable();
-            $table->tinyInteger('has_projects')->default(0);
+            $table->foreignId('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('total_time');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresas');
+        Schema::dropIfExists('project_hours');
     }
 };
