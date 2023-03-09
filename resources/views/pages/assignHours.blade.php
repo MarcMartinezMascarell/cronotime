@@ -28,7 +28,7 @@
                                 </div>
                             @endif --}}
 
-                            <h6 class="heading-small text-muted mb-4">Tienes <span id="minutesToAssign">{{auth()->user()->minutes_to_assign}}</span> minutos para asignar</h6>
+                            <h6 class="h5 text-muted mb-4">Tienes <span id="minutesToAssign">{{auth()->user()->minutes_to_assign}}</span> minutos para asignar</h6>
 
                             <hr class="my-4" />
 

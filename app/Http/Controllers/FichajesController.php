@@ -123,7 +123,7 @@ class FichajesController extends Controller
                     'forgot' => 1,
                 ]);
                 $nuevoFichaje->save();
-                if($user->company->has_projects == 1) {
+                if($user->company->has_projects == 1 && $nuevoFichaje->stopped_at != null) {
                     $user->minutes_to_assign = $user->minutes_to_assign + $total_time;
                     $user->update();
                     $projects = Project::where('id_empresa', Auth::user()->company->id)->get();
@@ -137,10 +137,20 @@ class FichajesController extends Controller
     }
 
     public function setSalida(Request $request) {
-        $fichaje = Fichaje::find($request->idFichaje);
-        $fichaje->stopped_at = $request->salida;
-        $fichaje->total_time = $fichaje->stopped_at->diffInMinutes($fichaje->started_at);
-        $fichaje->update();
+        if($user = Auth::user()) {
+            $fichaje = Fichaje::find($request->idFichaje);
+            $fichaje->stopped_at = $request->salida;
+            $fichaje->total_time = $fichaje->stopped_at->diffInMinutes($fichaje->started_at);
+            $fichaje->update();
+            if($user->company->has_projects == 1) {
+                $user->minutes_to_assign = $user->minutes_to_assign + $fichaje->total_time;
+                $user->update();
+                $projects = Project::where('id_empresa', Auth::user()->company->id)->get();
+                return view('pages.assignHours', ['projects' => $projects]);
+            } else {
+                return redirect()->back();
+            }
+        }
         return redirect()->back();
     }
 

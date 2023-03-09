@@ -10,6 +10,7 @@ use DB;
 
 use App\Models\Fichaje;
 use App\Models\User;
+use App\Models\Project;
 
 class EstadisticasController extends Controller
 {
@@ -72,12 +73,28 @@ class EstadisticasController extends Controller
                 $mediaHoras = $this->minutesToHours($total_minutes_periodo/$numero_dias_trabajados);
             else
                 $mediaHoras = '';
+
+            if($user->company->has_projects) {
+                $projects = Project::where('id_empresa', $user->company->id)->leftJoin('project_hours', 'project_hours.project_id', '=', 'projects.id')
+                ->where('project_hours.user_id', $user->id)->groupBy('projects.id')
+                ->whereBetween('project_hours.created_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+                ->select('projects.*', DB::raw('sum(total_time) as total_time'))->get();
+                $totalProjects = Project::where('id_empresa', $user->company->id)->leftJoin('project_hours', 'project_hours.project_id', '=', 'projects.id')
+                ->where('project_hours.user_id', $user->id)
+                ->whereBetween('project_hours.created_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+                ->sum('total_time');
+            } else {
+                $projects = [];
+                $totalProjects = [];
+            }
+
             return view('pages.informe', [
                 'entrada' => $entrada,
                 'salida' => $salida,
                 'fichajesPeriodo' => $fichajesPeriodo,
                 'diasTrabajados' => $numero_dias_trabajados,
                 'numeroFichajes' => $numero_fichajes,
+                'total_minutes_periodo' => $total_minutes_periodo,
                 'totalPeriodo' => $total_periodo,
                 'numeroOlvidados' => $numero_olvidados,
                 'mediaHoras' => $mediaHoras,
@@ -85,6 +102,8 @@ class EstadisticasController extends Controller
                 'ultimoFichaje' => $ultimoFichaje,
                 'minutes_per_day' => $minutes_per_day,
                 'total_minutes_semana' => $total_minutes_semana,
+                'totalProjects' => $totalProjects,
+                'projects' => $projects
             ]);
         } else {
             return redirect()->route('login');

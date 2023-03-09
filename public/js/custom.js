@@ -98,11 +98,23 @@ $(document).ready(function () {
     }
   }); //On change input number, update minutes to assign
 
+  $('input[type="number"]').on('keyup', function (e) {
+    if (e.keyCode >= 48 && e.keyCode <= 57 || e.keycode == 38 || e.keycode == 40 || e.key == 'Backspace') {
+      changeNumberAssigned(e);
+    }
+  });
   $('input[type="number"]').on('change', function (e) {
-    var minutesAssigned = 0;
+    changeNumberAssigned(e);
+  });
 
-    if (e.target.value == '') {
+  function changeNumberAssigned(e) {
+    var minutesAssigned = 0;
+    newMinutesToAssign = minutesToAssign;
+
+    if (e.target.value == '' || e.target.value <= 0) {
       e.target.value = 0;
+      newMinutesToAssign = minutesToAssign;
+      $('#minutesToAssign').text(minutesToAssign);
     }
 
     $('#assignMinutesForm').find('input[type="number"]').each(function (e) {
@@ -115,8 +127,9 @@ $(document).ready(function () {
     } else {
       $('#minutesToAssign').text(minutesToAssign);
     }
-  }); //FECHAS
+  } //FECHAS
   //Seleccionar tipo de evento nuevo al añadir
+
 
   $('.event-type-btn').on('click', function (e) {
     $('.event-type-form').hide();

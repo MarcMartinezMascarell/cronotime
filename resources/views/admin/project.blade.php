@@ -27,6 +27,7 @@ function toHoursAndMinutes($totalMinutes) {
             <form id="informeForm" action="{{ route('project.show', ['id' => $project->id])}}" method="GET">
                 <p class="text-muted m-0 mt-2">{{__("Cambiar período")}}</p>
                 <div class="date-options my-2">
+                    <a href="{{ route('project.show', [ 'id' => $project->id, 'start' => Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')]) }}" class="btn btn-dark fecha_informe">{{__("Este mes")}}</a>
                     <a href="{{ route('project.show', [ 'id' => $project->id, 'start' => Carbon\Carbon::now()->subDays(7)->startOfWeek()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->subDays(7)->endOfWeek()->format('Y-m-d')]) }}" class="btn btn-dark fecha_informe">{{__("Semana pasada")}}</a>
                     <a href="{{ route('project.show', [ 'id' => $project->id, 'start' => Carbon\Carbon::now()->subDays(30)->startOfMonth()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->subDays(30)->endOfMonth()->format('Y-m-d')]) }}" class="btn btn-dark fecha_informe">{{__("Mes pasado")}}</a>
                 </div>

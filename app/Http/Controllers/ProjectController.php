@@ -44,14 +44,17 @@ class ProjectController extends Controller
     }
 
     public function showProject($id, Request $request){
-        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
-            $project = Project::find($id);
-            $entrada = $request->get('start', Carbon::now()->startOfMonth());
-            $salida = $request->get('end', Carbon::today());
-            return view('admin.project', ['project' => $project, 'entrada' => $entrada, 'salida' => $salida]);
-        } else {
-            return redirect()->route('home')->withError('No tienes permiso para hacer eso');
+        if(Project::find($id)) {
+            if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
+                $project = Project::find($id);
+                $entrada = $request->get('start', Carbon::now()->startOfMonth());
+                $salida = $request->get('end', Carbon::today());
+                return view('admin.project', ['project' => $project, 'entrada' => $entrada, 'salida' => $salida]);
+            } else {
+                return redirect()->route('home')->withError('No tienes permiso para hacer eso');
+            }
         }
+        return redirect()->back()->withError('No tienes permiso para hacer eso');
     }
 
     public function assignHours() {
