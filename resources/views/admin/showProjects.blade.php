@@ -24,7 +24,7 @@ function toHoursAndMinutes($totalMinutes) {
 <div class="container-fluid">
     <div class="card bg-default shadow">
             <div class="card-header bg-transparent border-0">
-            <h3 class="text-white mb-0">Empresas</h3>
+            <h3 class="text-white mb-0">Proyectos</h3>
             </div>
             <div class="table-responsive">
                 <table id="companiesTable" class="table align-items-center table-dark table-flush"
