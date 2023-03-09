@@ -176,7 +176,6 @@ function toHoursAndMinutes($totalMinutes) {
                                             <a class="text-center text-muted" href="javascript:$('#downloadPDFForm2').submit();">{{__("Descárgate el pdf para verlos todos...")}}<i class="fas fa-file-download ml-2"></i></a>
                                         </form>
                                     <?php
-                                    break;
                                 }
                             ?>
                             <hr class="m-1">
@@ -260,13 +259,13 @@ function toHoursAndMinutes($totalMinutes) {
                                 $currentWeek = $minutes_per_day[0]->started_at->format('W');
                                 $startOfWeek = $minutes_per_day[0]->started_at->startOfWeek()->format('d/m/Y');
                                 $endOfWeek = $minutes_per_day[0]->started_at->endOfWeek()->format('d/m/Y');
-                                foreach ($total_minutes_semana as $semana) {
-                                    if($semana['weeks'] == $currentWeek) {
-                                        $week_minutes = $semana['minutes'];
+                                    foreach ($total_minutes_semana as $semana) {
+                                        if($semana['weeks'] == $currentWeek) {
+                                            $week_minutes = $semana['minutes'];
+                                        }
                                     }
-                                }
                                 ?>
-                                <p class="small text-muted mb-0">{{__("Semana")}} {{$startOfWeek}} - {{$endOfWeek }} ({{toHoursAndMinutes($week_minutes)}})</p>
+                                <p class="small text-muted mb-0">{{__("Semana")}} {{$startOfWeek}} - {{$endOfWeek }} ({{(isset($week_minutes)) ? toHoursAndMinutes($week_minutes) : ''}})</p>
                                 @foreach($minutes_per_day as $minutes)
                                     <?php
                                         if($minutes->started_at->format('W') > $currentWeek) {
@@ -300,6 +299,29 @@ function toHoursAndMinutes($totalMinutes) {
                                 @endforeach
                                 <?php endif; ?>
                             </div>
+                            @if(auth()->user()->company->has_projects)
+                            <div class="col-6 d-flex flex-column">
+                                <h5 class="mb-2 text-center">{{__("Proyectos")}}</h5>
+                                <div class="row mt-2">
+                                    <div class="col d-flex align-center align-items-center">
+                                        <p class="small w-50 text-center text-muted m-0">{{__("Total horas asignadas")}}</p>
+                                        <span class="small w-50 text-center">{{toHoursAndMinutes($totalProjects)}}</span>
+                                    </div>
+                                    <div class="col d-flex align-center align-items-center">
+                                        <p class="small w-50 text-center text-muted m-0">{{__("Horas NO asignadas")}}</p>
+                                        <span class="small w-50 text-center">{{toHoursAndMinutes($total_minutes_periodo - $totalProjects)}}</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    @foreach($projects as $project)
+                                        <div class="row mt-2">
+                                            <p class="w-50 text-center m-0">{{$project->name}}</p>
+                                            <span class="small w-50 text-center">{{toHoursAndMinutes($project->total_time)}}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

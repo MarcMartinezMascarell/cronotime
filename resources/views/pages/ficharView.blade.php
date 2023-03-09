@@ -18,7 +18,7 @@
 
 ?>
 
-@if (Carbon\Carbon::today()->dayOfWeek == 5 && Auth::user()->minutes_to_assign > 0 && Auth::user()->company->has_projects == 1)
+@if (Carbon\Carbon::today()->dayOfWeek == 4 && Auth::user()->minutes_to_assign > 0 && Auth::user()->company->has_projects == 1)
     <div class="modal fade in" id="assignHoursPlease" tabindex="1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
         <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
             <div class="modal-content bg-gradient-danger">

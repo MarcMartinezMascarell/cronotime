@@ -80,10 +80,22 @@ $(document).ready(function() {
         }
     });
     //On change input number, update minutes to assign
+    $('input[type="number"]').on('keyup', function(e) {
+        if((e.keyCode >= 48 && e.keyCode <= 57) || e.keycode == 38 || e.keycode == 40 || e.key == 'Backspace') {
+            changeNumberAssigned(e);
+        }
+    });
     $('input[type="number"]').on('change', function(e) {
+            changeNumberAssigned(e);
+    });
+
+    function changeNumberAssigned(e) {
         let minutesAssigned = 0;
-        if(e.target.value == '') {
+        newMinutesToAssign = minutesToAssign;
+        if(e.target.value == '' || e.target.value <= 0) {
             e.target.value = 0;
+            newMinutesToAssign = minutesToAssign;
+            $('#minutesToAssign').text(minutesToAssign);
         }
         $('#assignMinutesForm').find('input[type="number"]').each(function(e) {
             minutesAssigned += parseInt($(this).val());
@@ -94,7 +106,7 @@ $(document).ready(function() {
         } else {
             $('#minutesToAssign').text(minutesToAssign);
         }
-    });
+    }
 
 
     //FECHAS
