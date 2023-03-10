@@ -35,6 +35,14 @@ $(document).ready(function () {
 
   $("body").tooltip({
     selector: '[data-toggle=tooltip]'
+  }); //SHOW/HIDE ENDED PROJECTS ON CHECKBOX
+
+  $('#showEndedProjects').on('change', function () {
+    if ($(this).is(':checked')) {
+      $('.endedProjects').show();
+    } else {
+      $('.endedProjects').hide();
+    }
   }); //Get worker id of selected worker on fecha_informe click
 
   $('#workerId').on('change', function (e) {

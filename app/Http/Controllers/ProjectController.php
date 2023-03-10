@@ -17,8 +17,9 @@ class ProjectController extends Controller
     public function index()
     {
         if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1) {
-            $projects = Project::where('id_empresa', auth()->user()->id_empresa)->get();
-            return view('admin.showProjects', compact('projects'));
+            $projects = Project::where('id_empresa', auth()->user()->id_empresa)->where('status', 'active')->get();
+            $endedProjects = Project::where('id_empresa', auth()->user()->id_empresa)->where('status', 'inactive')->get();
+            return view('admin.showProjects', compact('projects', 'endedProjects'));
         } else {
             return redirect()->route('home')->withError('No tienes permiso para hacer eso');
         }
@@ -57,6 +58,12 @@ class ProjectController extends Controller
         return redirect()->back()->withError('No tienes permiso para hacer eso');
     }
 
+    public function updateProject(Request $request) {
+        $project = Project::find($request->id);
+        $project->update($request->all());
+        return redirect()->route('projects.index');
+    }
+
     public function assignHours() {
         if($user = Auth::user()) {
             $projects = Project::where('id_empresa', Auth::user()->company->id)->get();
@@ -87,6 +94,16 @@ class ProjectController extends Controller
         } else {
             return redirect()->route('login');
         }
+    }
 
+    public function deleteProject($id){
+        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
+            $project = Project::find($id);
+            $project->status = 'inactive';
+            $project->update();
+            return redirect()->route('projects.index');
+        } else {
+            return redirect()->route('home')->withError('No tienes permiso para hacer eso');
+        }
     }
 }

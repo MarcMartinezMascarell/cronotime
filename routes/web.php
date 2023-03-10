@@ -85,12 +85,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
         Route::get('createProject', [ProjectController::class, 'createProject'])->name('project.create');
         Route::post('storeProject', [ProjectController::class, 'storeProject'])->name('project.store');
-        Route::get('deleteProject/{id}', [ProjectController::class, 'deleteProject'])->name('project.delete');
+        Route::delete('deleteProject/{id}', [ProjectController::class, 'deleteProject'])->name('project.delete');
         Route::get('showProject/{id}', [ProjectController::class, 'showProject'])->name('project.show');
         Route::get('editProject/{id}', [ProjectController::class, 'editProject'])->name('project.edit');
-        Route::put('updateProject/{id}', [ProjectController::class, 'updateProject'])->name('project.update');
+        Route::patch('updateProject/{id}', [ProjectController::class, 'updateProject'])->name('project.update');
         Route::get('assignHours', [ProjectController::class, 'assignHours'])->name('project.assignHours');
         Route::post('saveProjectHours', [ProjectController::class, 'saveProjectHours'])->name('project.saveProjectHours');
+
 
     //ESTADÍSTICAS
         //EMPLEADOS
