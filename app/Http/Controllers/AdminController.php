@@ -68,6 +68,20 @@ class AdminController extends Controller
         }
     }
 
+    public function toggleAdmin(Request $request) {
+        $user = User::find($request->id);
+        if($user->hasRole('superAdmin')) {
+            return redirect()->back()->withError(__('No puedes cambiar el rol de este usuario.'));
+        }
+        if($user->hasRole('administrador')) {
+            $user->removeRole('administrador');
+            $user->assignRole('trabajador');
+        } else {
+            $user->removeRole('trabajador');
+            $user->assignRole('administrador');
+        }
+        return redirect()->back();
+    }
 
 
     public function sendSetPassword($user) {

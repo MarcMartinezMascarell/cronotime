@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('workers/{id}', [AdminController::class, 'showWorkers'])->name('workers.show');
 		Route::get('createProfile', [AdminController::class, 'createProfile'])->name('profile.create');
 		Route::post('storeProfile', [AdminController::class, 'storeProfile'])->name('profile.store');
+        Route::patch('toggleAdmin', [AdminController::class, 'toggleAdmin'])->name('workers.toggleAdmin');
 
         //Proyectos
         Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');

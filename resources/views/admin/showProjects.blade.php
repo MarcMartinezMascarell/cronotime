@@ -22,15 +22,15 @@ function toHoursAndMinutes($totalMinutes) {
 ?>
 
 <div class="container-fluid">
-    <div class="card bg-default shadow">
+    <div class="card shadow">
             <div class="card-header bg-transparent border-0">
-            <h3 class="text-white mb-0">Proyectos</h3>
+            <h3 class=" mb-0">Proyectos</h3>
             </div>
-            <div class="table-responsive">
-                <table id="companiesTable" class="table align-items-center table-dark table-flush"
+            <div class="table-responsive rounded">
+                <table id="companiesTable" class="table align-items-center bg-white "
                 data-toggle="table"
                 data-search="false">
-                <thead class="thead-dark">
+                <thead class="bg-light">
                     <tr>
                         <th scope="col" data-sortable="true" >Proyecto</th>
                         <th scope="col" data-sortable="true" >Horas dedicadas este mes</th>
@@ -76,7 +76,7 @@ function toHoursAndMinutes($totalMinutes) {
                             </td>
                             <td class="text-right">
                                 <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">

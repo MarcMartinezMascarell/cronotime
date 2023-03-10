@@ -71,12 +71,14 @@ class ProjectController extends Controller
             $timeAssigned = 0;
             foreach($request->all() as $value) {
                 if(is_array($value)) {
-                    $projectHours = new ProjectHours;
-                    $projectHours->project_id = (int)$value[0];
-                    $projectHours->user_id = Auth::user()->id;
-                    $projectHours->total_time = (int)$value[1];
-                    $projectHours->save();
-                    $timeAssigned += (int)$value[1];
+                    if((int)$value[1] > 0) {
+                        $projectHours = new ProjectHours;
+                        $projectHours->project_id = (int)$value[0];
+                        $projectHours->user_id = Auth::user()->id;
+                        $projectHours->total_time = (int)$value[1];
+                        $projectHours->save();
+                        $timeAssigned += (int)$value[1];
+                    }
                 }
             }
             $user->minutes_to_assign -= $timeAssigned;
