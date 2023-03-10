@@ -69,14 +69,19 @@ function toHoursAndMinutes($totalMinutes) {
                     <th scope="col" data-sortable="true" >{{__("Email")}}</th>
                     @hasrole('superAdmin')
                     <th scope="col" data-sortable="true">{{__("Administrador")}}</th>
-                    <th scope="col">{{__("Rol")}}</th>
                     @endhasrole
+                    @hasrole('administrador')
+                    <th scope="col" data-sortable="true">{{__("Rol")}}</th>
+                    @endif
                     <th scope="col">{{__("Horas periodo")}}</th>
                     <th scope="col">{{__("Media diaria")}}</th>
                     <th scope="col">{{__("% Olvidados")}}</th>
                     @hasrole('superAdmin')
                     <th scope="col">{{__("Empresa")}}</th>
                     @endhasrole
+                    @hasanyrole('administrador|superAdmin')
+                    <th></th>
+                    @endhasanyrole
                   </tr>
                 </thead>
                 <tbody>
@@ -97,6 +102,13 @@ function toHoursAndMinutes($totalMinutes) {
                                 {{ $worker->email }}
                             </div>
                         </td>
+                        @hasrole('administrador')
+                        <td>
+                            <div class="text-sm">
+                                {{ $worker->getRoleNames()[0] }}
+                            </div>
+                        </td>
+                        @endif
                         @hasrole('superAdmin')
                         <td>
                             <div class="text-sm">
@@ -133,6 +145,7 @@ function toHoursAndMinutes($totalMinutes) {
                                 <?php echo round($worker->porcentajeOlvidados($entrada, $salida), 2) ?>%
                             </div>
                         </td>
+                        @hasrole('superAdmin')
                         <td>
                             <div class="text-sm">
                                 @if ($worker->company)
@@ -140,6 +153,31 @@ function toHoursAndMinutes($totalMinutes) {
                                 @endif
                             </div>
                         </td>
+                        @endhasrole
+                        @hasanyrole('administrador|superAdmin')
+                        <td class="text-right">
+                                @if($worker->id != auth()->user()->id)
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <form method="post" action="{{ route('workers.toggleAdmin') }}">
+                                        @csrf
+                                        @method('patch')
+                                            @if($worker->hasRole('administrador'))
+                                            <input type="hidden" name="id" value="{{$worker->id}}">
+                                            <button type="submit" class="dropdown-item text-danger" href="#">{{__('Eliminar administración')}}</button>
+                                            @else
+                                            <input type="hidden" name="id" value="{{$worker->id}}">
+                                            <button type="submit" class="dropdown-item" href="#">{{__('Hacer administrador')}}</button>
+                                            @endif
+                                        </form>
+                                    </div>
+                                </div>
+                                @endif
+                            </td>
+                        @endhasanyrole
                     </tr>
                     @endforeach
             </tbody>

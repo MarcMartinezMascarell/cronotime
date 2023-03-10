@@ -48,6 +48,7 @@ function toHoursAndMinutes($totalMinutes) {
                 @endhasanyrole
                 <p class="text-muted m-0 mt-2">{{__("Cambiar período")}}</p>
                 <div class="date-options my-2">
+                <a href="{{ route('estadisticas.informe', ['start' => Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->endOfMonth()->format('Y-m-d'), 'userId' => $userId]) }}" class="btn btn-dark fecha_informe">{{__("Este mes")}}</a>
                     <a href="{{ route('estadisticas.informe', ['start' => Carbon\Carbon::now()->subDays(7)->startOfWeek()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->subDays(7)->endOfWeek()->format('Y-m-d'), 'userId' => $userId]) }}" class="btn btn-dark fecha_informe">{{__("Semana pasada")}}</a>
                     <a href="{{ route('estadisticas.informe', ['start' => Carbon\Carbon::now()->subDays(30)->startOfMonth()->format('Y-m-d'), 'end' => Carbon\Carbon::now()->subDays(30)->endOfMonth()->format('Y-m-d'), 'userId' => $userId]) }}" class="btn btn-dark fecha_informe">{{__("Mes pasado")}}</a>
                 </div>
@@ -165,7 +166,7 @@ function toHoursAndMinutes($totalMinutes) {
                                 </div>
                             </div>
                             @endif
-                            <?php
+                            <!-- <?php
                                 $fichajeCounter += 1;
                                 if($fichajeCounter > 10) {
                                     ?>
@@ -177,7 +178,7 @@ function toHoursAndMinutes($totalMinutes) {
                                         </form>
                                     <?php
                                 }
-                            ?>
+                            ?> -->
                             <hr class="m-1">
                         @endforeach
 
@@ -309,7 +310,7 @@ function toHoursAndMinutes($totalMinutes) {
                                     </div>
                                     <div class="col d-flex align-center align-items-center">
                                         <p class="small w-50 text-center text-muted m-0">{{__("Horas NO asignadas")}}</p>
-                                        <span class="small w-50 text-center">{{toHoursAndMinutes($total_minutes_periodo - $totalProjects)}}</span>
+                                        <span class="small w-50 text-center">{{($total_minutes_periodo -  $totalProjects > 0) ? toHoursAndMinutes($total_minutes_periodo - $totalProjects): '00:00'}}</span>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
