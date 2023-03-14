@@ -78,8 +78,10 @@ class FichajesController extends Controller
                 $total_time = $ultimoFichaje->stopped_at->diffInMinutes($ultimoFichaje->started_at);
                 $ultimoFichaje->total_time = $total_time;
                 $ultimoFichaje->save();
-                $user->minutes_to_assign = $user->minutes_to_assign + $total_time;
-                $user->update();
+                if($user->company->has_projects == 1) {
+                    $user->minutes_to_assign = $user->minutes_to_assign + $total_time;
+                    $user->update();
+                }
             } else {
                 $nuevoFichaje = Fichaje::create([
                     'user_id' => $user->id,
