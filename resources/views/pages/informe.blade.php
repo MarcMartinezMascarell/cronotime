@@ -282,7 +282,7 @@ function toHoursAndMinutes($totalMinutes) {
                                                 }
                                             }
                                             ?>
-                                            <p class="small text-muted mb-0">{{__("Semana")}} {{$startOfWeek}} - {{$endOfWeek }} ({{toHoursAndMinutes($week_minutes)}})</p>
+                                            <p class="small text-muted mb-0">{{__("Semana")}} {{$startOfWeek}} - {{$endOfWeek }} ({{(isset($week_minutes)) ? toHoursAndMinutes($week_minutes) : ''}})</p>
                                             <?php
                                         }
                                     ?>
