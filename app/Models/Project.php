@@ -12,6 +12,14 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'client',
+        'status',
+        'id_empresa',
+    ];
+
     public function totalTime($entrada, $salida) {
         $totalTime = ProjectHours::where('project_id', $this->id)->whereBetween('created_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])->sum('total_time');
         return $totalTime;

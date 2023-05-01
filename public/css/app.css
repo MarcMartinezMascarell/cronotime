@@ -10301,6 +10301,11 @@ textarea.form-control-lg {
   mix-blend-mode: multiply;
 }
 
+.endedProjects {
+  display: none;
+  opacity: 0.6;
+}
+
 #agenda .fc-day-today {
   background-color: rgba(244, 100, 95, 0.2);
 }

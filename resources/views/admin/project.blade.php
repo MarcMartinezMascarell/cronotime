@@ -3,7 +3,7 @@
 @section('content')
     @include('users.partials.header', [
         'title' => $project->name,
-        'description' => __('A continuación encontrarás los detalles del proyecto en el periodo seleccionado.'),
+        'description' => $project->description,
     ])
 
 <?php

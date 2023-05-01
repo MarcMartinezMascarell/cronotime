@@ -30,6 +30,11 @@ class ProfileController extends Controller
         //     return back()->withErrors(['not_allow_profile' => __('You are not allowed to change data for a default user.')]);
         // }
 
+        //Validate unique email
+        $request->validate([
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->user()->id,
+        ]);
+
         auth()->user()->update($request->all());
 
         return back()->withStatus(__('Profile successfully updated.'));
