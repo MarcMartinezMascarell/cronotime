@@ -162,6 +162,12 @@ function toHoursAndMinutes($totalMinutes) {
                                     <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <form method="post" action="{{ route('workers.resetHours') }}">
+                                        @csrf
+                                        @method('patch')
+                                            <input type="hidden" name="id" value="{{$worker->id}}">
+                                            <button type="submit" class="dropdown-item" href="#">{{__('Reset Horas No usadas')}}</button>
+                                        </form>
                                         <form method="post" action="{{ route('workers.toggleAdmin') }}">
                                         @csrf
                                         @method('patch')
@@ -172,6 +178,12 @@ function toHoursAndMinutes($totalMinutes) {
                                             <input type="hidden" name="id" value="{{$worker->id}}">
                                             <button type="submit" class="dropdown-item" href="#">{{__('Hacer administrador')}}</button>
                                             @endif
+                                        </form>
+                                        <form method="post" action="{{ route('workers.delete') }}">
+                                        @csrf
+                                        @method('delete')
+                                            <input type="hidden" name="id" value="{{$worker->id}}">
+                                            <button type="submit" class="dropdown-item text-danger" href="#">{{__('Eliminar Usuario')}}</button>
                                         </form>
                                     </div>
                                 </div>

@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('toggleProjects', [EmpresaController::class, 'toggleProjects'])->name('company.toggleProjects');
 
 		Route::get('workers/{id}', [AdminController::class, 'showWorkers'])->name('workers.show');
+        Route::delete('deleteWorker', [AdminController::class, 'deleteWorker'])->name('workers.delete');
+        Route::patch('resetHours', [AdminController::class, 'resetUserUnusedHours'])->name('workers.resetHours');
 		Route::get('createProfile', [AdminController::class, 'createProfile'])->name('profile.create');
 		Route::post('storeProfile', [AdminController::class, 'storeProfile'])->name('profile.store');
         Route::patch('toggleAdmin', [AdminController::class, 'toggleAdmin'])->name('workers.toggleAdmin');

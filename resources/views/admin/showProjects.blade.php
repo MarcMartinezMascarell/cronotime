@@ -81,7 +81,7 @@ function toHoursAndMinutes($totalMinutes) {
                                     <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Editar</a>
+                                        <a class="dropdown-item" href="{{ route('project.edit', ['id' => $project->id]) }}">Editar</a>
                                         <form method="post" action="{{ route('project.delete', ['id' => $project->id]) }}">
                                             @csrf
                                             @method('delete')

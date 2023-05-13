@@ -58,6 +58,15 @@ class ProjectController extends Controller
         return redirect()->back()->withError('No tienes permiso para hacer eso');
     }
 
+    public function editProject($id) {
+        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
+            $project = Project::find($id);
+            return view('admin.editProject', ['project' => $project]);
+        } else {
+            return redirect()->route('home')->withError('No tienes permiso para hacer eso');
+        }
+    }
+
     public function updateProject(Request $request) {
         $project = Project::find($request->id);
         $project->update($request->all());
