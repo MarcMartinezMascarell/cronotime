@@ -39,7 +39,7 @@
                                 @foreach($projects as $client => $clientProjects)
                                     <div class="row w-100">
                                         <h3 class="open-collapse" role="button" data-collapse="<?php echo preg_replace("/[^a-zA-Z]+/", "", $client) ?>">{{$client}}<i class="ml-2 fa fa-chevron-right"></i></h3>
-                                        <div class="d-none" id="<?php echo preg_replace("/[^a-zA-Z]+/", "", $client) ?>">
+                                        <div class="d-none" id="<?php echo preg_replace("/[^a-zA-Z0-9]+/", "", $client) ?>">
                                             @foreach($clientProjects as $project)
                                             <div class="col-xl-3 form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                                 <label class="form-control-label" for="input-name">{{ $project->name }}</label>
