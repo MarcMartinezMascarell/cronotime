@@ -13,8 +13,14 @@
         <small>(5/12/2022)</small>
         <li>Añadida nueva funcionalidad de Calendario Laboral. En ella podrás ver los distintos eventos creados por los administradores de tu empresa, así como añadir tus ausencias o solicitar vacaciones.</li>
     </ul> --}}
+    <ul >
+        <strong class="h5 mb-3">v1.1.1</strong>
+        <small>(3/06/2023)</small>
+        <li>Pequeños bugs solucionados.</li>
+        <li>Mejoras en la interfaz de usuario. (Separados los proyectos por cliente)</li>
+    </ul>
     <ul>
-        <strong class="h5 mb-3">v1.0.3</strong>
+        <strong class="h5 mb-3">v1.1.0</strong>
         <small>(10/03/2023)</small>
         <li>Nueva funcionalidad: Proyectos, en la que podrás pedirle a tus trabajadores que asignen las horas que han realizado a una serie de proyectos creados. Posibilidad de activar la versión beta de la funcionalidad en el perfil del usuario administrador.</li>
         <li>Pequeños bugs solucionados.</li>

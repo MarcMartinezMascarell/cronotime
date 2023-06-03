@@ -3,18 +3,6 @@ var __webpack_exports__ = {};
 /*!********************************!*\
   !*** ./resources/js/custom.js ***!
   \********************************/
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 $(document).ready(function () {
   if ($('#assignHoursPlease').length) {
     $('#assignHoursPlease').modal('show');
@@ -135,9 +123,29 @@ $(document).ready(function () {
     } else {
       $('#minutesToAssign').text(minutesToAssign);
     }
-  } //FECHAS
-  //Seleccionar tipo de evento nuevo al añadir
+  } //Abrir collapse de proyectos para asignar horas
 
+
+  $('.open-collapse').on('click', function (e) {
+    e.preventDefault();
+    var collapseId = $(this).data('collapse');
+    var div = $('#' + collapseId);
+
+    if (div.hasClass('d-none')) {
+      div.removeClass('d-none');
+      div.addClass('d-flex');
+      div.show();
+      $(this).find('i').removeClass('fa-chevron-right');
+      $(this).find('i').addClass('fa-chevron-down');
+    } else {
+      div.removeClass('d-flex');
+      div.hide();
+      div.addClass('d-none');
+      $(this).find('i').removeClass('fa-chevron-down');
+      $(this).find('i').addClass('fa-chevron-right');
+    }
+  }); //FECHAS
+  //Seleccionar tipo de evento nuevo al añadir
 
   $('.event-type-btn').on('click', function (e) {
     $('.event-type-form').hide();
@@ -245,38 +253,37 @@ $(document).ready(function () {
     });
     calendar.render();
   } //CHART
+  // let ctx = document.getElementById('myChart').getContext('2d');
+  // let maxYValue = Math.max(...chartData) + 2;
+  // let chart = new Chart(ctx, {
+  //     type: 'bar',
+  //     data: {
+  //         labels: labels,
+  //         datasets: [{
+  //             label: 'Barras',
+  //             data: chartData,
+  //             backgroundColor: 'rgba(244, 100, 95, 0.2)',
+  //             borderColor: 'rgba(244, 100, 95, 1)',
+  //             borderWidth: 1,
+  //             pointStyle: 'circle',
+  //         }]
+  //     },
+  //     options: {
+  //         scales: {
+  //             yAxes: [{
+  //                 ticks: {
+  //                     beginAtZero: true,
+  //                     max: Math.ceil(maxYValue)
+  //                 },
+  //                 scaleLabel: {
+  //                     display: true,
+  //                     labelString: 'Horas'
+  //                 }
+  //             }]
+  //         }
+  //     }
+  // });
 
-
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var maxYValue = Math.max.apply(Math, _toConsumableArray(chartData)) + 2;
-  var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Barras',
-        data: chartData,
-        backgroundColor: 'rgba(244, 100, 95, 0.2)',
-        borderColor: 'rgba(244, 100, 95, 1)',
-        borderWidth: 1,
-        pointStyle: 'circle'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-            max: Math.ceil(maxYValue)
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Horas'
-          }
-        }]
-      }
-    }
-  });
 });
 /******/ })()
 ;

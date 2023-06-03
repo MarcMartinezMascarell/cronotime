@@ -32,23 +32,32 @@
 
                             <hr class="my-4" />
 
-                            <div class="d-flex flex-wrap">
-                            <?php $iterator = 0 ?>
-                            @foreach($projects as $project)
-                                    <div class="col-xl-3 form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-name">{{ $project->name }}</label>
-                                        <input type="hidden" name="{{$iterator}}[]" value="{{$project->id}}">
-                                        <input type="number" name="{{$iterator}}[]" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" min="0" value="0" required autofocus>
 
-                                        @if ($errors->has('name'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
-                                        @endif
+
+                            <div class="d-flex flex-wrap">
+                                <?php $iterator = 0 ?>
+                                @foreach($projects as $client => $clientProjects)
+                                    <div class="row w-100">
+                                        <h3 class="open-collapse" role="button" data-collapse="<?php echo str_replace(' ', '', $client) ?>">{{$client}}<i class="ml-2 fa fa-chevron-right"></i></h3>
+                                        <div class="d-none" id="<?php echo str_replace(' ', '', $client) ?>">
+                                            @foreach($clientProjects as $project)
+                                            <div class="col-xl-3 form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                                <label class="form-control-label" for="input-name">{{ $project->name }}</label>
+                                                <input type="hidden" name="{{$iterator}}[]" value="{{$project->id}}">
+                                                <input type="number" name="{{$iterator}}[]" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" min="0" value="0" required autofocus>
+
+                                                @if ($errors->has('name'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('name') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <?php $iterator++; ?>
+                                            @endforeach
+                                        </div>
                                     </div>
-                            <?php $iterator++; ?>
-                            @endforeach
-                            </div>
+                                @endforeach
+                                </div>
 
                             <div class="text-center w-100">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Guardar') }}</button>

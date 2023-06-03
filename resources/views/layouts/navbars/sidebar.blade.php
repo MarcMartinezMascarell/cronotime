@@ -218,7 +218,7 @@
                 </li>
             </ul>
             <p class="text-muted text-center small">
-                v1.0.3
+                v1.1.1
             </p>
         </div>
     </div>

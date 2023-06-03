@@ -75,7 +75,8 @@ class ProjectController extends Controller
 
     public function assignHours() {
         if($user = Auth::user()) {
-            $projects = Project::where('id_empresa', Auth::user()->company->id)->get();
+            $projects = Project::where('id_empresa', Auth::user()->company->id)
+            ->orderBy('client', 'asc')->orderBy('updated_at')->get()->groupby('client');
             return view('pages.assignHours', ['projects' => $projects]);
         } else {
             return redirect()->route('login');
