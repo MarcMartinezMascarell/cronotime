@@ -116,6 +116,27 @@ $(document).ready(function() {
         }
     }
 
+    //Abrir collapse de proyectos para asignar horas
+    $('.open-collapse').on('click', function(e) {
+        e.preventDefault();
+        let collapseId = $(this).data('collapse');
+        let div = $('#' + collapseId);
+        if(div.hasClass('d-none')) {
+            div.removeClass('d-none');
+            div.addClass('d-flex');
+            div.show();
+            $(this).find('i').removeClass('fa-chevron-right');
+            $(this).find('i').addClass('fa-chevron-down');
+        } else {
+            div.removeClass('d-flex');
+            div.hide();
+            div.addClass('d-none');
+            $(this).find('i').removeClass('fa-chevron-down');
+            $(this).find('i').addClass('fa-chevron-right');
+        }
+
+    })
+
 
     //FECHAS
 
@@ -237,36 +258,36 @@ $(document).ready(function() {
 
 
     //CHART
-    let ctx = document.getElementById('myChart').getContext('2d');
-    let maxYValue = Math.max(...chartData) + 2;
-    let chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Barras',
-                data: chartData,
-                backgroundColor: 'rgba(244, 100, 95, 0.2)',
-                borderColor: 'rgba(244, 100, 95, 1)',
-                borderWidth: 1,
-                pointStyle: 'circle',
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        max: Math.ceil(maxYValue)
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Horas'
-                    }
-                }]
-            }
-        }
-    });
+    // let ctx = document.getElementById('myChart').getContext('2d');
+    // let maxYValue = Math.max(...chartData) + 2;
+    // let chart = new Chart(ctx, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: labels,
+    //         datasets: [{
+    //             label: 'Barras',
+    //             data: chartData,
+    //             backgroundColor: 'rgba(244, 100, 95, 0.2)',
+    //             borderColor: 'rgba(244, 100, 95, 1)',
+    //             borderWidth: 1,
+    //             pointStyle: 'circle',
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             yAxes: [{
+    //                 ticks: {
+    //                     beginAtZero: true,
+    //                     max: Math.ceil(maxYValue)
+    //                 },
+    //                 scaleLabel: {
+    //                     display: true,
+    //                     labelString: 'Horas'
+    //                 }
+    //             }]
+    //         }
+    //     }
+    // });
 
 })
 

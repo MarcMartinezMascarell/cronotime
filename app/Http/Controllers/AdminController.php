@@ -83,12 +83,35 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-
     public function sendSetPassword($user) {
             $token = Str::random(64);
             Mail::send('email.forgetPassword', ['token' => $token, 'user' => $user], function($message, $user) {
             $message->to($user->email);
             $message->subject('Reset Password');
         });
+    }
+
+    public function resetUserUnusedHours(Request $request) {
+        if(auth()->user()->hasAnyRole('administrador|superAdmin') && auth()->user()->company->has_projects == 1 && User::find($request->id)->id_empresa == auth()->user()->company->id) {
+            $user = User::find($request->id);
+            $user->minutes_to_assign = 0;
+            $user->update();
+            return redirect()->route('workers.show', [auth()->user()->company->id]);
+        } else {
+            return redirect()->back()->withError('No tienes permiso para hacer eso');
+        }
+    }
+
+    public function deleteWorker(Request $request) {
+        $user = User::find($request->id);
+        if(auth()->user()->hasAnyRole('superAdmin|administrador')) {
+            if($user->hasRole('superAdmin')) {
+                return redirect()->back()->withError(__('No puedes eliminar a este usuario.'));
+            }
+            $user->delete();
+        } else {
+            return redirect()->back()->withError(__('No puedes eliminar a este usuario.'));
+        }
+        return redirect()->back();
     }
 }
