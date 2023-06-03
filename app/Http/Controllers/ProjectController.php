@@ -16,9 +16,13 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1) {
+        if(Auth::user()->hasRole('administrador') && Auth::user()->company->has_projects == 1) {
             $projects = Project::where('id_empresa', auth()->user()->id_empresa)->where('status', 'active')->get();
             $endedProjects = Project::where('id_empresa', auth()->user()->id_empresa)->where('status', 'inactive')->get();
+            return view('admin.showProjects', compact('projects', 'endedProjects'));
+        } else if(auth()->user()->hasRole('superAdmin')) {
+            $projects = Project::all();
+            $endedProjects = Project::where('status', 'inactive')->get();
             return view('admin.showProjects', compact('projects', 'endedProjects'));
         } else {
             return redirect()->route('home')->withError('No tienes permiso para hacer eso');
