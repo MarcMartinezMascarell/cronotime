@@ -106,6 +106,17 @@ class ProjectController extends Controller
         }
     }
 
+    public function inactiveProject($id) {
+        if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
+            $project = Project::find($id);
+            $project->status = 'inactive';
+            $project->update();
+            return redirect()->route('projects.index');
+        } else {
+            return redirect()->route('home')->withError('No tienes permiso para hacer eso');
+        }
+    }
+
     public function deleteProject($id){
         if($user = Auth::user()->hasAnyRole('administrador|superAdmin') && Auth::user()->company->has_projects == 1 && Project::find($id)->id_empresa == Auth::user()->company->id) {
             $project = Project::find($id);
