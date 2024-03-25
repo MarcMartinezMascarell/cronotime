@@ -38,10 +38,10 @@
                                 <?php $iterator = 0 ?>
                                 @foreach($projects as $client => $clientProjects)
                                     <div class="row w-100">
-                                        <h3 class="open-collapse" role="button" data-collapse="<?php echo str_replace(' ', '', $client) ?>">{{$client}}<i class="ml-2 fa fa-chevron-right"></i></h3>
-                                        <div class="d-none" id="<?php echo str_replace(' ', '', $client) ?>">
+                                        <h3 class="open-collapse" role="button" data-collapse="<?php echo preg_replace("/[^a-zA-Z0-9]+/", "", $client) ?>">{{$client}}<i class="ml-2 fa fa-chevron-right"></i></h3>
+                                        <div class="d-none" id="<?php echo preg_replace("/[^a-zA-Z0-9]+/", "", $client) ?>">
                                             @foreach($clientProjects as $project)
-                                            <div class="col-xl-3 form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                            <div class="<?php echo (count($clientProjects) > 2) ? 'col-xl-3' : 'col-xl-6' ?> form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                                 <label class="form-control-label" for="input-name">{{ $project->name }}</label>
                                                 <input type="hidden" name="{{$iterator}}[]" value="{{$project->id}}">
                                                 <input type="number" name="{{$iterator}}[]" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" min="0" value="0" required autofocus>
