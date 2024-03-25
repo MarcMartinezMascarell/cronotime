@@ -51,6 +51,7 @@ class EstadisticasController extends Controller
             ->get();
             $numero_dias_trabajados = $dias_trabajados->count();
             $total_minutes_periodo = Fichaje::where('user_id', $user->id)->whereBetween('started_at', [Carbon::parse($entrada)->startOfDay(), Carbon::parse($salida)->endOfDay()])
+            ->whereNotNull('stopped_at')
             ->sum('total_time');
             $total_periodo = $this->minutesToHours($total_minutes_periodo);
             $ultimoFichaje = Fichaje::where('user_id', $user->id)->orderBy('started_at', 'desc')->first();
@@ -140,26 +141,26 @@ class EstadisticasController extends Controller
         }
     }
 
-    public function chartData() {
-        if($user = Auth::user()) {
-            // Retrieve the data from the database
-            $results = Fichaje::selectRaw("MONTH(started_at) as month, SUM(TIMESTAMPDIFF(MINUTE, started_at, stopped_at)) as total_minutes")
-            ->where("user_id", $userId)
-            ->groupBy("month")
-            ->get();
+    // public function chartData() {
+    //     if($user = Auth::user()) {
+    //         // Retrieve the data from the database
+    //         $results = Fichaje::selectRaw("MONTH(started_at) as month, SUM(TIMESTAMPDIFF(MINUTE, started_at, stopped_at)) as total_minutes")
+    //         ->where("user_id", $userId)
+    //         ->groupBy("month")
+    //         ->get();
 
-            // Extract the labels and data from the results
-            $labels = [];
-            $chartData = [];
-            foreach ($results as $result) {
-                $labels[] = $result->month;
-                $chartData[] = $result->total_minutes;
-            }
+    //         // Extract the labels and data from the results
+    //         $labels = [];
+    //         $chartData = [];
+    //         foreach ($results as $result) {
+    //             $labels[] = $result->month;
+    //             $chartData[] = $result->total_minutes;
+    //         }
 
-            // Return the data as a JSON response
-            return response()->json($data);
-        }
-    }
+    //         // Return the data as a JSON response
+    //         return response()->json($data);
+    //     }
+    // }
 
 
 
